@@ -31,6 +31,13 @@ jobs:
           sudo make install
           ruby -ropenssl -e 'puts OpenSSL::OPENSSL_VERSION'
 
+      - name: Symlink Ruby where script expects it
+        run: |
+          if [ ! -f /usr/bin/ruby-2.7 ]; then
+            sudo ln -s "$(command -v ruby)" /usr/bin/ruby-2.7
+          fi
+          ruby -v
+      
       - uses: actions/checkout@v3
 
       # Use GitHub Actions' cache to cache dependencies on servers
