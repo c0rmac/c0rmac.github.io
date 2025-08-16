@@ -9,24 +9,26 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Ruby 2.7.8 from source with OpenSSL 1.1 (old-releases)
+      - name: Build OpenSSL 1.1.1w
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libreadline-dev zlib1g-dev \
-                                  libyaml-dev libffi-dev libgdbm-dev wget tar
+          sudo apt-get install -y build-essential wget tar
+          wget https://www.openssl.org/source/openssl-1.1.1w.tar.gz
+          tar -xzf openssl-1.1.1w.tar.gz
+          cd openssl-1.1.1w
+          ./config --prefix=$HOME/.openssl --openssldir=$HOME/.openssl shared zlib
+          make -j$(nproc)
+          make install
 
-          # Fetch OpenSSL 1.1 from old-releases
-          wget http://old-releases.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
-          wget http://old-releases.ubuntu.com/ubuntu/pool/main/o/openssl/libssl-dev_1.1.1f-1ubuntu2.19_amd64.deb
-          sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb libssl-dev_1.1.1f-1ubuntu2.19_amd64.deb
-
+      - name: Build Ruby 2.7.8 with custom OpenSSL
+        run: |
+          sudo apt-get install -y libreadline-dev zlib1g-dev libyaml-dev libffi-dev libgdbm-dev
           curl -sSL https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz -o ruby.tar.gz
           tar -xzf ruby.tar.gz
           cd ruby-2.7.8
-          ./configure --disable-install-doc --with-openssl-dir=/usr
+          ./configure --disable-install-doc --with-openssl-dir=$HOME/.openssl
           make -j$(nproc)
           sudo make install
-
           ruby -ropenssl -e 'puts OpenSSL::OPENSSL_VERSION'
 
       - uses: actions/checkout@v3
