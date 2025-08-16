@@ -14,6 +14,10 @@ jobs:
           ruby-version: 3.1   # match GitHub Pages environment
           bundler-cache: true
 
+      - name: Install build dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential pkg-config libcmocka-dev
+
+
       - uses: actions/checkout@v3
 
       # Use GitHub Actions' cache to cache dependencies on servers

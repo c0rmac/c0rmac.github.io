@@ -10,6 +10,6 @@ group :jekyll_plugins do
   gem 'webrick', '~> 1.8'
 end
 
-gem "commonmarker", "~> 0.23.8"
+gem "commonmarker", "~> 0.23.12"
 
 gem 'github-pages'
