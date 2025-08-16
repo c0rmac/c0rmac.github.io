@@ -9,18 +9,17 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Ruby 2.7.8 from source with pinned OpenSSL 1.1
+      - name: Install Ruby 2.7.8 from source with OpenSSL 1.1 (old-releases)
         run: |
-          sudo apt update
-          sudo apt install -y build-essential libreadline-dev zlib1g-dev \
-                              libyaml-dev libffi-dev libgdbm-dev wget tar
+          sudo apt-get update
+          sudo apt-get install -y build-essential libreadline-dev zlib1g-dev \
+                                  libyaml-dev libffi-dev libgdbm-dev wget tar
 
-          # Pull in OpenSSL 1.1 from Ubuntu archive
-          wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
-          wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl-dev_1.1.1f-1ubuntu2.19_amd64.deb
+          # Fetch OpenSSL 1.1 from old-releases
+          wget http://old-releases.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
+          wget http://old-releases.ubuntu.com/ubuntu/pool/main/o/openssl/libssl-dev_1.1.1f-1ubuntu2.19_amd64.deb
           sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb libssl-dev_1.1.1f-1ubuntu2.19_amd64.deb
 
-          # Build Ruby with explicit OpenSSL path
           curl -sSL https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz -o ruby.tar.gz
           tar -xzf ruby.tar.gz
           cd ruby-2.7.8
@@ -28,10 +27,7 @@ jobs:
           make -j$(nproc)
           sudo make install
 
-          # Confirm OpenSSL binding
           ruby -ropenssl -e 'puts OpenSSL::OPENSSL_VERSION'
-
-
 
       - uses: actions/checkout@v3
 
