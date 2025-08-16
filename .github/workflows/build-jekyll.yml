@@ -20,23 +20,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: Install build deps for commonmarker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            g++ \
-            make \
-            pkg-config \
-            libicu-dev
-
-      - name: Update bundler & rake
-        run: |
-          gem install bundler -v '<3'
-          gem install rake
-
-      - name: Install gems
-        run: bundle install --jobs 4 --retry 3
-
 
       # Use GitHub Deploy Action to build and deploy to Github
       - uses: jeffreytse/jekyll-deploy-action@v0.4.0
