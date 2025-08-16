@@ -9,16 +9,19 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Ruby 2.7 from source
+      - name: Install Ruby 2.7.8 from source (with OpenSSL)
         run: |
           sudo apt update
-          sudo apt install -y build-essential libssl-dev libreadline-dev zlib1g-dev
+          # Install build toolchain + OpenSSL headers
+          sudo apt install -y build-essential libssl-dev libreadline-dev zlib1g-dev \
+                              libyaml-dev libffi-dev libgdbm-dev
           curl -sSL https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz -o ruby.tar.gz
           tar -xzf ruby.tar.gz
           cd ruby-2.7.8
-          ./configure --disable-install-doc
+          ./configure --disable-install-doc --with-openssl-dir=/usr
           make -j$(nproc)
           sudo make install
+
 
       - uses: actions/checkout@v3
 
