@@ -7,30 +7,8 @@ on:
 
 jobs:
   build_and_deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - name: Build OpenSSL 1.1.1w
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential wget tar
-          wget https://www.openssl.org/source/openssl-1.1.1w.tar.gz
-          tar -xzf openssl-1.1.1w.tar.gz
-          cd openssl-1.1.1w
-          ./config --prefix=$HOME/.openssl --openssldir=$HOME/.openssl shared zlib
-          make -j$(nproc)
-          make install
-
-      - name: Build Ruby 2.7.8 with custom OpenSSL
-        run: |
-          sudo apt-get install -y libreadline-dev zlib1g-dev libyaml-dev libffi-dev libgdbm-dev
-          curl -sSL https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.8.tar.gz -o ruby.tar.gz
-          tar -xzf ruby.tar.gz
-          cd ruby-2.7.8
-          ./configure --disable-install-doc --with-openssl-dir=$HOME/.openssl
-          make -j$(nproc)
-          sudo make install
-          ruby -ropenssl -e 'puts OpenSSL::OPENSSL_VERSION'
-
       - uses: actions/checkout@v3
 
       # Use GitHub Actions' cache to cache dependencies on servers
