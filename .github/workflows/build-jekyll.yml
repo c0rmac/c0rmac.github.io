@@ -9,6 +9,10 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1   # match GitHub Pages environment
+          bundler-cache: true
 
       - uses: actions/checkout@v3
 
