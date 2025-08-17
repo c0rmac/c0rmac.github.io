@@ -14,8 +14,11 @@ jobs:
           ruby-version: 3.2   # match GitHub Pages environment
           bundler-cache: true
 
-      - name: Install build dependencies
-        run: sudo apt-get update && sudo apt-get install -y build-essential pkg-config libcmocka-dev
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake libcmark-dev
+
 
 
       - uses: actions/checkout@v3
