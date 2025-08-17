@@ -19,6 +19,8 @@ tags:
   - k-means clustering
 ---
 
+> **Abstract:** This article details the architecture and methodology of an automated, quantitative trading system designed for cryptocurrency markets. The system's core is a machine learning strategy that leverages unsupervised clustering to identify distinct market patterns and applies cluster-specific models to generate daily trade signals. Trade execution is managed through a sophisticated two-phase lifecycle, incorporating a momentum-based entry confirmation and dynamic in-trade risk management. The software is designed with a dual-mode operational framework, allowing for both live trading and robust, parallelized backtesting on historical data. This document outlines the system's modular components, the intricacies of the trading and capital management strategies, and the implementation of its operational modes.
+
 <style>
     /* This is the container that will allow scrolling */
     #diagram-container {
@@ -35,8 +37,6 @@ tags:
         box-sizing: border-box;
     }
 </style>
-
-> **Abstract:** This article details the architecture and methodology of an automated, quantitative trading system designed for cryptocurrency markets. The system's core is a machine learning strategy that leverages unsupervised clustering to identify distinct market patterns and applies cluster-specific models to generate daily trade signals. Trade execution is managed through a sophisticated two-phase lifecycle, incorporating a momentum-based entry confirmation and dynamic in-trade risk management. The software is designed with a dual-mode operational framework, allowing for both live trading and robust, parallelized backtesting on historical data. This document outlines the system's modular components, the intricacies of the trading and capital management strategies, and the implementation of its operational modes.
 
 ## 1. System Architecture
 
@@ -100,61 +100,61 @@ The following diagram illustrates the complete process managed by the `LiveTrade
 
 <div id="diagram-container">
     <div class="mermaid">
-        graph TD
-            subgraph "Start of Day"
-                A["Daily Prediction @ 23:55"] --> B{Cycle Active?};
-                B -- No --> C[Start New Cycle: Process Predictions & Allocate Capital];
-                B -- Yes --> D((Ignore Prediction));
-            end
+graph TD
+    subgraph "Start of Day"
+        A["Daily Prediction @ 23:55"] --> B{Cycle Active?}
+        B -- No --> C[Start New Cycle: Process Predictions & Allocate Capital]
+        B -- Yes --> D((Ignore Prediction))
+    end
 
-            subgraph "Ongoing Operations (Triggered every 5 mins)"
-                C --> F;
-                E["Price Update @ 5 min intervals"] --> F[For each active asset...];
-                
-                subgraph "Pre-Trade Asset Logic"
-                    F --> G{State is Pre-Trade?};
-                    G -- Yes --> H{Expired?};
-                    H -- Yes --> I[Expire Asset: Move Capital to Holding Pool];
-                    H -- No --> J{Price Breakout?};
-                    J -- Yes --> K[BUY Asset: Transition to Active Trade];
-                    J -- No --> L((Hold));
-                end
+    subgraph "Ongoing Operations (Triggered every 5 mins)"
+        C --> F
+        E["Price Update @ 5 min intervals"] --> F[For each active asset...]
 
-                subgraph "Active-Trade Asset Logic"
-                    G -- No --> M{State is Active Trade?};
-                    M -- Yes --> N{"Sell Signal? (Profit/Loss)"};
-                    N -- Yes --> O[SELL Asset];
-                    O --> P{Profit or Loss?};
-                    P -- Profit --> Q[Move Proceeds to Main Budget];
-                    P -- Loss --> R[Move Proceeds to Divestment Pool];
-                    N -- No --> S((Hold));
-                end
+        subgraph "Pre-Trade Asset Logic"
+            F --> G{State is Pre-Trade?}
+            G -- Yes --> H{Expired?}
+            H -- Yes --> I[Expire Asset: Move Capital to Holding Pool]
+            H -- No --> J{Price Breakout?}
+            J -- Yes --> K[BUY Asset: Transition to Active Trade]
+            J -- No --> L((Hold))
+        end
 
-                subgraph "Post-Tick Processing"
-                    I --> T{All Assets Closed?};
-                    K --> T;
-                    L --> T;
-                    Q --> T;
-                    R --> T;
-                    S --> T;
-                    T -- No --> U[Process Divestment Pool];
-                    U --> V{Capital to Reinvest?};
-                    V -- Yes --> W[Reinvest into eligible Active Trades];
-                    V -- No --> X((Wait for next tick));
-                    W --> X;
-                end
-            end
+        subgraph "Active-Trade Asset Logic"
+            G -- No --> M{State is Active Trade?}
+            M -- Yes --> N{"Sell Signal? (Profit/Loss)"}
+            N -- Yes --> O[SELL Asset]
+            O --> P{Profit or Loss?}
+            P -- Profit --> Q[Move Proceeds to Main Budget]
+            P -- Loss --> R[Move Proceeds to Divestment Pool]
+            N -- No --> S((Hold))
+        end
 
-            subgraph "End of Cycle"
-                T -- Yes --> Y[End Cycle: Calculate P/L];
-                Y --> Z{Activate Dry Run for Next Cycle?};
-                Z -- Yes --> AA((Reset for Dry Run Cycle));
-                Z -- No --> AB((Reset for Live Cycle));
-            end
+        subgraph "Post-Tick Processing"
+            I --> T{All Assets Closed?}
+            K --> T
+            L --> T
+            Q --> T
+            R --> T
+            S --> T
+            T -- No --> U[Process Divestment Pool]
+            U --> V{Capital to Reinvest?}
+            V -- Yes --> W[Reinvest into eligible Active Trades]
+            V -- No --> X((Wait for next tick))
+            W --> X
+        end
+    end
 
-            style A fill:#cde4f9,stroke:#333,stroke-width:2px
-            style E fill:#d2f5d2,stroke:#333,stroke-width:2px
-            style Y fill:#cde4f9,stroke:#333,stroke-width:2px
+    subgraph "End of Cycle"
+        T -- Yes --> Y[End Cycle: Calculate P/L]
+        Y --> Z{Activate Dry Run for Next Cycle?}
+        Z -- Yes --> AA((Reset for Dry Run Cycle))
+        Z -- No --> AB((Reset for Live Cycle))
+    end
+
+    style A fill:#cde4f9,stroke:#333,stroke-width:2px
+    style E fill:#d2f5d2,stroke:#333,stroke-width:2px
+    style Y fill:#cde4f9,stroke:#333,stroke-width:2px
     </div>
 </div>
 
