@@ -7,11 +7,11 @@ on:
 
 jobs:
   build_and_deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2   # match GitHub Pages environment
+          ruby-version: 2.7   # match GitHub Pages environment
           bundler-cache: true
 
       - uses: actions/checkout@v3

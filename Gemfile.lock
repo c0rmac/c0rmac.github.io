@@ -276,7 +276,6 @@ PLATFORMS
   x86_64-darwin-22
 
 DEPENDENCIES
-  commonmarker (>= 0.23.6)
   github-pages
   jekyll
   jekyll-feed
