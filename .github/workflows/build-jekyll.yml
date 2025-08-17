@@ -14,16 +14,6 @@ jobs:
           ruby-version: 3.2   # match GitHub Pages environment
           bundler-cache: true
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            build-essential \
-            cmake \
-            pkg-config \
-            libcmark-dev
-
-
       - uses: actions/checkout@v3
 
       # Use GitHub Actions' cache to cache dependencies on servers
@@ -36,7 +26,7 @@ jobs:
 
 
       # Use GitHub Deploy Action to build and deploy to Github
-      - uses: jeffreytse/jekyll-deploy-action@v0.6.0
+      - uses: jeffreytse/jekyll-deploy-action@v0.4.0
         with:
           provider: 'github'
           token: ${{ secrets.GITHUB_TOKEN }}  # It's your Personal Access Token(PAT)
