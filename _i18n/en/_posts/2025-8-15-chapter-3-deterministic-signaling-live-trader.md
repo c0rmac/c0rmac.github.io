@@ -19,24 +19,24 @@ tags:
   - k-means clustering
 ---
 
-> **Abstract:** This article details the architecture and methodology of an automated, quantitative trading system designed for cryptocurrency markets. The system's core is a machine learning strategy that leverages unsupervised clustering to identify distinct market patterns and applies cluster-specific models to generate daily trade signals. Trade execution is managed through a sophisticated two-phase lifecycle, incorporating a momentum-based entry confirmation and dynamic in-trade risk management. The software is designed with a dual-mode operational framework, allowing for both live trading and robust, parallelized backtesting on historical data. This document outlines the system's modular components, the intricacies of the trading and capital management strategies, and the implementation of its operational modes.
-
 <style>
-        /* This is the container that will allow scrolling */
-        #diagram-container {
-            width: 100%;
-            max-height: 700px;
-            /* This is the key property: it adds scrollbars ONLY if needed */
-            overflow: auto; 
-        }
+    /* This is the container that will allow scrolling */
+    #diagram-container {
+       width: 100%;
+        max-height: 700px;
+        /* This is the key property: it adds scrollbars ONLY if needed */
+        overflow: auto; 
+    }
         
-        /* Add some padding around the diagram itself */
-        .mermaid {
+    /* Add some padding around the diagram itself */
+    .mermaid {
 	    width: 200%;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-    </style>
+        padding: 20px;
+        box-sizing: border-box;
+    }
+</style>
+
+> **Abstract:** This article details the architecture and methodology of an automated, quantitative trading system designed for cryptocurrency markets. The system's core is a machine learning strategy that leverages unsupervised clustering to identify distinct market patterns and applies cluster-specific models to generate daily trade signals. Trade execution is managed through a sophisticated two-phase lifecycle, incorporating a momentum-based entry confirmation and dynamic in-trade risk management. The software is designed with a dual-mode operational framework, allowing for both live trading and robust, parallelized backtesting on historical data. This document outlines the system's modular components, the intricacies of the trading and capital management strategies, and the implementation of its operational modes.
 
 ## 1. System Architecture
 
@@ -99,63 +99,63 @@ Upon a successful buy, the asset transitions to an "active trade" state, where a
 The following diagram illustrates the complete process managed by the `LiveTrader`, which is driven by two distinct, scheduled triggers.
 
 <div id="diagram-container">
-<div class="mermaid">
-graph TD
-    subgraph "Start of Day"
-        A["Daily Prediction @ 23:55"] --> B{Cycle Active?};
-        B -- No --> C[Start New Cycle: Process Predictions & Allocate Capital];
-        B -- Yes --> D((Ignore Prediction));
-    end
+    <div class="mermaid">
+        graph TD
+            subgraph "Start of Day"
+                A["Daily Prediction @ 23:55"] --> B{Cycle Active?};
+                B -- No --> C[Start New Cycle: Process Predictions & Allocate Capital];
+                B -- Yes --> D((Ignore Prediction));
+            end
 
-    subgraph "Ongoing Operations (Triggered every 5 mins)"
-        C --> F;
-        E["Price Update @ 5 min intervals"] --> F[For each active asset...];
-        
-        subgraph "Pre-Trade Asset Logic"
-            F --> G{State is Pre-Trade?};
-            G -- Yes --> H{Expired?};
-            H -- Yes --> I[Expire Asset: Move Capital to Holding Pool];
-            H -- No --> J{Price Breakout?};
-            J -- Yes --> K[BUY Asset: Transition to Active Trade];
-            J -- No --> L((Hold));
-        end
+            subgraph "Ongoing Operations (Triggered every 5 mins)"
+                C --> F;
+                E["Price Update @ 5 min intervals"] --> F[For each active asset...];
+                
+                subgraph "Pre-Trade Asset Logic"
+                    F --> G{State is Pre-Trade?};
+                    G -- Yes --> H{Expired?};
+                    H -- Yes --> I[Expire Asset: Move Capital to Holding Pool];
+                    H -- No --> J{Price Breakout?};
+                    J -- Yes --> K[BUY Asset: Transition to Active Trade];
+                    J -- No --> L((Hold));
+                end
 
-        subgraph "Active-Trade Asset Logic"
-            G -- No --> M{State is Active Trade?};
-            M -- Yes --> N{"Sell Signal? (Profit/Loss)"};
-            N -- Yes --> O[SELL Asset];
-            O --> P{Profit or Loss?};
-            P -- Profit --> Q[Move Proceeds to Main Budget];
-            P -- Loss --> R[Move Proceeds to Divestment Pool];
-            N -- No --> S((Hold));
-        end
+                subgraph "Active-Trade Asset Logic"
+                    G -- No --> M{State is Active Trade?};
+                    M -- Yes --> N{"Sell Signal? (Profit/Loss)"};
+                    N -- Yes --> O[SELL Asset];
+                    O --> P{Profit or Loss?};
+                    P -- Profit --> Q[Move Proceeds to Main Budget];
+                    P -- Loss --> R[Move Proceeds to Divestment Pool];
+                    N -- No --> S((Hold));
+                end
 
-        subgraph "Post-Tick Processing"
-            I --> T{All Assets Closed?};
-            K --> T;
-            L --> T;
-            Q --> T;
-            R --> T;
-            S --> T;
-            T -- No --> U[Process Divestment Pool];
-            U --> V{Capital to Reinvest?};
-            V -- Yes --> W[Reinvest into eligible Active Trades];
-            V -- No --> X((Wait for next tick));
-            W --> X;
-        end
-    end
+                subgraph "Post-Tick Processing"
+                    I --> T{All Assets Closed?};
+                    K --> T;
+                    L --> T;
+                    Q --> T;
+                    R --> T;
+                    S --> T;
+                    T -- No --> U[Process Divestment Pool];
+                    U --> V{Capital to Reinvest?};
+                    V -- Yes --> W[Reinvest into eligible Active Trades];
+                    V -- No --> X((Wait for next tick));
+                    W --> X;
+                end
+            end
 
-    subgraph "End of Cycle"
-        T -- Yes --> Y[End Cycle: Calculate P/L];
-        Y --> Z{Activate Dry Run for Next Cycle?};
-        Z -- Yes --> AA((Reset for Dry Run Cycle));
-        Z -- No --> AB((Reset for Live Cycle));
-    end
+            subgraph "End of Cycle"
+                T -- Yes --> Y[End Cycle: Calculate P/L];
+                Y --> Z{Activate Dry Run for Next Cycle?};
+                Z -- Yes --> AA((Reset for Dry Run Cycle));
+                Z -- No --> AB((Reset for Live Cycle));
+            end
 
-    style A fill:#cde4f9,stroke:#333,stroke-width:2px
-    style E fill:#d2f5d2,stroke:#333,stroke-width:2px
-    style Y fill:#cde4f9,stroke:#333,stroke-width:2px
-</div>
+            style A fill:#cde4f9,stroke:#333,stroke-width:2px
+            style E fill:#d2f5d2,stroke:#333,stroke-width:2px
+            style Y fill:#cde4f9,stroke:#333,stroke-width:2px
+    </div>
 </div>
 
 ## 3. Capital and Risk Management
@@ -256,7 +256,7 @@ Having detailed the theoretical framework, architecture, and potential improveme
 
 * Thorp, E. O. (2006). The Kelly Criterion in Blackjack, Sports Betting, and the Stock Market. In *Handbook of asset and liability management* (Vol. 1, pp. 385-428). Elsevier.
 
-    <script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
-    </script>
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+</script>
