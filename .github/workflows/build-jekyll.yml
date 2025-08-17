@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1   # match GitHub Pages environment
+          ruby-version: 3.2   # match GitHub Pages environment
           bundler-cache: true
 
       - name: Install build dependencies
