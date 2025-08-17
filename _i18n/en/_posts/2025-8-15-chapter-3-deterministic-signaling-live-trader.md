@@ -99,7 +99,7 @@ Upon a successful buy, the asset transitions to an "active trade" state, where a
 The following diagram illustrates the complete process managed by the `LiveTrader`, which is driven by two distinct, scheduled triggers.
 
 <div id="diagram-container">
-    <div class="mermaid">
+    <pre class="mermaid">
 graph TD
     subgraph "Start of Day"
         A["Daily Prediction @ 23:55"] --> B{Cycle Active?}
@@ -155,7 +155,7 @@ graph TD
     style A fill:#cde4f9,stroke:#333,stroke-width:2px
     style E fill:#d2f5d2,stroke:#333,stroke-width:2px
     style Y fill:#cde4f9,stroke:#333,stroke-width:2px
-    </div>
+    </pre>
 </div>
 
 ## 3. Capital and Risk Management
