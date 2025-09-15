@@ -210,7 +210,7 @@ While the system's architecture is robust, several design choices present opport
 
 ### 5.1. Dynamic Risk Parameters
 
-* **Issue**: The current system uses static, "one-size-fits-all" risk parameters (e.g., `limit_returns = 1.52`, `stop_returns = 0.983`). This is rarely optimal, as different assets and market conditions have different volatility profiles.
+* **Issue**: The current system uses static, "one-size-fits-all" risk parameters (e.g., `limit_returns = 1.52`, `stop_returns = 0.983`). This is not neccesarily optimal, as different assets and market conditions have different volatility profiles.
 
 * **A Potential Improvement**: The parameters could be made dynamic. The ideal objective would be to learn a function $\theta^*(X_t, a)$ that maps the current market state and asset characteristics to an optimal set of risk parameters. This function would be the solution to the optimization problem, which is a formulation of the well-known Kelly Criterion (Kelly, 1956):
 

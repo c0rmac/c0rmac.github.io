@@ -46,11 +46,11 @@ Due to the inherently random nature of crypto-asset prices, the instantaneous re
 
 **Process 1: The Baseline Strategy (Uniform Random Selection)**
 
-This process models the revenue projection of a naive investment strategy where the portfolio is rebalanced at discrete intervals (e.g., daily). At each rebalancing point, an asset $c$ is selected from the universe $C$ with uniform probability. The portfolio's value, $V^{\text{random}}(t)$, evolves as a continuous-time stochastic process whose growth is driven by the returns of these randomly selected assets. Let $r^{\text{random}}$ be the random variable for the return over a single rebalancing period.
+This process models the revenue projection of a naive investment strategy where the portfolio is rebalanced at discrete intervals (e.g., daily). At each rebalancing point, $n$-many assest $c_1, \ldots, c_n$ are selected from the universe $C$ with uniform probability. The portfolio's value, $V^{\text{random}}(t)$, evolves as a continuous-time stochastic process whose growth is driven by the returns of these randomly selected assets. Let $r^{\text{random}}$ be the random variable for the return over a single rebalancing period.
 
 **Process 2: The Heuristic Strategy (Informed Selection)**
 
-This process models the revenue projection of the strategy guided by our algorithm, also rebalanced at discrete intervals. At each rebalancing point, the algorithm identifies a subset of assets $C_H(t) \subseteq C$ that meet the selection heuristic $H$. An asset $c$ is then chosen from this informed subset. The portfolio's value, $V^{\text{heuristic}}(t)$, evolves as a different continuous-time stochastic process, driven by the returns of the algorithm's selected assets. Let $r^{\text{heuristic}}$ be the random variable for the return over a single rebalancing period under this strategy.
+This process models the revenue projection of the strategy guided by our algorithm, also rebalanced at discrete intervals. At each rebalancing point, the algorithm identifies a subset of assets $C_H(t) \subseteq C$ that meet the selection heuristic $H$. $n$-many assest $c_1, \ldots, c_n$ are selected from this informed subset. The portfolio's value, $V^{\text{heuristic}}(t)$, evolves as a different continuous-time stochastic process, driven by the returns of the algorithm's selected assets. Let $r^{\text{heuristic}}$ be the random variable for the return over a single rebalancing period under this strategy.
 
 **The Core Assertions**
 
@@ -112,7 +112,9 @@ With a solid data foundation, the next stage is to engineer features that captur
 
 1. **Sentiment Trajectory**: To understand the momentum of market psychology, the algorithm generates features based on the historical trajectory of the Fear & GreG Index. By creating rolling snapshots of sentiment over various lookback periods, the model gains insight into whether the market is moving towards greed or fear.
 
-2. **Defining the Prediction Target (`y`)**: The ultimate goal is to predict a very specific event: a strong, high-quality breakout. The target variable, `y`, is therefore defined with two conditions:
+2. **Trade Signals**: We can incorporate usual trade signals and technical indicators that traders use to determine if an asset is worth trading. The signals we used were as follows: `signal_stoch`, `signal_obv`, `signal_cmf`, `signal_mae`, `signal_ichimoku`, `signal_fib`, `signal_bb`, `signal_macd`, `signal_rsi`, `signal_wt`, `signal_cci`, `signal_adx`, `signal_kc`
+
+3. **Defining the Prediction Target (`y`)**: The ultimate goal is to predict a very specific event: a strong, high-quality breakout. The target variable, `y`, is therefore defined with two conditions:
 
    * The rally's magnitude (`log_returns`) must be greater than a significant threshold (e.g., a 15% gain, or `np.log(1.15)`).
 
