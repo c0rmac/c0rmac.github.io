@@ -21,6 +21,13 @@ High‑performance toolkit for computing quantum‑state texture measures and ba
 - Optional GPU acceleration (Metal) and C/C++ kernels for hotspots.  
 - Lightweight interoperability utilities for Qiskit and QuTiP; minimal NumPy/SciPy dependency footprint.  
 
+### <a href='https://github.com/c0rmac/deep-quant'>DeepQuant</a>
+High-performance Python library for pricing American options, specializing in rough volatility markets using an adaptive deep learning framework. Provides tight, provable price bounds by dynamically selecting the optimal stochastic volatility model.
+- **Rough Volatility Modeling:** Leverages the two-factor rough **Bergomi model** to accurately capture market behavior when the Hurst parameter is less than 0.5. An adaptive engine automatically selects the appropriate SDE based on a forecasted Hurst parameter, ensuring model validity.
+- **Attention-Enhanced Deep Solvers:** Replaces classical regression with deep **Residual Networks (ResNets)** enhanced with **Squeeze-and-Excitation (SE) attention blocks** for efficient feature learning. These networks use path signatures as inputs to approximate the continuation value (primal) and the martingale integrand (dual).
+- **Primal-Dual Framework:** Orchestrates modular solvers to compute a lower bound (primal price) and an upper bound (dual price), yielding a duality gap as a direct measure of pricing accuracy.
+- **High-Performance Numerics:** Features a fully vectorized PyTorch implementation for the dual solver with optimized full-batch and mini-batch training modes for efficiency.
+
 ### <a href='https://github.com/c0rmac/holographic-tensor-networks'>holographic‑tensor‑networks</a>
 Numerical laboratory for holographic tensor networks built on discrete hyperbolic geometry (hyperbolic buildings). Converts combinatorial geometric constructions into contractible tensor networks and provides flexible numerics for entanglement and holographic diagnostics.  
 - Programmatic geometric kernel (HyperbolicBuilding) to generate `{p,q}` tilings, construct buildings from side‑pairings, enumerate faces and dual graphs, and locate discrete geodesics.  
