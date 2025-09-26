@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://c0rmac.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://c0rmac.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-09-26T11:23:21-07:00</updated><id>https://c0rmac.github.io/feed.xml</id><title type="html">Cormac Kinsella</title><subtitle>Final year Mathematics BA Student and Software Engineer</subtitle><author><name>Cormac Kinsella</name></author><entry><title type="html">Identifying Market Accumulation Patterns with K-Means Clustering</title><link href="https://c0rmac.github.io/posts/2025/8/15/chapter-1-cluster-buster/" rel="alternate" type="text/html" title="Identifying Market Accumulation Patterns with K-Means Clustering" /><published>2025-08-15T00:00:00-07:00</published><updated>2025-08-15T00:00:00-07:00</updated><id>https://c0rmac.github.io/posts/2025/8/15/chapter-1-cluster-buster</id><content type="html" xml:base="https://c0rmac.github.io/posts/2025/8/15/chapter-1-cluster-buster/"><![CDATA[<blockquote>
+  <p><strong>Abstract:</strong> This paper details the “ClusterBuster” algorithm, a methodology for identifying potentially profitable market conditions using unsupervised machine learning. The approach leverages K-Means clustering to group historical financial data, with features primarily derived from rolling modes of the “Fear and Greed Index” over various lookback periods. Each resulting cluster is evaluated using custom performance metrics: the “breakthrough ratio” to quantify upside potential and the “loss ratio” to assess downside risk. The core of the algorithm is an optimization loop that systematically tests different numbers of clusters to identify a model that maximizes the proportion of high-performing, or “breakthrough,” clusters. The final output is an optimized clustering model that effectively isolates historical data patterns correlated with significant positive returns, providing a systematic approach to identifying trading opportunities.</p>
+</blockquote>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>The ClusterBuster script uses the K-Means algorithm to identify optimal market conditions by clustering financial data. It analyzes historical “Fear and Greed Index” data to find patterns that historically precede significant price increases.</p>
+
+<hr />
+
+<h2 id="1-data-preprocessing-datapreprocesspy">1. Data Preprocessing (<code class="language-plaintext highlighter-rouge">datapreprocess.py</code>)</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">generate_lookback</code> function enriches the data by creating features from past “Fear and Greed Index” values. It calculates the rolling mode of the index over various lookback periods (e.g., 0-60 days), creating a set of features known as the <code class="language-plaintext highlighter-rouge">fear_greed_trail</code>.</p>
+
+<hr />
+
+<h2 id="2-output-definitions">2. Output Definitions</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">run</code> function produces a list called <code class="language-plaintext highlighter-rouge">training_analysis</code>. Each item in the list is a dictionary that holds the complete results for a specific <code class="language-plaintext highlighter-rouge">k</code> value. The key fields and metrics used in the analysis are described below.</p>
+
+<h3 id="analysis-definitions">Analysis Definitions</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">k</code></td>
+      <td>The number of clusters used for this analysis run.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proportion_train_breakthrough_ratio_above_threshold</code></td>
+      <td>The proportion of clusters that had a “Breakthrough Ratio” above the defined threshold. This is the primary optimization metric.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proportion_train_loss_ratio_above_threshold</code></td>
+      <td>The proportion of clusters that had a “Loss Ratio” above the defined threshold.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">max_train_loss_ratio</code></td>
+      <td>The highest “Loss Ratio” found among all clusters for this <code class="language-plaintext highlighter-rouge">k</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cluster_sizes</code></td>
+      <td>A list containing the number of members in each cluster.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">kmeans</code></td>
+      <td>The fitted <code class="language-plaintext highlighter-rouge">KMeans</code> model object from scikit-learn.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scaler</code></td>
+      <td>The <code class="language-plaintext highlighter-rouge">StandardScaler</code> object used to scale the data.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">train_df</code></td>
+      <td>The complete DataFrame with the cluster assignments for this <code class="language-plaintext highlighter-rouge">k</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="metric-definitions">Metric Definitions</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">breakthrough_ratio</code></td>
+      <td>The ratio of trades that exceeded a profit threshold to those that didn’t. A higher value indicates greater upside potential.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">loss_ratio</code></td>
+      <td>The ratio of trades that exceeded a loss threshold to those that didn’t. A higher value indicates greater downside risk.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="3-core-logic-clusterbusterpy">3. Core Logic (<code class="language-plaintext highlighter-rouge">clusterbuster.py</code>)</h2>
+
+<p>The main script finds the best clustering model by performing the following steps:</p>
+
+<h3 id="finding-and-scoring-clusters">Finding and Scoring Clusters</h3>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">find_clusters</code></strong>: This function prepares the data for clustering.
+    <ol>
+      <li><strong>Data Split</strong>: It divides the data into a <code class="language-plaintext highlighter-rouge">learning_df</code> (for training on data with high returns) and an <code class="language-plaintext highlighter-rouge">assignment_df</code> (for the remaining data).</li>
+      <li><strong>K-Means Training</strong>: It trains a <code class="language-plaintext highlighter-rouge">KMeans</code> model on the scaled <code class="language-plaintext highlighter-rouge">learning_df</code> for a given number of clusters, <code class="language-plaintext highlighter-rouge">k</code>.</li>
+      <li><strong>Cluster Assignment</strong>: It uses the trained model to assign all data points from both dataframes into clusters.</li>
+    </ol>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">score_clusters</code></strong>: This function evaluates each cluster’s performance.
+    <ul>
+      <li><strong>Breakthrough Ratio</strong>: Measures upside potential by calculating the ratio of positive to negative outcomes.</li>
+      <li><strong>Loss Ratio</strong>: Measures downside risk.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="optimization-loop-run">Optimization Loop (<code class="language-plaintext highlighter-rouge">run</code>)</h3>
+
+<p>This is the main function that finds the optimal number of clusters (<code class="language-plaintext highlighter-rouge">k</code>).</p>
+
+<ol>
+  <li>
+    <p>It iterates through a range of <code class="language-plaintext highlighter-rouge">k</code> values (e.g., 2 to 30), running the clustering and scoring process for each.</p>
+  </li>
+  <li>
+    <p>It filters out models with too many small, insignificant clusters.</p>
+  </li>
+  <li>
+    <p>It selects the best model by identifying the one with the highest proportion of “breakthrough” clusters. If there’s a tie, it chooses the model with the higher <code class="language-plaintext highlighter-rouge">k</code> value to favor a more detailed clustering solution.</p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="4-results">4. Results</h2>
+
+<h3 id="example-training-results">Example Training Results</h3>
+
+<p>Below is a table showing a detailed breakdown for a single run where <code class="language-plaintext highlighter-rouge">k=6</code>. It displays the performance metrics for each of the six clusters (0-5) on both the training and testing datasets.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Cluster 0</th>
+      <th>Cluster 1</th>
+      <th>Cluster 2</th>
+      <th>Cluster 3</th>
+      <th>Cluster 4</th>
+      <th>Cluster 5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">train_size</code></td>
+      <td>65.00</td>
+      <td>57.00</td>
+      <td>24.00</td>
+      <td>154.00</td>
+      <td>64.00</td>
+      <td>31.00</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">train_breakthrough_ratio</code></td>
+      <td>0.12</td>
+      <td>0.33</td>
+      <td>0.14</td>
+      <td>0.31</td>
+      <td>0.31</td>
+      <td>0.35</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">train_loss_ratio</code></td>
+      <td>6.22</td>
+      <td>6.13</td>
+      <td>11.00</td>
+      <td>3.67</td>
+      <td>4.82</td>
+      <td>9.33</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">test_size</code></td>
+      <td>1.00</td>
+      <td>47.00</td>
+      <td>21.00</td>
+      <td>17.00</td>
+      <td>0.00</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">test_breakthrough_ratio</code></td>
+      <td>0.00</td>
+      <td>0.21</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>inf</td>
+      <td>0.11</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">test_loss_ratio</code></td>
+      <td>inf</td>
+      <td>6.83</td>
+      <td>6.00</td>
+      <td>2.40</td>
+      <td>inf</td>
+      <td>3.55</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The ClusterBuster algorithm systematically identifies profitable trading setups. By combining feature engineering with K-Means clustering and a custom scoring system, it pinpoints historical patterns with high profit potential. The output is the optimal clustering model for separating these opportunities from other market data.</p>]]></content><author><name>Cormac Kinsella</name></author><category term="machine learning" /><category term="data science" /><category term="quantitative finance" /><category term="algorithmic trading" /><category term="financial modeling" /><category term="k-means clustering" /><category term="unsupervised learning" /><category term="market sentiment analysis" /><category term="fear and greed index" /><category term="python" /><category term="scikit-learn" /><category term="cluster analysis" /><category term="market accumulation" /><category term="trading strategy" /><category term="risk management" /><category term="pattern recognition" /><summary type="html"><![CDATA[Abstract: This paper details the “ClusterBuster” algorithm, a methodology for identifying potentially profitable market conditions using unsupervised machine learning. The approach leverages K-Means clustering to group historical financial data, with features primarily derived from rolling modes of the “Fear and Greed Index” over various lookback periods. Each resulting cluster is evaluated using custom performance metrics: the “breakthrough ratio” to quantify upside potential and the “loss ratio” to assess downside risk. The core of the algorithm is an optimization loop that systematically tests different numbers of clusters to identify a model that maximizes the proportion of high-performing, or “breakthrough,” clusters. The final output is an optimized clustering model that effectively isolates historical data patterns correlated with significant positive returns, providing a systematic approach to identifying trading opportunities.]]></summary></entry><entry><title type="html">Improving the Odds: A Heuristic Method for Selecting Crypto Breakouts</title><link href="https://c0rmac.github.io/posts/2025/8/15/chapter-2-improving-odds/" rel="alternate" type="text/html" title="Improving the Odds: A Heuristic Method for Selecting Crypto Breakouts" /><published>2025-08-15T00:00:00-07:00</published><updated>2025-08-15T00:00:00-07:00</updated><id>https://c0rmac.github.io/posts/2025/8/15/chapter-2-improving-odds</id><content type="html" xml:base="https://c0rmac.github.io/posts/2025/8/15/chapter-2-improving-odds/"><![CDATA[<blockquote>
+  <p><strong>Abstract:</strong> This document details a proprietary algorithm designed to predict significant upward price movements, or “breakouts,” in crypto-assets. The methodology is built on a multi-stage process that transforms raw market data into a powerful selection heuristic. The algorithm leverages historical price action, market sentiment, and a novel, stability-focused machine learning approach to identify and leverage a more favorable, informed subset of the crypto-asset universe for potential trading opportunities.</p>
+</blockquote>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In the volatile world of crypto-assets, identifying true breakout opportunities is a significant challenge. This document outlines a unique algorithm developed to meet this challenge. The core objective is to move beyond simple price prediction and instead identify high-probability breakout events, defined by both the magnitude of the price increase and the quality of the rally.</p>
+
+<h2 id="methodology-and-rationale">Methodology and Rationale</h2>
+
+<p>A critical aspect of this algorithm is its novel approach to model training, which intentionally deviates from standard time-series forecasting practices. This section provides the motivation and justification for this design.</p>
+
+<h3 id="the-bag-of-events-hypothesis">The “Bag of Events” Hypothesis</h3>
+
+<p>Conventional wisdom dictates that shuffling time-series data is poor practice, as it can lead to data leakage and unreliable models. However, this algorithm deliberately reframes the problem from <strong>time-series forecasting</strong> to <strong>pattern recognition</strong>.</p>
+
+<p>The core hypothesis is that the combination of features signaling a high-quality breakout is a <strong>recurrent, time-independent pattern</strong>. In other words, the specific signature of sentiment, volume, and price action that precedes a breakout is fundamentally the same whether it occurred last year or last week. The goal is not to predict the price on <em>day T+1</em> based on <em>day T</em>, but to classify whether the pattern on <em>day T</em> belongs to the class of “patterns that lead to a breakout.”</p>
+
+<p>By shuffling the data within a cross-validation fold, we force the model to learn the intrinsic properties of the breakout pattern itself, divorced from its specific place in history. This prevents the model from “cheating” by learning simple, time-based correlations and compels it to become a more generalized and robust pattern-recognition engine.</p>
+
+<h3 id="purpose-as-a-selection-heuristic">Purpose as a Selection Heuristic</h3>
+
+<p>It is critical to acknowledge that predicting specific breakout events with high accuracy is exceptionally difficult. Therefore, this algorithm is not designed to be an infallible predictor. Rather, its intended purpose is to serve as a powerful heuristic, or a method of “better guessing.” When faced with a large universe of potential crypto-assets to invest in on any given day, the model’s signals are designed to significantly improve the selection process. The core value proposition is that using this model to filter and select assets will yield superior results over time compared to choosing them at random.</p>
+
+<h3 id="formalizing-the-hypothesis-a-stochastic-process-framework">Formalizing the Hypothesis: A Stochastic Process Framework</h3>
+
+<p>The central hypothesis of this work can be formally described by comparing the projected revenue streams from two distinct investment strategies. Let $V(t)$ represent the value of a portfolio at time $t$, where $t$ is a continuous variable. The evolution of $V(t)$ is a stochastic process whose behavior is governed by the underlying investment strategy.</p>
+
+<p>Due to the inherently random nature of crypto-asset prices, the instantaneous return of a portfolio is a random variable. The goal is to show that our selection heuristic systematically biases the probability distribution of these returns in our favor.</p>
+
+<p><strong>Process 1: The Baseline Strategy (Uniform Random Selection)</strong></p>
+
+<p>This process models the revenue projection of a naive investment strategy where the portfolio is rebalanced at discrete intervals (e.g., daily). At each rebalancing point, $n$-many assest $c_1, \ldots, c_n$ are selected from the universe $C$ with uniform probability. The portfolio’s value, $V^{\text{random}}(t)$, evolves as a continuous-time stochastic process whose growth is driven by the returns of these randomly selected assets. Let $r^{\text{random}}$ be the random variable for the return over a single rebalancing period.</p>
+
+<p><strong>Process 2: The Heuristic Strategy (Informed Selection)</strong></p>
+
+<p>This process models the revenue projection of the strategy guided by our algorithm, also rebalanced at discrete intervals. At each rebalancing point, the algorithm identifies a subset of assets $C_H(t) \subseteq C$ that meet the selection heuristic $H$. $n$-many assest $c_1, \ldots, c_n$ are selected from this informed subset. The portfolio’s value, $V^{\text{heuristic}}(t)$, evolves as a different continuous-time stochastic process, driven by the returns of the algorithm’s selected assets. Let $r^{\text{heuristic}}$ be the random variable for the return over a single rebalancing period under this strategy.</p>
+
+<p><strong>The Core Assertions</strong></p>
+
+<p>The fundamental hypothesis can be stated in two ways.</p>
+
+<p><strong>1. Geometric Growth Rate</strong></p>
+
+<p>The first assertion is that the heuristic strategy will generate a higher compound growth rate than the baseline strategy. This is captured by comparing the expected one-step log returns:</p>
+
+\[E[\ln(1 + r^{\text{heuristic}})] &gt; E[\ln(1 + r^{\text{random}})]\]
+
+<p>This formulation relates directly to the median, or typical, long-term outcome of a compounding strategy.</p>
+
+<p><strong>2. Arithmetic Average</strong></p>
+
+<p>The second assertion is that the long-term expected portfolio value of the heuristic strategy will be greater than that of the baseline.</p>
+
+\[\lim_{t \to \infty} E[V^{\text{heuristic}}(t)] &gt; \lim_{t \to \infty} E[V^{\text{random}}(t)]\]
+
+<p>While this assertion compares the long-term average portfolio values, it should be approached with some caution. The expected value (the arithmetic mean) of a compounding process can be heavily skewed by rare, extreme positive outcomes, which can make it a deceptive measure of a strategy’s typical performance. A quantitative investigation of these hypotheses will be the subject of a future article.</p>
+
+<h3 id="justification-through-advanced-concepts">Justification Through Advanced Concepts</h3>
+
+<p>This methodology is supported by established, advanced concepts in machine learning and financial econometrics:</p>
+
+<ol>
+  <li>
+    <p><strong>Robustness Through Extreme Ensembling</strong>: The “Grand Tournament” is a massive application of ensemble learning. By training thousands of models on different shuffles of the data and—most importantly—selecting for <strong>minimum variance</strong>, the algorithm actively filters for models that are robust to the “noise” of a shuffled context. Models that rely on temporal sequence will fail this stress test by exhibiting high performance variance. This is a sophisticated method for managing the bias-variance tradeoff, prioritizing stability and reliability above all else.</p>
+  </li>
+  <li>
+    <p><strong>Addressing Non-Stationarity</strong>: Financial markets are notoriously non-stationary, meaning their statistical properties change over time. A model that learns a sequence in one market regime (e.g., a bull market) will likely fail in another. The <strong>Market Regime Clustering</strong> (Stage 3) is a crucial prerequisite that groups the data into more homogenous, “pseudo-stationary” periods. Shuffling events <em>within</em> a single market regime is therefore more justifiable and allows the algorithm to train an expert model for each distinct market type.</p>
+  </li>
+  <li>
+    <p><strong>Academic Alignment</strong>: While the exact method is proprietary, its principles align with the work of leading researchers like <strong>Dr. Marcos López de Prado</strong>, who has been highly critical of applying standard machine learning techniques naively to finance. The focus on robust cross-validation, feature importance, and preventing data leakage is central to modern financial machine learning, and this algorithm represents a powerful, heuristic approach to achieving those goals.</p>
+  </li>
+</ol>
+
+<h2 id="algorithmic-framework-and-workflow">Algorithmic Framework and Workflow</h2>
+
+<p>The algorithm operates through a sequential, multi-stage pipeline. Each stage is designed to progressively refine the data and build a foundation for the final predictive model.</p>
+
+<h3 id="stage-1-data-structuring-and-feature-foundation">Stage 1: Data Structuring and Feature Foundation</h3>
+
+<p>The foundational step of the algorithm is to structure raw time-series data into a format rich with predictive potential. The motivation here is to create a comprehensive snapshot of the market at each time step.</p>
+
+<ol>
+  <li>
+    <p><strong>Candlestick Aggregation</strong>: To reduce noise and summarize price action, raw data is first converted into a candlestick representation (Open, High, Low, Close) at a daily interval. This provides a clear, standardized view of market activity.</p>
+  </li>
+  <li>
+    <p><strong>Contextual Data Integration</strong>: Each candlestick is enriched with crucial contextual data:</p>
+
+    <ul>
+      <li>
+        <p><strong>Volume</strong>: The total trading volume, indicating the conviction behind price movements.</p>
+      </li>
+      <li>
+        <p><strong>Fear &amp; Greed Index</strong>: The mode of the market sentiment index during the period, offering a direct measure of investor psychology.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Future Peak Identification (<code class="language-plaintext highlighter-rouge">log_returns</code>)</strong>: To train a predictive model, we must first define what we are trying to predict. The algorithm looks forward from each candlestick over a set window (e.g., 4 days) to identify the absolute highest price reached. The logarithmic return between the current candle’s closing price and this future peak is calculated. This value, <code class="language-plaintext highlighter-rouge">log_returns</code>, quantifies the magnitude of the best possible future rally.</p>
+  </li>
+  <li>
+    <p><strong>Breakout Quality Analysis (<code class="language-plaintext highlighter-rouge">log_returns_min_prior_to_max</code>)</strong>: Not all rallies are created equal. A key innovation of this algorithm is its ability to assess the <em>quality</em> of a breakout. It’s crucial to distinguish a clean, powerful rally from a volatile one that experienced a sharp dip first. To do this, the algorithm calculates the most significant dip the price took <em>on its way</em> to reaching the future peak. The log return between the current price and this low point is stored. A value close to zero indicates a high-quality, low-volatility breakout, which is the primary target for prediction.</p>
+  </li>
+</ol>
+
+<h3 id="stage-2-advanced-feature-engineering">Stage 2: Advanced Feature Engineering</h3>
+
+<p>With a solid data foundation, the next stage is to engineer features that capture historical trends and define the precise prediction target.</p>
+
+<ol>
+  <li>
+    <p><strong>Sentiment Trajectory</strong>: To understand the momentum of market psychology, the algorithm generates features based on the historical trajectory of the Fear &amp; GreG Index. By creating rolling snapshots of sentiment over various lookback periods, the model gains insight into whether the market is moving towards greed or fear.</p>
+  </li>
+  <li>
+    <p><strong>Trade Signals</strong>: We can incorporate usual trade signals and technical indicators that traders use to determine if an asset is worth trading. The signals we used were as follows: <code class="language-plaintext highlighter-rouge">signal_stoch</code>, <code class="language-plaintext highlighter-rouge">signal_obv</code>, <code class="language-plaintext highlighter-rouge">signal_cmf</code>, <code class="language-plaintext highlighter-rouge">signal_mae</code>, <code class="language-plaintext highlighter-rouge">signal_ichimoku</code>, <code class="language-plaintext highlighter-rouge">signal_fib</code>, <code class="language-plaintext highlighter-rouge">signal_bb</code>, <code class="language-plaintext highlighter-rouge">signal_macd</code>, <code class="language-plaintext highlighter-rouge">signal_rsi</code>, <code class="language-plaintext highlighter-rouge">signal_wt</code>, <code class="language-plaintext highlighter-rouge">signal_cci</code>, <code class="language-plaintext highlighter-rouge">signal_adx</code>, <code class="language-plaintext highlighter-rouge">signal_kc</code></p>
+  </li>
+  <li>
+    <p><strong>Defining the Prediction Target (<code class="language-plaintext highlighter-rouge">y</code>)</strong>: The ultimate goal is to predict a very specific event: a strong, high-quality breakout. The target variable, <code class="language-plaintext highlighter-rouge">y</code>, is therefore defined with two conditions:</p>
+
+    <ul>
+      <li>
+        <p>The rally’s magnitude (<code class="language-plaintext highlighter-rouge">log_returns</code>) must be greater than a significant threshold (e.g., a 15% gain, or <code class="language-plaintext highlighter-rouge">np.log(1.15)</code>).</p>
+      </li>
+      <li>
+        <p>The rally’s quality (<code class="language-plaintext highlighter-rouge">log_returns_min_prior_to_max</code>) must be high, meaning the price did not dip more than a small amount (e.g., 10%, or <code class="language-plaintext highlighter-rouge">np.log(0.9)</code>) on its way to the peak.</p>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p>This dual condition ensures the algorithm focuses exclusively on identifying the most desirable breakout opportunities.</p>
+
+<h3 id="stage-3-market-regime-clustering">Stage 3: Market Regime Clustering</h3>
+
+<p>A core hypothesis of this methodology is that a “one-size-fits-all” model is suboptimal for financial markets. Different market conditions (e.g., a bull market, a a bear market, sideways consolidation) have unique dynamics. To address this, the algorithm employs K-Means clustering to automatically segment the historical data into distinct market regimes. This allows for the training of specialized models, each an expert in a particular type of market behavior, leading to a more nuanced and effective overall system.</p>
+
+<h3 id="stage-4-stability-focused-model-generation">Stage 4: Stability-Focused Model Generation</h3>
+
+<p>The final stage is the generation of the predictive models. The primary motivation in this stage is to build a system that is not just accurate, but exceptionally <strong>reliable and stable</strong>. A model that performs well on historical data but is erratic on new data is useless. Therefore, the algorithm employs a rigorous, tournament-style selection process.</p>
+
+<h4 id="the-search-for-optimal-models-k_splits">The Search for Optimal Models (<code class="language-plaintext highlighter-rouge">k_splits</code>)</h4>
+
+<ol>
+  <li>
+    <p><strong>The Grand Tournament</strong>: The algorithm initiates a massive competition, running 5,000 independent training sessions in parallel. This large-scale simulation is designed to explore a vast solution space to find the most robust models.</p>
+  </li>
+  <li>
+    <p><strong>The Training Regimen</strong>: Each of the 5,000 sessions uses <strong>9-Fold Stratified Cross-Validation</strong>. In this technique, the data is split into 9 representative parts. The model is trained on 8 parts and tested on 1, in 9 successive rounds. This ensures the model is evaluated against all parts of the data, preventing it from overfitting to a specific subset.</p>
+  </li>
+  <li>
+    <p><strong>Identifying the Champions via Stability</strong>: After the tournament, the winner is not chosen based on the single highest accuracy score. Instead, the algorithm seeks <strong>consistency</strong>. For each of the 5,000 sessions, it calculates the standard deviation of the model’s performance across its 9 validation folds. A low standard deviation proves that the model is stable and performs reliably on different data subsets. The algorithm selects the group of models that exhibited the absolute lowest standard deviation.</p>
+  </li>
+  <li>
+    <p><strong>Assembling the Final Team</strong>: The individual models from these champion sessions are collected. This final, elite group (<code class="language-plaintext highlighter-rouge">k_splits</code>) represents the most reliable and consistent predictors discovered during the entire process.</p>
+  </li>
+</ol>
+
+<h2 id="final-output-and-future-work">Final Output and Future Work</h2>
+
+<p>The output of the algorithm described in this paper is a set of highly-vetted, specialized prediction models for each crypto-asset. The next logical step, which will be the focus of a subsequent article, is to deploy these models within a live trading framework to test the core hypotheses.</p>
+
+<h3 id="implementation-of-predictors">Implementation of Predictors</h3>
+
+<p>In a live environment, the system will perform the following steps for each asset in the universe on a daily basis:</p>
+
+<ol>
+  <li>
+    <p><strong>Data Ingestion</strong>: Acquire the latest market data (price, volume, sentiment).</p>
+  </li>
+  <li>
+    <p><strong>Feature Engineering</strong>: Apply the exact same feature generation pipeline as used in training to the new data point.</p>
+  </li>
+  <li>
+    <p><strong>Regime Identification</strong>: Use the pre-trained clustering model to determine the current market regime for the asset.</p>
+  </li>
+  <li>
+    <p><strong>Signal Generation</strong>: Load the specific prediction model trained for that asset and that regime. The model will then process the new features and output a binary signal (0 or 1), indicating whether the conditions for a potential breakout have been met.</p>
+  </li>
+</ol>
+
+<h3 id="the-heuristic-trading-algorithm">The Heuristic Trading Algorithm</h3>
+
+<p>The signals generated by the predictors will feed into a systematic trading algorithm. The design of this algorithm will be straightforward, focusing on executing the heuristic strategy:</p>
+
+<ol>
+  <li>
+    <p><strong>Daily Scan</strong>: At the start of each trading period, the algorithm will run the prediction pipeline for every asset in the universe.</p>
+  </li>
+  <li>
+    <p><strong>Portfolio Construction</strong>: It will identify the subset of assets, $C_H(t)$, for which the model generated a positive signal.</p>
+  </li>
+  <li>
+    <p><strong>Execution</strong>: The algorithm will then construct a portfolio based on this subset. For instance, a simple implementation would be to create an equally-weighted portfolio of all assets in $C_H(t)$, rebalancing daily.</p>
+  </li>
+</ol>
+
+<p>The performance of this trading algorithm, when backtested on historical data and potentially deployed in a live market, will serve as the ultimate validation of the methodology outlined in this paper. The detailed results of these tests will be presented in our next article.</p>]]></content><author><name>Cormac Kinsella</name></author><category term="machine learning" /><category term="cryptocurrency" /><category term="algorithmic trading" /><category term="quantitative finance" /><category term="heuristic" /><category term="selection model" /><category term="pattern recognition" /><category term="ensemble learning" /><category term="stochastic process" /><category term="breakout trading" /><category term="xgboost" /><summary type="html"><![CDATA[Abstract: This document details a proprietary algorithm designed to predict significant upward price movements, or “breakouts,” in crypto-assets. The methodology is built on a multi-stage process that transforms raw market data into a powerful selection heuristic. The algorithm leverages historical price action, market sentiment, and a novel, stability-focused machine learning approach to identify and leverage a more favorable, informed subset of the crypto-asset universe for potential trading opportunities.]]></summary></entry><entry><title type="html">Harnessing Deterministic Signals through Stochastic Sampling: A State-Based Approach to Algorithmic Trading</title><link href="https://c0rmac.github.io/posts/2025/8/15/chapter-3-deterministic-signaling-live-trader/" rel="alternate" type="text/html" title="Harnessing Deterministic Signals through Stochastic Sampling: A State-Based Approach to Algorithmic Trading" /><published>2025-08-15T00:00:00-07:00</published><updated>2025-08-15T00:00:00-07:00</updated><id>https://c0rmac.github.io/posts/2025/8/15/chapter-3-deterministic-signaling-live-trader</id><content type="html" xml:base="https://c0rmac.github.io/posts/2025/8/15/chapter-3-deterministic-signaling-live-trader/"><![CDATA[<blockquote>
+  <p><strong>Abstract:</strong> This article details the architecture and methodology of an automated, quantitative trading system designed for cryptocurrency markets. The system’s core is a machine learning strategy that leverages unsupervised clustering to identify distinct market patterns and applies cluster-specific models to generate daily trade signals. Trade execution is managed through a sophisticated two-phase lifecycle, incorporating a momentum-based entry confirmation and dynamic in-trade risk management. The software is designed with a dual-mode operational framework, allowing for both live trading and robust, parallelized backtesting on historical data. This document outlines the system’s modular components, the intricacies of the trading and capital management strategies, and the implementation of its operational modes.</p>
+</blockquote>
+
+<style>
+    /* This is the container that will allow scrolling */
+    #diagram-container {
+       width: 100%;
+        max-height: 700px;
+        /* This is the key property: it adds scrollbars ONLY if needed */
+        overflow: auto; 
+    }
+        
+    /* Add some padding around the diagram itself */
+    .mermaid {
+	    width: 200%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+</style>
+
+<h2 id="1-system-architecture">1. System Architecture</h2>
+
+<p>The software is built on a modular, event-driven architecture that separates concerns into distinct, interacting components. The <code class="language-plaintext highlighter-rouge">LiveTrader</code> class serves as the central orchestrator, managing the overall trading lifecycle, budget, and state transitions.</p>
+
+<p>The primary components are:</p>
+
+<ul>
+  <li>
+    <p><strong>Predictor</strong>: The “brain” of the system, responsible for analyzing market data and generating a list of nominated assets for potential trading.</p>
+  </li>
+  <li>
+    <p><strong>Strategy Agents (<code class="language-plaintext highlighter-rouge">PreTrade</code>, <code class="language-plaintext highlighter-rouge">ActiveTrade</code>)</strong>: These classes define the logic for each stage of a trade’s lifecycle, from initial nomination to final sale. They implement the base <code class="language-plaintext highlighter-rouge">TradingAgent</code> interface.</p>
+  </li>
+  <li>
+    <p><strong>Budget Manager</strong>: A sophisticated class that compartmentalizes and tracks capital across various states: unallocated (<code class="language-plaintext highlighter-rouge">main</code>), nominated (<code class="language-plaintext highlighter-rouge">pre_trade</code>), active, and designated for reinvestment (<code class="language-plaintext highlighter-rouge">divestment</code>, <code class="language-plaintext highlighter-rouge">held_for_reinvestment</code>).</p>
+  </li>
+  <li>
+    <p><strong>API Executor</strong>: An abstraction layer responsible for executing buy and sell orders, whether in a simulated environment or with a live exchange API.</p>
+  </li>
+  <li>
+    <p><strong>Operational Entrypoints</strong>: The system has two primary modes of execution:</p>
+
+    <ul>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">main.py</code>: The entry point for live or paper trading, which uses a scheduler to run prediction and data-fetching tasks at set intervals.</p>
+      </li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">test_trader.py</code>: The entry point for backtesting, which simulates the entire process against historical data to evaluate strategy performance.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="2-the-trading-strategy">2. The Trading Strategy</h2>
+
+<p>The core strategy is a multi-stage process designed to identify high-probability setups and manage risk dynamically once a position is open.</p>
+
+<h3 id="21-signal-generation-predictor">2.1. Signal Generation (Predictor)</h3>
+
+<p>The signal generation process, encapsulated within the <code class="language-plaintext highlighter-rouge">Predictor</code> class, is executed once per day at 23:55, as defined in <code class="language-plaintext highlighter-rouge">main.py</code>. It leverages pre-trained machine learning models.</p>
+
+<ol>
+  <li>
+    <p><strong>Clustering for Market Regimes</strong>: The system uses an unsupervised learning model (k-means) to classify the current market state into a predefined cluster. This is based on various features derived from candlestick data. The assumption is that different market patterns (e.g., high volatility, low volatility, trending) require different predictive approaches.</p>
+  </li>
+  <li>
+    <p><strong>Cluster-Specific Prediction</strong>: For each identified cluster, a dedicated predictive model is loaded. When new data is processed, it is first assigned to a cluster, and then the corresponding model for that cluster is invoked to determine if a “buy” signal should be issued. This tailored approach allows the strategy to adapt to changing market conditions.</p>
+  </li>
+</ol>
+
+<h3 id="22-trade-execution-logic">2.2. Trade Execution Logic</h3>
+
+<p>A signal from the <code class="language-plaintext highlighter-rouge">Predictor</code> does not trigger an immediate market buy. Instead, it initiates a two-phase execution and management process.</p>
+
+<h4 id="221-phase-1-pre-trade-confirmation-pretrade-class">2.2.1. Phase 1: Pre-Trade Confirmation (<code class="language-plaintext highlighter-rouge">PreTrade</code> Class)</h4>
+
+<p>Once an asset is nominated, it enters a “pre-trade” state for a maximum of 24 hours. This phase acts as a filter to confirm market momentum before committing capital.</p>
+
+<ul>
+  <li>
+    <p><strong>Breakout Trigger</strong>: A price window is established around the price at the time of nomination, defined by a <code class="language-plaintext highlighter-rouge">limit_price</code> (e.g., initial price * 1.005) and a <code class="language-plaintext highlighter-rouge">stop_price</code> (e.g., initial price * 0.92).</p>
+  </li>
+  <li>
+    <p><strong>Buy Execution</strong>: A “buy” action is only triggered if the price breaks out of this window in either direction. This ensures the asset is showing significant momentum, reducing the risk of entering a stagnant market.</p>
+  </li>
+  <li>
+    <p><strong>Expiration</strong>: If the price does not break the window within the 24-hour period, the pre-trade nomination expires, and the allocated capital is returned to a holding pool.</p>
+  </li>
+</ul>
+
+<h4 id="222-phase-2-active-trade-management-activetrade-class">2.2.2. Phase 2: Active Trade Management (<code class="language-plaintext highlighter-rouge">ActiveTrade</code> Class)</h4>
+
+<p>Upon a successful buy, the asset transitions to an “active trade” state, where a dynamic risk management strategy is applied.</p>
+
+<ul>
+  <li>
+    <p><strong>Profit Target</strong>: A static profit-taking limit is set upon purchase (e.g., purchase price * 1.52).</p>
+  </li>
+  <li>
+    <p><strong>Dynamic Stop-Loss</strong>: The system employs a trailing stop-loss to protect capital and lock in profits. The initial stop-loss is set at a fixed percentage below the purchase price (e.g., 98.3%). However, as the trade becomes profitable (e.g., price exceeds 110% of purchase price), the stop-loss is dynamically adjusted upwards to trail the current price, securing gains while giving the trade room to grow.</p>
+  </li>
+  <li>
+    <p><strong>Capital Recycling (Divestment)</strong>: When a trade is sold at a loss, the proceeds are not returned to the main budget. Instead, they are moved to a <code class="language-plaintext highlighter-rouge">divestment</code> pool. The system then seeks to reinvest this capital into other <em>active</em> trades that are showing early signs of profitability, effectively increasing the position size of the current cycle’s winners.</p>
+  </li>
+</ul>
+
+<h3 id="23-trade-lifecycle-flowchart">2.3 Trade Lifecycle Flowchart</h3>
+
+<p>The following diagram illustrates the complete process managed by the <code class="language-plaintext highlighter-rouge">LiveTrader</code>, which is driven by two distinct, scheduled triggers.</p>
+
+<div id="diagram-container">
+    <pre class="mermaid">
+graph TD
+    subgraph "Start of Day"
+        A["Daily Prediction @ 23:55"] --&gt; B{Cycle Active?}
+        B -- No --&gt; C[Start New Cycle: Process Predictions &amp; Allocate Capital]
+        B -- Yes --&gt; D((Ignore Prediction))
+    end
+
+    subgraph "Ongoing Operations (Triggered every 5 mins)"
+        C --&gt; F
+        E["Price Update @ 5 min intervals"] --&gt; F[For each active asset...]
+
+        subgraph "Pre-Trade Asset Logic"
+            F --&gt; G{State is Pre-Trade?}
+            G -- Yes --&gt; H{Expired?}
+            H -- Yes --&gt; I[Expire Asset: Move Capital to Holding Pool]
+            H -- No --&gt; J{Price Breakout?}
+            J -- Yes --&gt; K[BUY Asset: Transition to Active Trade]
+            J -- No --&gt; L((Hold))
+        end
+
+        subgraph "Active-Trade Asset Logic"
+            G -- No --&gt; M{State is Active Trade?}
+            M -- Yes --&gt; N{"Sell Signal? (Profit/Loss)"}
+            N -- Yes --&gt; O[SELL Asset]
+            O --&gt; P{Profit or Loss?}
+            P -- Profit --&gt; Q[Move Proceeds to Main Budget]
+            P -- Loss --&gt; R[Move Proceeds to Divestment Pool]
+            N -- No --&gt; S((Hold))
+        end
+
+        subgraph "Post-Tick Processing"
+            I --&gt; T{All Assets Closed?}
+            K --&gt; T
+            L --&gt; T
+            Q --&gt; T
+            R --&gt; T
+            S --&gt; T
+            T -- No --&gt; U[Process Divestment Pool]
+            U --&gt; V{Capital to Reinvest?}
+            V -- Yes --&gt; W[Reinvest into eligible Active Trades]
+            V -- No --&gt; X((Wait for next tick))
+            W --&gt; X
+        end
+    end
+
+    subgraph "End of Cycle"
+        T -- Yes --&gt; Y[End Cycle: Calculate P/L]
+        Y --&gt; Z{Activate Dry Run for Next Cycle?}
+        Z -- Yes --&gt; AA((Reset for Dry Run Cycle))
+        Z -- No --&gt; AB((Reset for Live Cycle))
+    end
+
+    style A fill:#cde4f9,stroke:#333,stroke-width:2px
+    style E fill:#d2f5d2,stroke:#333,stroke-width:2px
+    style Y fill:#cde4f9,stroke:#333,stroke-width:2px
+    </pre>
+</div>
+
+<h2 id="3-capital-and-risk-management">3. Capital and Risk Management</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">LiveTrader</code> class implements a robust framework for managing capital and mitigating risk through operational modes.</p>
+
+<h3 id="31-budget-allocation-budget-class">3.1. Budget Allocation (<code class="language-plaintext highlighter-rouge">Budget</code> Class)</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Budget</code> class provides granular control over the trading capital by dividing it into distinct pools. Capital flows between these pools based on trade events:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">main</code>: Liquid capital available for allocation.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">pre_trade_allocations</code>: Capital reserved for nominated assets awaiting a buy trigger.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">active_trade_allocations</code>: Capital deployed in live positions.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">divestment</code>: Proceeds from losing trades, held for strategic reinvestment into potentially profitable active trades.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">held_for_reinvestment</code>: Capital from expired pre-trade nominations, which can be redeployed in the next trading cycle.</p>
+  </li>
+</ul>
+
+<h3 id="32-dry-run-and-live-modes">3.2. Dry-Run and Live Modes</h3>
+
+<p>The system can operate in a “dry-run” (paper trading) mode as a risk-control measure.</p>
+
+<ul>
+  <li>
+    <p><strong>Automatic Dry-Run Activation</strong>: The system automatically enters dry-run mode after a configurable number of consecutive losing cycles (<code class="language-plaintext highlighter-rouge">dry_run_loss_threshold</code>). This halts real-capital deployment during unfavorable market periods.</p>
+  </li>
+  <li>
+    <p><strong>Profit-Triggered Conversion to Live</strong>: A key innovation is the ability to convert an entire dry-run cycle to live trading mid-cycle. If any single paper trade in a dry-run cycle reaches a significant profit threshold (<code class="language-plaintext highlighter-rouge">dry_run_to_live_threshold</code>), the system can be configured to immediately deploy real capital across all active paper positions, aiming to capture a highly favorable market-wide move.</p>
+  </li>
+</ul>
+
+<h2 id="4-implementation-and-operation">4. Implementation and Operation</h2>
+
+<h3 id="41-live-trading-mainpy">4.1. Live Trading (<code class="language-plaintext highlighter-rouge">main.py</code>)</h3>
+
+<p>The live execution script orchestrates the system for real-time operation.</p>
+
+<ul>
+  <li>
+    <p><strong>Scheduler</strong>: A <code class="language-plaintext highlighter-rouge">Runner</code> object schedules two primary tasks: fetching price data from the <code class="language-plaintext highlighter-rouge">DataStream</code> every 5 minutes and running the <code class="language-plaintext highlighter-rouge">PredictionTask</code> daily at 23:55.</p>
+  </li>
+  <li>
+    <p><strong>Status Server</strong>: A lightweight HTTP server is launched in a separate thread to provide real-time status updates on the trader’s performance, budget, and active positions.</p>
+  </li>
+</ul>
+
+<h3 id="42-backtesting-framework-test_traderpy">4.2. Backtesting Framework (<code class="language-plaintext highlighter-rouge">test_trader.py</code>)</h3>
+
+<p>The backtesting script provides a powerful framework for strategy validation.</p>
+
+<ul>
+  <li>
+    <p><strong>Historical Data Simulation</strong>: The script loads historical price data from pickle files and iterates through it, simulating the price tick-by-tick flow of a live environment.</p>
+  </li>
+  <li>
+    <p><strong>Parallel Execution</strong>: To achieve a statistically significant evaluation, the script leverages <code class="language-plaintext highlighter-rouge">joblib</code> and <code class="language-plaintext highlighter-rouge">tqdm</code> to run hundreds of independent simulations in parallel over the same historical dataset.</p>
+  </li>
+  <li>
+    <p><strong>Performance Analysis</strong>: At the conclusion of the runs, it aggregates the results and generates histograms of final capital distribution. This provides a deep understanding of the strategy’s expected return, risk profile, and consistency.</p>
+  </li>
+</ul>
+
+<h2 id="5-potential-issues-and-future-improvements">5. Potential Issues and Future Improvements</h2>
+
+<p>While the system’s architecture is robust, several design choices present opportunities for refinement and could pose risks in a live environment.</p>
+
+<h3 id="51-dynamic-risk-parameters">5.1. Dynamic Risk Parameters</h3>
+
+<ul>
+  <li>
+    <p><strong>Issue</strong>: The current system uses static, “one-size-fits-all” risk parameters (e.g., <code class="language-plaintext highlighter-rouge">limit_returns = 1.52</code>, <code class="language-plaintext highlighter-rouge">stop_returns = 0.983</code>). This is not neccesarily optimal, as different assets and market conditions have different volatility profiles.</p>
+  </li>
+  <li>
+    <p><strong>A Potential Improvement</strong>: The parameters could be made dynamic. The ideal objective would be to learn a function $\theta^*(X_t, a)$ that maps the current market state and asset characteristics to an optimal set of risk parameters. This function would be the solution to the optimization problem, which is a formulation of the well-known Kelly Criterion (Kelly, 1956):</p>
+
+\[\theta^*(X_t, a) = \arg\max_{\theta} \mathbb{E} \left[ \log(1 + R_a(\theta)) \,|\, X_t, a \right]\]
+
+    <p>where $R_a(\theta)$ is the return of a single trade on asset $a$ using parameters $\theta$.</p>
+
+    <p><strong>Relaxation</strong>: A practical relaxation is to optimize a proxy metric over historical data. For each market cluster <code class="language-plaintext highlighter-rouge">c</code>, we can find the parameters $\theta_c^*$ that maximize the Sharpe Ratio (Sharpe, 1966) of simulated historical returns:</p>
+
+\[\theta_c^* = \arg\max_{\theta} \frac{\mathbb{E}[\text{SimulateReturns}(D_c, \theta)]}{\sqrt{\text{Var}[\text{SimulateReturns}(D_c, \theta)]}}\]
+  </li>
+</ul>
+
+<h3 id="52-managing-prediction-randomness">5.2. Managing Prediction Randomness</h3>
+
+<ul>
+  <li>
+    <p><strong>Issue</strong>: After the model generates a list of nominated coins, the system randomly selects a subset to trade. This introduces a significant element of luck, meaning the performance of any single cycle can have a very high variance.</p>
+  </li>
+  <li>
+    <p><strong>A Potential Improvement</strong>: One possible improvement is to run an ensemble of $K$ independent <code class="language-plaintext highlighter-rouge">LiveTrader</code> instances in parallel. The total portfolio return would be the sample mean of all instances:</p>
+
+\[\bar{R}_{K,t} = \frac{1}{K} \sum_{i=1}^{K} R_{i,t}\]
+
+    <p>By the Law of Large Numbers, as $K$ increases, this sample mean converges to the true expected return of the strategy, and its variance is reduced by a factor of $K$. This ensemble approach (Dietterich, 2000) could transform high variance into a predictable, stable return.</p>
+  </li>
+</ul>
+
+<h3 id="53-risk-based-position-sizing">5.3. Risk-Based Position Sizing</h3>
+
+<ul>
+  <li>
+    <p><strong>Issue</strong>: The system divides capital equally among all selected trades, treating all trades as having equal potential and risk.</p>
+  </li>
+  <li>
+    <p><strong>A Potential Improvement</strong>: A position sizing model could be implemented. For example, the capital allocated to a trade could be inversely proportional to the asset’s recent volatility. This would mean taking smaller positions on riskier assets and larger positions on more stable ones, leading to a more balanced risk profile across the portfolio.</p>
+  </li>
+</ul>
+
+<h2 id="6-next-steps-empirical-evaluation">6. Next Steps: Empirical Evaluation</h2>
+
+<p>Having detailed the theoretical framework, architecture, and potential improvements of the trading system, the subsequent article in this series will be dedicated to a rigorous empirical evaluation. We will conduct a comprehensive backtest of the model as described, running the simulation on historical data from the first six months of 2025 to assess its real-world performance and validate the strategies discussed herein.</p>
+
+<p><strong>References</strong></p>
+
+<ul>
+  <li>
+    <p>Dietterich, T. G. (2000). Ensemble Methods in Machine Learning. <em>Multiple Classifier Systems</em>, 1-15.</p>
+  </li>
+  <li>
+    <p>Kelly, J. L. (1956). A New Interpretation of Information Rate. <em>Bell System Technical Journal, 35</em>(4), 917-926.</p>
+  </li>
+  <li>
+    <p>MacLean, L. C., Thorp, E. O., &amp; Ziemba, W. T. (Eds.). (2011). <em>The Kelly capital growth investment criterion: Theory and practice</em>. World Scientific.</p>
+  </li>
+  <li>
+    <p>Rotando, L. M., &amp; Thorp, E. O. (1992). The Kelly criterion and the stock market. <em>The American Mathematical Monthly, 99</em>(10), 922-931.</p>
+  </li>
+  <li>
+    <p>Sharpe, W. F. (1966). Mutual Fund Performance. <em>The Journal of Business, 39</em>(1), 119-138.</p>
+  </li>
+  <li>
+    <p>Thorp, E. O. (2006). The Kelly Criterion in Blackjack, Sports Betting, and the Stock Market. In <em>Handbook of asset and liability management</em> (Vol. 1, pp. 385-428). Elsevier.</p>
+  </li>
+</ul>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+</script>]]></content><author><name>Cormac Kinsella</name></author><category term="algorithmic trading" /><category term="quantitative finance" /><category term="machine learning" /><category term="stochastic modeling" /><category term="cryptocurrency" /><category term="portfolio optimization" /><category term="risk management" /><category term="simulation" /><category term="backtesting" /><category term="python" /><category term="kelly criterion" /><category term="sharpe ratio" /><category term="state-based model" /><category term="k-means clustering" /><summary type="html"><![CDATA[Abstract: This article details the architecture and methodology of an automated, quantitative trading system designed for cryptocurrency markets. The system’s core is a machine learning strategy that leverages unsupervised clustering to identify distinct market patterns and applies cluster-specific models to generate daily trade signals. Trade execution is managed through a sophisticated two-phase lifecycle, incorporating a momentum-based entry confirmation and dynamic in-trade risk management. The software is designed with a dual-mode operational framework, allowing for both live trading and robust, parallelized backtesting on historical data. This document outlines the system’s modular components, the intricacies of the trading and capital management strategies, and the implementation of its operational modes.]]></summary></entry><entry><title type="html">Public Documentation on BCMS Upload Services</title><link href="https://c0rmac.github.io/posts/2023/1/bcms-upload-1/" rel="alternate" type="text/html" title="Public Documentation on BCMS Upload Services" /><published>2023-01-05T00:00:00-08:00</published><updated>2023-01-05T00:00:00-08:00</updated><id>https://c0rmac.github.io/posts/2023/1/bcms-upload-1</id><content type="html" xml:base="https://c0rmac.github.io/posts/2023/1/bcms-upload-1/"><![CDATA[<p>I provide public documentation of my work regarding <a href="/portfolio/bcms-upload/">BCMS Upload Services</a> in this article where you can see how I structured the application and what decisions led me to those structures be implemented in the application. I show my own way of creating an application and apply my principles which are shown in my work in <code class="language-plaintext highlighter-rouge">trin-app</code> and <code class="language-plaintext highlighter-rouge">trin-react</code>.</p>
+
+<p>Note that this article is continuously being developed.</p>
+
+<p>The BCMS Upload Services application is based on Kotlin Multiplatform with a Common Module, a Server Module and a Web App Module. The <code class="language-plaintext highlighter-rouge">bcms-alt-service</code> submodule has also been created which holds logic that interacts with the official BCMS site. There is an external Wordpress module that constitutes the front page site.</p>
+
+<h2 id="the-common-module">The Common Module</h2>
+<p>The fundamental model of the application is developed here, i.e. where most of the basic features of the application are kept. Data can be safely transferred between the Web App and the server. Generally, the module follows the trin-app guidelines and it imports <code class="language-plaintext highlighter-rouge">trin-app</code> as a submodule. We setup our submodules as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>commons
+|-----upload
+    |-----entity
+        |-----SubmissionStatus
+        |-----UploadStatus
+                |-----Standby : UploadStatus
+                |-----InternalUploading : UploadStatus
+                |-----PendingPayment : UploadStatus
+                |-----PendingBCMSUpload : UploadStatus
+                |-----BCMSUploading : UploadStatus
+                |-----Success : UploadStatus
+                |-----Error : UploadStatus
+    |-----exception
+        |-----UserNotInternallyFoundException
+        |-----BCMSException
+        |-----BCMSDeletionInProgressException : BCMSException
+        |-----BCMSUploadInProgressException : BCMSException
+        |-----BCMSBusyException : BCMSException
+        |-----PaymentCannotBeTakenException
+        |-----InsufficientFundsException
+        |-----BCMSSubmissionNotFoundException
+        |-----BCMSAuthNotFoundException
+        |-----UploadOrderRequestNotFoundException
+        |-----UploadOrdersNotFoundException
+    |-----port
+        |-----MyAppSuppDocUploadAPI
+        |-----SubmissionsUploadAPI
+        |-----MyAppStatDocUploadAPI
+        |-----MyNoticesSuppDocUploadAPI
+        |-----MyNoticesStatDocUploadAPI
+    |-----transport
+        |-----generic
+            |-----IUploadOrder
+            |-----UploadOrder : IUploadOrder
+            |-----UploadOrderRequest
+        |-----myappsuppdoc
+            |-----IUploadOrder
+            |-----UploadOrder : IUploadOrder
+            |-----UploadOrderRequest
+        |-----Submission
+        |-----MyApplicationsSubmission
+        |-----MyNoticesSubmission
+        |-----UploadOrderRequest
+        |-----UploadOrder
+
+</code></pre></div></div>
+
+<p>It is important that this module is kept as compact as possible and keeping any model here requires careful reasoning. In the file tree above, I draw your attention to the <code class="language-plaintext highlighter-rouge">upload</code> subpackage to give an example of my own reasoning. <code class="language-plaintext highlighter-rouge">UploadStatus</code> and <code class="language-plaintext highlighter-rouge">SubmissionStatus</code> appear in <em>entity</em>. It makes sense to keep them in the Common Module since information about uploading documents is transmitted frequently in the application and requires a standard model throughout the application.</p>
+
+<p>Although care must be taken about most of what is kept in this module, there are a couple of rules of thumb for what can normally be included in the module. Consider <code class="language-plaintext highlighter-rouge">exception</code>. Many errors are thrown in an application between ‘a form not filled in correctly’ and an internal problem in the application occuring. Many of the errors a user would see are kept here. An error can be thrown on the Server Module side to notify the user of an error. Thanks to <code class="language-plaintext highlighter-rouge">RESTAPIManager</code> from <code class="language-plaintext highlighter-rouge">trin-react</code>, no preconfiguration in the web application is required to handle an <code class="language-plaintext highlighter-rouge">exception</code> error. The rules of thumb are discussed further in `trin-app’ guidelines and more information on trin-app matters can be found in an article to be published soon.</p>
+
+<h3 id="transmission-of-models">Transmission of Models</h3>
+<p><code class="language-plaintext highlighter-rouge">kotlinx.serialization</code> is used for serializing the models throughout the application. Each <code class="language-plaintext highlighter-rouge">port</code> subpackage maintains a model of commands that are made between the server and the web application. It is up to the Web App Module and the Server Module how the models should be implemented.</p>
+
+<h2 id="the-web-app-module">The Web App Module</h2>
+<p>A ReactJS application written in Kotlin-JS and based on the <code class="language-plaintext highlighter-rouge">trin-react</code> framework is developed in this module. This is a simple interface application with minimal number of pages; they are:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/public/login - LogincVC
+/public/register - RegisterVC
+
+
+/consumer/dashboard - DashboardVC
+
+/consumer/myapplications - MyApplicationVC
+/consumer/services/myapplications/suppdoc/:pUUID - MyApplicationsSuppDocVC
+/consumer/services/myapplications/statdoc/:pUUID - MyApplicationsStatDocVC
+
+/consumer/mynotices - MyNoticesVC
+/consumer/services/mynotices/suppdoc/:pUUID - MyNoticesSuppDocVC
+/consumer/services/mynotices/statdoc/:pUUID - MyNoticesStatDocVC
+</code></pre></div></div>
+
+<h3 id="application-forms">Application Forms</h3>
+<p>I give you an overview of the different forms available on the official BCMS site: My Notices/Supporting Documents, My Notices/Statutory Documents, My Applications/Statutory Documents, My Applications/Supporting Documents and it can be seen that their counterpart has been developed in the above. The first parts of the forms are very similar and I am motivated to create an abstract class on those three pages. The last form is quite different from the other three and cannot easily be based on the same abstract class.</p>
+
+<p>Accordingly, I set up the <em>VCs</em> (ie <em>ViewControllers</em>) as seen in the diagram below:</p>
+<div style="text-align: center; padding-bottom: 16px;">
+<img src="/images/portfolio/bcms-upload/client-app-upload-service-structure.gv.svg?raw=true" alt="Léaráid Aicmí de struchtúr na VCs." />
+</div>
+
+<p>Here is an exact overview of the abstract features of <code class="language-plaintext highlighter-rouge">BaseUploadServiceVC</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Document Submission Logic
+abstract suspend fun uploadDocumentsLoadOnClickHandler()
+
+abstract fun addDocumentOnClickHandler(event: Event)
+
+abstract suspend fun getUploadRequests(): List&lt;T&gt;
+
+abstract suspend fun getSubmission(): Submission
+
+abstract suspend fun executeUploadRequest(uploadOrderRequest: T): T
+
+abstract suspend fun deleteAllUploads()
+
+abstract fun getSubmissionStatus(submission: Submission): SubmissionStatus
+
+abstract fun updateSubmissionStatus(submissionStatus: SubmissionStatus)
+
+// Render Logic
+abstract fun RBuilder.uploadOrdersRender()
+
+abstract fun RBuilder.uploadsRender()
+
+abstract fun RBuilder.addDocumentRender()
+</code></pre></div></div>
+
+<p>and here is an overview of the abstract features of <code class="language-plaintext highlighter-rouge">GenericUploadServiceVC</code> and the inherited functions it implements from <code class="language-plaintext highlighter-rouge">BaseUploadServiceVC</code>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>abstract val documentTypes: Array&lt;DocumentType.Generic&gt;
+
+// Implemented Functions from BaseUploadServiceVC
+override fun addDocumentOnClickHandler(event: Event)
+
+override fun RBuilder.uploadOrdersRender()
+
+override fun RBuilder.uploadsRender()
+
+override fun RBuilder.addDocumentRender()
+</code></pre></div></div>
+
+<p>That leaves <code class="language-plaintext highlighter-rouge">MyNoticesSuppDocVC</code>, <code class="language-plaintext highlighter-rouge">MyNoticesStatDocVC</code> and <code class="language-plaintext highlighter-rouge">MyNoticesStatDocVC</code> only <code class="language-plaintext highlighter-rouge">uploadDocumentsLoadOnClickHandler</code>, <code class="language-plaintext highlighter-rouge">getUploadRequests</code>, <code class="language-plaintext highlighter-rouge">getSubmission</code>, <code class="language-plaintext highlighter-rouge">executeUploadRequest</code>, <code class="language-plaintext highlighter-rouge">deleteAllUploads</code>, <code class="language-plaintext highlighter-rouge">getSubmissionStatus</code>, <code class="language-plaintext highlighter-rouge">updateSubmissionStatus</code> to implement.</p>
+
+<h2 id="the-server-module">The Server Module</h2>
+<p>The server module is divided into sub-modules based on a hexagonal architecture. The http program is kept in a separate <code class="language-plaintext highlighter-rouge">web-app</code> module and out of the business logic. The basic logic of the application is kept in the <code class="language-plaintext highlighter-rouge">core</code> module as recommended by the hexagonal architecture guidelines but the difference is that <code class="language-plaintext highlighter-rouge">core</code> imports the Common Module together with the <code class="language-plaintext highlighter-rouge">port</code> module, a module that controls the external logic (ie database logic, <code class="language-plaintext highlighter-rouge">web-app</code> module etc.) and which decide what logic <code class="language-plaintext highlighter-rouge">core</code> needs to interact with. As an experiment, I’ve allowed the Common Module to be imported into every module, even `core’ to find out how a structure like this will turn out.</p>
+
+<p>For <code class="language-plaintext highlighter-rouge">web-app</code>, the classes in <code class="language-plaintext highlighter-rouge">port</code> of each subpackage are implemented in <code class="language-plaintext highlighter-rouge">common</code>. Spring Boot is used for all http matters.</p>
+
+<p>The application is hosted by AWS - Amazon Web Services.</p>
+
+<p>Not much else can be commented on this module for the sake of application security.</p>]]></content><author><name>Cormac Kinsella</name></author><category term="bcms upload" /><category term="technical details" /><summary type="html"><![CDATA[I provide public documentation of my work regarding BCMS Upload Services in this article where you can see how I structured the application and what decisions led me to those structures be implemented in the application. I show my own way of creating an application and apply my principles which are shown in my work in trin-app and trin-react.]]></summary></entry><entry><title type="html">Derive a function that simulates an unbiased coin toss - Coding Challenge 1</title><link href="https://c0rmac.github.io/posts/2022/12/coding-challenge-1/" rel="alternate" type="text/html" title="Derive a function that simulates an unbiased coin toss - Coding Challenge 1" /><published>2022-12-18T00:00:00-08:00</published><updated>2022-12-18T00:00:00-08:00</updated><id>https://c0rmac.github.io/posts/2022/12/coding-challenge-1</id><content type="html" xml:base="https://c0rmac.github.io/posts/2022/12/coding-challenge-1/"><![CDATA[<blockquote>
+  <p>Suppose toss_biased is a function which returns Heads (H) or Tails (T) with probability $p$ and $q$, \(p \neq q\), ie. the toss is biased. <br /><br />
+Derive a function that simulates an unbiased coin toss</p>
+</blockquote>
+
+<p>Consider two independent coins</p>
+
+\[B^{(1)} \sim \text{ toss_biased() } \\
+B^{(2)} \sim \text{ toss_biased() }
+\notag\]
+
+<p>In addition, consider the following pairs of events</p>
+
+\[\begin{align}
+\{H^{(1)}H^{(2)}\}, \{T^{(1)}T^{(2)}\} \notag \\
+\{H^{(1)}T^{(2)}\}, \{T^{(1)}H^{(2)}\} \notag
+\end{align} \notag\]
+
+<p>where $H^{(i)}, T^{(i)}$ are the events that coin $B^{(i)}$ outputs $H$ or $T$.</p>
+
+<p>Due to independence, the probability can be calculated by the product rule $P(B^{(1)}, B^{(2)})=P(B^{(1)})P(B^{(2)})$. Hence, we can compute their joint probabilities</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>$P$</th>
+      <th>$H^{(1)}$</th>
+      <th>$T^{(1)}$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$H^{(2)}$</td>
+      <td>$p^2$</td>
+      <td>$pq$</td>
+    </tr>
+    <tr>
+      <td>$T^{(2)}$</td>
+      <td>$pq$</td>
+      <td>$q^2$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now note that $P(H^{(1)},T^{(2)})=P(T^{(1)},H^{(2)})$. We will exploit this property to come up with a motivating solution to this challenge. Let</p>
+
+\[\bar{H}=\{H^{(1)}T^{(2)}\}\\
+\bar{T}=\{T^{(1)}H^{(2)}\}
+\notag\]
+
+<p>be the possible outcomes of the new coin $\bar{B}$. It is clear from the above property that</p>
+
+\[P(\bar{H}) = P(\bar{T}) \notag\]
+
+<p>and $\bar{B}$ is therefore an unbiased coin. Also, consider the following sets</p>
+
+\[J=\{H^{(1)}T^{(2)},T^{(1)}H^{(2)}\}=\{\bar{H},\bar{T}\}\\
+K=\{H^{(1)}H^{(2)},T^{(1)}T^{(2)}\}
+\notag\]
+
+<p>Note that $r:=P(J)=2pq$ and $s:=P(K)=p^2+q^2$. We may plot the above events as a tree below</p>
+<div style="text-align: center; padding-bottom: 16px;">
+<img src="/images/posts/coding-challenge-1/tree-graph.gv.svg?raw=true" alt="Léaráid Mharkov den phróiseas togartha" />
+</div>
+
+<p>$J$ is the only event in which the events $\bar{H}$ or $\bar{T}$ are attained and we want event $J$ to occur to obtain its unbiased result. We will need to run the process recursively for $J$ to occur. Therefore, its natural to consider the above tree diagram as a Markov process $X_n$</p>
+
+<div style="text-align: center; padding-bottom: 16px;">
+
+<img src="/images/posts/coding-challenge-1/markov-graph.gv.svg?raw=true" alt="Léaráid Mharkov den phróiseas togartha" />
+$
+P = \begin{bmatrix}
+    r &amp; s \\
+    0 &amp; 1
+\end{bmatrix}
+$
+</div>
+
+<p>Note that $P(T_J = k) = s^{k-1}r$. We shall calculate $T_J$ until $X_n = K$ for some $n \geq 1$. The probability that $K$ is reached as $n \to \infty$, i.e. that $K$ will be reached after infinite steps, is</p>
+
+\[\begin{align}
+P(T_J \geq 0) &amp;= \sum^{\infty}_{k=1} P(T_J = k)\notag \\
+&amp;= \sum^{\infty}_{k=1} s^{k-1}r \notag \\
+&amp;= \frac{r}{1-s} \notag \\
+&amp;= \frac{2pq}{1-p^2-q^2} \notag \\
+&amp;= 1 \notag 
+\end{align} \notag\]
+
+<p>Therefore, event $J$ occurs after an infinite number of steps. So now that we know that $J$ occurs almost certainly, we shall consider the following function</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unbiased_toss() {
+  b1 = toss_biased()
+  b2 = toss_biased()
+
+  if b1 == b2 {
+    # Teagmhas K
+    # Still waiting for the event J to occur which has an unbiased result.
+     # We will execute unbiased_toss again.
+    return unbiased_toss()
+  } else {
+    # Teagmhas J
+    # Give an unbiased result.
+    if (b1 == H) {
+      return H_unbiased
+    } else {
+      return T_unbiased
+    }
+  }
+}
+</code></pre></div></div>]]></content><author><name>Cormac Kinsella</name></author><category term="coding challenge" /><category term="biased" /><category term="simulate" /><category term="coin" /><category term="unbiased" /><summary type="html"><![CDATA[Suppose toss_biased is a function which returns Heads (H) or Tails (T) with probability $p$ and $q$, \(p \neq q\), ie. the toss is biased. Derive a function that simulates an unbiased coin toss]]></summary></entry></feed>

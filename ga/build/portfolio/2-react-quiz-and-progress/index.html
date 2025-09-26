@@ -1,0 +1,417 @@
+<!doctype html><html lang="en" class="no-js"><head><meta charset="utf-8"> <!-- begin SEO --><title>React Quiz and Progress - Cormac Kinsella</title><meta property="og:locale" content="en-US"><meta property="og:site_name" content="Cormac Kinsella"><meta property="og:title" content="React Quiz and Progress"><link rel="canonical" href="https://c0rmac.github.io/portfolio/2-react-quiz-and-progress/"><meta property="og:url" content="https://c0rmac.github.io/portfolio/2-react-quiz-and-progress/"><meta property="og:description" content="Build a Questionnaire with a progress bar for React Js app. "> <script type="application/ld+json"> { "@context" : "http://schema.org", "@type" : "Person", "name" : "Cormac Kinsella", "url" : "https://c0rmac.github.io", "sameAs" : null } </script> <!-- end SEO --><link href="https://c0rmac.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Cormac Kinsella Feed"> <!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width, initial-scale=1.0"> <script> document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js '; </script> <!-- For all browsers --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet" href="https://c0rmac.github.io/assets/css/main.css"><meta http-equiv="cleartype" content="on"> <!-- start custom head snippets --><link rel="apple-touch-icon" sizes="57x57" href="https://c0rmac.github.io/images/apple-touch-icon-57x57.png?v=M44lzPylqQ"><link rel="apple-touch-icon" sizes="60x60" href="https://c0rmac.github.io/images/apple-touch-icon-60x60.png?v=M44lzPylqQ"><link rel="apple-touch-icon" sizes="72x72" href="https://c0rmac.github.io/images/apple-touch-icon-72x72.png?v=M44lzPylqQ"><link rel="apple-touch-icon" sizes="76x76" href="https://c0rmac.github.io/images/apple-touch-icon-76x76.png?v=M44lzPylqQ"><link rel="apple-touch-icon" sizes="114x114" href="https://c0rmac.github.io/images/apple-touch-icon-114x114.png?v=M44lzPylqQ"><link rel="apple-touch-icon" sizes="120x120" href="https://c0rmac.github.io/images/apple-touch-icon-120x120.png?v=M44lzPylqQ"><link rel="apple-touch-icon" sizes="144x144" href="https://c0rmac.github.io/images/apple-touch-icon-144x144.png?v=M44lzPylqQ"><link rel="apple-touch-icon" sizes="152x152" href="https://c0rmac.github.io/images/apple-touch-icon-152x152.png?v=M44lzPylqQ"><link rel="apple-touch-icon" sizes="180x180" href="https://c0rmac.github.io/images/apple-touch-icon-180x180.png?v=M44lzPylqQ"><link rel="icon" type="image/png" href="https://c0rmac.github.io/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32"><link rel="icon" type="image/png" href="https://c0rmac.github.io/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192"><link rel="icon" type="image/png" href="https://c0rmac.github.io/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96"><link rel="icon" type="image/png" href="https://c0rmac.github.io/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16"><link rel="manifest" href="https://c0rmac.github.io/images/manifest.json?v=M44lzPylqQ"><link rel="mask-icon" href="https://c0rmac.github.io/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000"><link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ"><meta name="msapplication-TileColor" content="#000000"><meta name="msapplication-TileImage" content="https://c0rmac.github.io/images/mstile-144x144.png?v=M44lzPylqQ"><meta name="msapplication-config" content="https://c0rmac.github.io/images/browserconfig.xml?v=M44lzPylqQ"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="https://c0rmac.github.io/assets/css/academicons.css"/> <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script> <script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } }); </script> <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script> <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> <!-- end custom head snippets --></head><body> <!--[if lt IE 9]><div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]--><div class="masthead"><div class="masthead__inner-wrap"><div class="masthead__menu"><nav id="site-nav" class="greedy-nav"> <button><div class="navicon"></div></button><ul class="visible-links"><li class="masthead__menu-item masthead__menu-item--lg"><a href="https://c0rmac.github.io/">Cormac Kinsella</a></li><li class="masthead__menu-item"><a href="https://c0rmac.github.io/year-archive/">Blog</a></li><li class="masthead__menu-item"><a href="https://c0rmac.github.io/teaching/">Teaching</a></li><li class="masthead__menu-item"><a href="https://c0rmac.github.io/portfolio/">Portfolio</a></li><li class="masthead__menu-item"><a href="https://c0rmac.github.io/cv/">CV</a></li><li class="masthead__menu-item"><a href="https://c0rmac.github.io/publications/">Publications</a></li><li class="masthead__menu-item"><a href="/ga/portfolio/2-react-quiz-and-progress/">Use site in Irish Gaelic</a></li></ul><ul class="hidden-links hidden"></ul></nav></div></div></div><div id="main" role="main"><div class="sidebar sticky"><div itemscope itemtype="http://schema.org/Person"><div class="author__avatar"> <img src="https://c0rmac.github.io/images/profile.jpeg" class="author__avatar" alt="Cormac Kinsella"></div><div class="author__content"><h3 class="author__name">Cormac Kinsella</h3><p class="author__bio">Mathematics Master Student and Software Engineer</p></div><div class="author__urls-wrapper"> <button class="btn btn--inverse">Follow</button><ul class="author__urls social-icons"><li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Munich, Germany</li><li><a href="https://github.com/c0rmac"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li></ul></div></div></div><article class="page" itemscope itemtype="http://schema.org/CreativeWork"><meta itemprop="headline" content="React Quiz and Progress"><meta itemprop="description" content="Build a Questionnaire with a progress bar for React Js app. "><div class="page__inner-wrap"><header><h1 class="page__title" itemprop="headline">React Quiz and Progress</h1></header><section class="page__content" itemprop="text"><p><a href="https://github.com/c0rmac/react-quiz-and-progress">See the code on GitHub</a></p><p>Build a Questionnaire with a progress bar for React Js app. <a href="https://github.com/c0rmac/react-quiz-and-progress/blob/main/README.ga.MD">Click here</a> to see the README in Irish Gaelic.</p><h2 id="motivation">Motivation</h2><p>In 2020, I was working on an application called <a href="https://c0rmac.github.io/portfolio/house-of-costs/">House of Costs</a> in which a user personalised questionnaire was asked to be fulfilled by the end user. The questionnaire had various levels of complexity, as answering certain answers to certain questions would trigger followup questions. This would give the impression to the end-user that the Questionnaire could be a long slog, especially by the fact that there was no indication as to how much more of the Questionnaire the user would have to complete.</p><p>In turn, this motivated the idea of having a linear progress bar which would indicate intuitively to the user how much of the questionnaire the user has completed.</p><p>As the user answers more questions, the more the progress bar progresses. For questions that are “independent” (ie: do not depend on previous answers to previous questions), a large progress increment is rewarded to the progress bar. For “dependent” questions, a smaller increment is rewarded to the progress bar. For questions that are “dependent” questions that are dependent on other questions (and that are dependent on other questions and so on), an even smaller increment is rewarded to the progress bar.</p><h2 id="demonstration">Demonstration</h2><p>If you’re interested in trying out the plugin without any setup, I encourage you to take a look at code <a href="https://github.com/c0rmac/react-quiz-and-progress/tree/main/demo">demo here</a>. You will need to open the demo in Intelij Idea as it is a Kotlin Js project. I use material-ui as the basis of the interface.</p><p><img src="https://raw.githubusercontent.com/c0rmac/react-quiz-and-progress/main/README/ezgif-3-629ea576ae.gif" alt="Demo" /></p><h2 id="technical-details">Technical Details</h2><p>The plugin was developed in Kotlin React Js (since I use Multiplatform Kotlin by nature). I will publish more of the technical details of my plugin on my blog soon.</p><h2 id="overview">Overview</h2><h3 id="questionsetprogresscontroller">QuestionSetProgressController</h3><p>This class provides the state of the Questionnaire, such as progress made, determining the next question and when the Questionnaire is complete. It should be placed in the state class.</p><div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">QuestionSetProgressController</span><span class="p">(</span>
+    <span class="n">proposedQuestionSet</span> <span class="p">=</span> <span class="nc">ProposedQuestionSet</span><span class="p">(</span>
+        <span class="c1">// Place all the questions you want to ask here. See the next section</span>
+        <span class="c1">// for more specific details</span>
+        <span class="n">questions</span> <span class="p">=</span> <span class="nf">arrayOf</span><span class="p">(</span>
+            <span class="nc">Question</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 1"</span><span class="p">,</span>
+                <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">emptySet</span><span class="p">(),</span> <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="k">null</span><span class="p">,</span>
+                <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                    <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                    <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">),</span>
+                    <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 3"</span><span class="p">),</span>
+                    <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 4"</span><span class="p">),</span>
+                    <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 5"</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">),</span> 
+        <span class="c1">// A map from Qustion.id to Answer.id. That is, if the end user</span>
+        <span class="c1">// chooses the answer with id=3 for question with id=1, the map will be</span>
+        <span class="c1">// assigned with 1-&gt;3</span>
+        <span class="n">answerSet</span> <span class="p">=</span> <span class="nf">mutableMapOf</span><span class="p">(),</span> 
+        <span class="c1">// Define a prefilled answer set, if needed</span>
+        <span class="n">defaultAnswerSet</span> <span class="p">=</span> <span class="k">null</span>
+    <span class="p">),</span>
+    <span class="c1">// Specify the current question the end user is on</span>
+    <span class="n">currentQuestionID</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="c1">// Some callbacks</span>
+    <span class="n">questionOnChange</span> <span class="p">=</span> <span class="o">::</span><span class="n">questionOnChange</span><span class="p">,</span>
+    <span class="n">questionSetOnFulfilled</span> <span class="p">=</span> <span class="o">::</span><span class="n">questionSetOnFulfilled</span>
+<span class="p">)</span>
+</code></pre></div></div><h3 id="question">Question</h3><p>We can define questions and parameterize them as independent questions that will always be asked no matter what, and dependent questions which depend on the answer given to previous questions. Here is an example of a question set</p><div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">arrayOf</span><span class="p">(</span>
+    <span class="c1">// An example of an independent question</span>
+    <span class="nc">Question</span><span class="p">(</span>
+        <span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 1"</span><span class="p">,</span>
+        <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">emptySet</span><span class="p">(),</span> 
+        <span class="c1">// The independence is characterised by the fact that dependentQuestionID = null</span>
+        <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="k">null</span><span class="p">,</span>
+        <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+            <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+            <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">),</span>
+            <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 3"</span><span class="p">),</span>
+            <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 4"</span><span class="p">),</span>
+            <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 5"</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="c1">// An example of a dependent question</span>
+    <span class="nc">Question</span><span class="p">(</span>
+        <span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 1.1"</span><span class="p">,</span>
+        <span class="c1">// As opposed to the previous question, we have assigned dependentQuestionID = 1</span>
+        <span class="c1">// and dependentAnswerIds is assigned a set.</span>
+        <span class="c1">// That is, this question, question with id = 2, will be asked if and only if</span>
+        <span class="c1">// answer with ids 2 or 3 is selected in question with id = 1.</span>
+        <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+            <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+            <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">),</span>
+            <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 3"</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div><h2 id="setup">Setup</h2><p>There are various ways that you may choose to setup the questionnaire. I preferred to setup the questionnaire using react router to present each question by its own “page”.</p><p>I’d also like to warn you that I have not switched to using more modern React Js coding conventions, so I apologise for my dinosaur code.</p><h3 id="javascript-es6-regular-react-js-project">Javascript ES6 (Regular React Js project)</h3><p>I will publish instructions on this in the future as I am no longer familiar with ES6 anymore. But it should be similar to the Kotlin Js setup, provided you are somewhat comfortable with reading basic Kotlin. Help here would be very welcome!</p><p>As usual, you can retrieve the plugin by running the following</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i react-quiz-and-progress
+</code></pre></div></div><h3 id="kotlin-js">Kotlin Js</h3><p>In your build.gradle.kts file, add the following</p><div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Required dependency</span>
+<span class="nf">implementation</span><span class="p">(</span><span class="nf">npm</span><span class="p">(</span><span class="s">"react-quiz-and-progress"</span><span class="p">,</span><span class="s">"1.0.0"</span><span class="p">))</span>
+
+<span class="c1">// Usual Kotlin React Js (legacy) dependencies</span>
+<span class="nf">implementation</span><span class="p">(</span><span class="s">"org.jetbrains.kotlin-wrappers:kotlin-react-legacy:18.2.0-pre.479"</span><span class="p">)</span>
+<span class="nf">implementation</span><span class="p">(</span><span class="s">"org.jetbrains.kotlin-wrappers:kotlin-react-dom-legacy:18.2.0-pre.479"</span><span class="p">)</span>
+<span class="nf">implementation</span><span class="p">(</span><span class="s">"org.jetbrains.kotlin-wrappers:kotlin-styled:5.3.6-pre.479"</span><span class="p">)</span>
+<span class="nf">implementation</span><span class="p">(</span><span class="s">"org.jetbrains.kotlin-wrappers:kotlin-react-router-dom:5.2.0-pre.256-kotlin-1.5.31"</span><span class="p">)</span>
+<span class="nf">implementation</span><span class="p">(</span><span class="nf">npm</span><span class="p">(</span><span class="s">"react-router-transition"</span><span class="p">,</span> <span class="s">"2.0.0"</span><span class="p">))</span>
+<span class="nf">implementation</span><span class="p">(</span><span class="nf">npm</span><span class="p">(</span><span class="s">"glamor"</span><span class="p">,</span> <span class="s">"2.20.40"</span><span class="p">))</span>
+<span class="nf">implementation</span><span class="p">(</span><span class="nf">npm</span><span class="p">(</span><span class="s">"react-visibility-sensor"</span><span class="p">,</span> <span class="s">"5.1.1"</span><span class="p">))</span>
+<span class="nf">implementation</span><span class="p">(</span><span class="nf">npm</span><span class="p">(</span><span class="s">"react-animate-height"</span><span class="p">,</span> <span class="s">"2.0.21"</span><span class="p">))</span>
+</code></pre></div></div><p>Client.kt file</p><div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">kotlinx.browser.window</span>
+<span class="k">import</span> <span class="nn">react.dom.render</span>
+<span class="k">import</span> <span class="nn">react.router.dom.hashRouter</span>
+<span class="k">import</span> <span class="nn">react.router.dom.route</span>
+<span class="k">import</span> <span class="nn">web.dom.document</span>
+
+<span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">window</span><span class="p">.</span><span class="n">onload</span> <span class="p">=</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">container</span> <span class="p">=</span> <span class="n">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="s">"root"</span><span class="p">)</span> <span class="o">?:</span> <span class="nf">error</span><span class="p">(</span><span class="s">"Couldn't find root container!"</span><span class="p">)</span>
+        <span class="n">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s">"Container"</span><span class="p">,</span> <span class="n">container</span><span class="p">)</span>
+        <span class="nf">render</span><span class="p">(</span><span class="n">container</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nf">hashRouter</span> <span class="p">{</span>
+                <span class="nf">route</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">welcomeWithRouter</span><span class="p">.</span><span class="nf">invoke</span> <span class="p">{</span>
+                        <span class="n">attrs</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s">"Kotlin/JS"</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div><p>(Optional) AnimatedSwitch.kt</p><div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.demo.wrapper.glamorCss</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.demo.wrapper.reactroutertransition.AnimatedSwitchProps</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.demo.wrapper.reactroutertransition.animatedSwitch</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.demo.wrapper.reactroutertransition.spring</span>
+<span class="k">import</span> <span class="nn">kotlinext.js.js</span>
+<span class="k">import</span> <span class="nn">react.RBuilder</span>
+<span class="k">import</span> <span class="nn">react.RHandler</span>
+
+<span class="k">private</span> <span class="kd">val</span> <span class="py">hOCSwitchRule</span> <span class="p">=</span> <span class="nf">glamorCss</span><span class="p">(</span><span class="nf">js</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="s">"relative"</span>
+    <span class="k">this</span><span class="p">[</span><span class="s">"&amp; &gt; div"</span><span class="p">]</span> <span class="p">=</span> <span class="nf">js</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="s">"absolute"</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="k">private</span> <span class="k">fun</span> <span class="nf">glide</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nc">Double</span><span class="p">):</span> <span class="k">dynamic</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nf">spring</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nf">js</span><span class="p">(</span><span class="s">"{ stiffness: 174, damping: 24 }"</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="k">fun</span> <span class="nc">RBuilder</span><span class="p">.</span><span class="nf">animatedSwitch</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="nc">RHandler</span><span class="p">&lt;</span><span class="nc">AnimatedSwitchProps</span><span class="p">&gt;)</span>
+        <span class="p">=</span> <span class="k">this</span><span class="nd">@animatedSwitch</span><span class="p">.</span><span class="nf">animatedSwitch</span><span class="p">(</span><span class="n">className</span> <span class="p">=</span> <span class="s">"view-holder-container"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">attrs</span> <span class="p">{</span>
+        <span class="n">atEnter</span> <span class="p">=</span> <span class="nf">js</span> <span class="p">{</span> <span class="p">}</span>
+        <span class="n">atEnter</span><span class="p">.</span><span class="nf">asDynamic</span><span class="p">().</span><span class="n">offset</span> <span class="p">=</span> <span class="mi">100</span>
+
+        <span class="n">atLeave</span> <span class="p">=</span> <span class="nf">js</span> <span class="p">{</span> <span class="p">}</span>
+        <span class="n">atLeave</span><span class="p">.</span><span class="nf">asDynamic</span><span class="p">().</span><span class="n">offset</span> <span class="p">=</span> <span class="nf">glide</span><span class="p">(-</span><span class="mf">100.0</span><span class="p">)</span>
+
+        <span class="n">atActive</span> <span class="p">=</span> <span class="nf">js</span> <span class="p">{</span> <span class="p">}</span>
+        <span class="n">atActive</span><span class="p">.</span><span class="nf">asDynamic</span><span class="p">().</span><span class="n">offset</span> <span class="p">=</span> <span class="nf">glide</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="n">switchRule</span> <span class="p">=</span> <span class="n">hOCSwitchRule</span>
+        <span class="n">mapStyles</span> <span class="p">=</span> <span class="p">{</span> <span class="n">styles</span><span class="p">:</span> <span class="k">dynamic</span> <span class="p">-&gt;</span>
+            <span class="nf">js</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">styles</span><span class="p">.</span><span class="n">offset</span> <span class="p">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">transform</span> <span class="p">=</span> <span class="s">"unset"</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="n">transform</span> <span class="p">=</span> <span class="s">"translateX("</span> <span class="p">+</span> <span class="n">styles</span><span class="p">.</span><span class="n">offset</span> <span class="p">+</span> <span class="s">"%)"</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">handler</span><span class="p">.</span><span class="nf">invoke</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div><p>Welcome.kt file</p><div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.core.Answer</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.core.ProposedQuestionSet</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.core.Question</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.core.QuestionSetProgressController</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.demo.wrapper.buttonBase</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.demo.wrapper.vizSensor</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.react.comp.AnswerButton</span>
+<span class="k">import</span> <span class="nn">com.trinitcore.quizprogress.react.viewregion.QuestionAndAnswer</span>
+<span class="k">import</span> <span class="nn">kotlinx.css.*</span>
+<span class="k">import</span> <span class="nn">react.*</span>
+<span class="k">import</span> <span class="nn">react.dom.div</span>
+<span class="k">import</span> <span class="nn">react.router.dom.*</span>
+<span class="k">import</span> <span class="nn">styled.StyleSheet</span>
+<span class="k">import</span> <span class="nn">styled.css</span>
+<span class="k">import</span> <span class="nn">styled.styledDiv</span>
+<span class="k">import</span> <span class="nn">styled.styledH4</span>
+
+<span class="k">external</span> <span class="kd">interface</span> <span class="nc">WelcomeProps</span> <span class="p">:</span> <span class="nc">Props</span><span class="p">,</span> <span class="nc">RouteComponentProps</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="py">name</span><span class="p">:</span> <span class="nc">String</span>
+<span class="p">}</span>
+
+<span class="kd">data class</span> <span class="nc">WelcomeState</span><span class="p">(</span>
+    <span class="kd">val</span> <span class="py">name</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">controller</span><span class="p">:</span> <span class="nc">QuestionSetProgressController</span>
+<span class="p">)</span> <span class="p">:</span> <span class="nc">State</span>
+
+<span class="kd">interface</span> <span class="nc">DemoAnswerButtonProps</span> <span class="p">:</span> <span class="nc">Props</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="py">answer</span><span class="p">:</span> <span class="nc">Answer</span>
+    <span class="kd">var</span> <span class="py">ansStateControl</span><span class="p">:</span> <span class="nc">AnswerButton</span><span class="p">.</span><span class="nc">StateControl</span>
+    <span class="kd">var</span> <span class="py">onClick</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="nc">Unit</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">DemoAnswerButton</span> <span class="p">:</span> <span class="nc">RComponent</span><span class="p">&lt;</span><span class="nc">DemoAnswerButtonProps</span><span class="p">,</span> <span class="nc">State</span><span class="p">&gt;()</span> <span class="p">{</span>
+
+    <span class="kd">object</span> <span class="nc">Style</span> <span class="p">:</span> <span class="nc">StyleSheet</span><span class="p">(</span><span class="s">"yourappname-DemoAnswerButton"</span><span class="p">,</span> <span class="n">isStatic</span> <span class="p">=</span> <span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nc">RBuilder</span><span class="p">.</span><span class="nf">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">child</span><span class="p">(</span><span class="nc">AnswerButton</span><span class="o">::</span><span class="k">class</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">label</span> <span class="p">=</span> <span class="n">props</span><span class="p">.</span><span class="n">answer</span><span class="p">.</span><span class="n">answer</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">stateControl</span> <span class="p">=</span> <span class="n">props</span><span class="p">.</span><span class="n">ansStateControl</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">render</span> <span class="p">=</span> <span class="p">{</span> <span class="n">isSelected</span><span class="p">,</span> <span class="n">label</span> <span class="p">-&gt;</span>
+                <span class="c1">// Add your button render code here for your customised answer button.</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span> <span class="nc">DemoQuestionAndAnswerProps</span> <span class="p">:</span> <span class="nc">Props</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="py">question</span><span class="p">:</span> <span class="nc">Question</span>
+    <span class="kd">var</span> <span class="py">handleQuestionAnswered</span><span class="p">:</span> <span class="p">(</span><span class="n">matrixAnswerID</span><span class="p">:</span> <span class="nc">Int</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nc">Unit</span>
+    <span class="kd">var</span> <span class="py">backButtonOnClick</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="nc">Unit</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">DemoQuestionAndAnswer</span> <span class="p">:</span> <span class="nc">RComponent</span><span class="p">&lt;</span><span class="nc">DemoQuestionAndAnswerProps</span><span class="p">,</span> <span class="nc">State</span><span class="p">&gt;()</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nc">RBuilder</span><span class="p">.</span><span class="nf">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">child</span><span class="p">(</span><span class="nc">QuestionAndAnswer</span><span class="o">::</span><span class="k">class</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">showForgettenQuesWarn</span> <span class="p">=</span> <span class="nc">QuestionSetProgressController</span><span class="p">.</span><span class="nc">Mode</span><span class="p">.</span><span class="nc">STANDARD</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">question</span> <span class="p">=</span> <span class="n">props</span><span class="p">.</span><span class="n">question</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">answerID</span> <span class="p">=</span> <span class="k">null</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">handleQuestionAnswered</span> <span class="p">=</span> <span class="n">props</span><span class="p">.</span><span class="n">handleQuestionAnswered</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">backButtonOnClick</span> <span class="p">=</span> <span class="n">props</span><span class="p">.</span><span class="n">backButtonOnClick</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">answerButtonRender</span> <span class="p">=</span> <span class="p">{</span> <span class="n">answer</span><span class="p">,</span> <span class="n">ansStateControl</span> <span class="p">-&gt;</span>
+                <span class="c1">// Specify the answer button to the question here.</span>
+                <span class="nf">child</span><span class="p">(</span><span class="nc">DemoAnswerButton</span><span class="o">::</span><span class="k">class</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">attrs</span><span class="p">.</span><span class="n">answer</span> <span class="p">=</span> <span class="n">answer</span>
+                    <span class="n">attrs</span><span class="p">.</span><span class="n">ansStateControl</span> <span class="p">=</span> <span class="n">ansStateControl</span>
+                    <span class="n">attrs</span><span class="p">.</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span> <span class="n">props</span><span class="p">.</span><span class="nf">handleQuestionAnswered</span><span class="p">(</span><span class="n">ansStateControl</span><span class="p">.</span><span class="n">answer</span><span class="p">.</span><span class="n">id</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">attrs</span><span class="p">.</span><span class="n">backButtonRender</span> <span class="p">=</span> <span class="p">{</span> <span class="n">backButtonOnClick</span> <span class="p">-&gt;</span>
+                <span class="c1">// Specify a back button here.</span>
+            <span class="p">}</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Inject history props into class</span>
+<span class="kd">val</span> <span class="py">welcomeWithRouter</span> <span class="p">=</span> <span class="nf">withRouter</span><span class="p">(</span><span class="nc">Welcome</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+
+<span class="nd">@JsExport</span>
+<span class="kd">class</span> <span class="nc">Welcome</span><span class="p">(</span><span class="n">props</span><span class="p">:</span> <span class="nc">WelcomeProps</span><span class="p">)</span> <span class="p">:</span> <span class="nc">RComponent</span><span class="p">&lt;</span><span class="nc">WelcomeProps</span><span class="p">,</span> <span class="nc">WelcomeState</span><span class="p">&gt;(</span><span class="n">props</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="nf">init</span> <span class="p">{</span>
+        <span class="c1">// Initialise a react state with the Questionnaire Set Progress Controller.</span>
+        <span class="c1">// As the user progresses through the questions, the Progress Controller updates</span>
+        <span class="c1">// its values and should be reflected on the user interface.</span>
+        <span class="n">state</span> <span class="p">=</span> <span class="nc">WelcomeState</span><span class="p">(</span>
+            <span class="n">props</span><span class="p">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="nc">QuestionSetProgressController</span><span class="p">(</span>
+                <span class="n">proposedQuestionSet</span> <span class="p">=</span> <span class="nc">ProposedQuestionSet</span><span class="p">(</span>
+                    <span class="c1">// Sample question set</span>
+                    <span class="n">questions</span> <span class="p">=</span> <span class="nf">arrayOf</span><span class="p">(</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 1"</span><span class="p">,</span>
+                            <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">emptySet</span><span class="p">(),</span> <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="k">null</span><span class="p">,</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 3"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 4"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 5"</span><span class="p">),</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 1.1"</span><span class="p">,</span>
+                            <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 3"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 2"</span><span class="p">,</span>
+                            <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">emptySet</span><span class="p">(),</span> <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="k">null</span><span class="p">,</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 3"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3"</span><span class="p">,</span>
+                            <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">emptySet</span><span class="p">(),</span> <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="k">null</span><span class="p">,</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 3"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3A.1"</span><span class="p">,</span>
+                            <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">4</span><span class="p">,</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 3"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3B.1"</span><span class="p">,</span>
+                            <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">4</span><span class="p">,</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">7</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3B.2"</span><span class="p">,</span>
+                            <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">4</span><span class="p">,</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">8</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3BA.1"</span><span class="p">,</span>
+                            <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">7</span><span class="p">,</span> <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3BAA.1"</span><span class="p">,</span>
+                            <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">8</span><span class="p">,</span> <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3BAAA.1"</span><span class="p">,</span>
+                            <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3BAAA.2"</span><span class="p">,</span>
+                            <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3BAAA.3"</span><span class="p">,</span>
+                            <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="nc">Question</span><span class="p">(</span>
+                            <span class="n">id</span> <span class="p">=</span> <span class="mi">13</span><span class="p">,</span> <span class="n">question</span> <span class="p">=</span> <span class="s">"Question 3BAAA.4"</span><span class="p">,</span>
+                            <span class="n">dependentQuestionID</span> <span class="p">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">dependentAnswerIds</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+                            <span class="n">answers</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 1"</span><span class="p">),</span>
+                                <span class="nc">Answer</span><span class="p">(</span><span class="n">id</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">answer</span> <span class="p">=</span> <span class="s">"Answer 2"</span><span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">),</span> <span class="n">answerSet</span> <span class="p">=</span> <span class="nf">mutableMapOf</span><span class="p">(),</span> <span class="n">defaultAnswerSet</span> <span class="p">=</span> <span class="k">null</span>
+                <span class="p">),</span>
+                <span class="n">currentQuestionID</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">questionOnChange</span> <span class="p">=</span> <span class="o">::</span><span class="n">questionOnChange</span><span class="p">,</span>
+                <span class="n">questionSetOnFulfilled</span> <span class="p">=</span> <span class="o">::</span><span class="n">questionSetOnFulfilled</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Specify your callback for when the question controller asks to go </span>
+    <span class="c1">// to the next question.</span>
+    <span class="k">fun</span> <span class="nf">questionOnChange</span><span class="p">(</span><span class="n">question</span><span class="p">:</span> <span class="nc">Question</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Navigate to the next page with the next questtion</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">props</span><span class="p">.</span><span class="n">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="s">"/"</span> <span class="p">+</span> <span class="n">question</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Specify your callback for when the questionnaire has been completed.</span>
+    <span class="k">fun</span> <span class="nf">questionSetOnFulfilled</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Reset the questionnaire to the start</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">props</span><span class="p">.</span><span class="n">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="s">"/1"</span><span class="p">)</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">controller</span><span class="p">.</span><span class="n">progress</span> <span class="p">=</span> <span class="mf">0.0</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">controller</span><span class="p">.</span><span class="nf">setQuestionWithID</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">controller</span><span class="p">.</span><span class="n">answerSet</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="kd">object</span> <span class="nc">Style</span> <span class="p">:</span> <span class="nc">StyleSheet</span><span class="p">(</span><span class="s">"com-trinitcore-quizprogress-demo-Welcome"</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="kd">var</span> <span class="py">currentRouterQuestionID</span><span class="p">:</span> <span class="nc">Int</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>
+    
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">handleMatrixQuestionRouteOnChange</span><span class="p">(</span><span class="n">visible</span><span class="p">:</span> <span class="nc">Boolean</span><span class="p">,</span> <span class="n">question</span><span class="p">:</span> <span class="nc">Question</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">visible</span> <span class="p">&amp;&amp;</span> <span class="n">currentRouterQuestionID</span> <span class="p">!=</span> <span class="n">question</span><span class="p">.</span><span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">currentRouterQuestionID</span> <span class="p">=</span> <span class="n">question</span><span class="p">.</span><span class="n">id</span>
+
+            <span class="n">state</span><span class="p">.</span><span class="n">controller</span><span class="o">?.</span><span class="nf">setQuestionWithID</span><span class="p">(</span><span class="n">question</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Handle when an answer is clicked.</span>
+    <span class="k">private</span> <span class="k">fun</span> <span class="nf">handleMatrixQuestionAnswered</span><span class="p">(</span><span class="n">answerId</span><span class="p">:</span> <span class="nc">Int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">setState</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">controller</span><span class="o">?.</span><span class="nf">tryAnsQuesAndGoToNxtQues</span><span class="p">(</span><span class="n">answerId</span><span class="p">)</span> <span class="p">{</span> <span class="n">ques</span><span class="p">,</span> <span class="n">answerId</span> <span class="p">-&gt;</span>
+
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nc">RBuilder</span><span class="p">.</span><span class="nf">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">div</span> <span class="p">{</span>
+            <span class="nf">styledDiv</span> <span class="p">{</span>
+                <span class="c1">// Specify some linear progress bar here.</span>
+                <span class="nf">linearProgress</span><span class="p">(</span>
+                    <span class="n">value</span> <span class="p">=</span> <span class="n">state</span><span class="p">.</span><span class="n">controller</span><span class="p">.</span><span class="n">progress</span> <span class="p">*</span> <span class="mf">100.0</span> <span class="c1">// controller.progress is a value between 0 to 1.</span>
+                <span class="p">)</span>
+            <span class="p">}</span>
+            
+            <span class="nf">animatedSwitch</span> <span class="p">{</span> <span class="c1">// Optional animation between questions. Remove animatedSwitch if you don't want any animation.</span>
+                <span class="n">state</span><span class="p">.</span><span class="n">controller</span><span class="p">.</span><span class="n">questions</span><span class="p">.</span><span class="nf">forEach</span> <span class="p">{</span> <span class="n">question</span> <span class="p">-&gt;</span>
+                    <span class="nf">route</span><span class="p">(</span><span class="s">"/${question.id}"</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nf">vizSensor</span> <span class="p">{</span>
+                            <span class="k">this</span><span class="p">.</span><span class="n">attrs</span><span class="p">.</span><span class="n">onChange</span> <span class="p">=</span> <span class="p">{</span> <span class="n">visible</span><span class="p">:</span> <span class="nc">Boolean</span> <span class="p">-&gt;</span> <span class="nf">handleMatrixQuestionRouteOnChange</span><span class="p">(</span><span class="n">visible</span><span class="p">,</span> <span class="n">question</span><span class="p">)</span> <span class="p">}</span>
+                            <span class="nf">child</span><span class="p">(</span><span class="nc">DemoQuestionAndAnswer</span><span class="o">::</span><span class="k">class</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="n">attrs</span><span class="p">.</span><span class="n">question</span> <span class="p">=</span> <span class="n">question</span>
+                                <span class="n">attrs</span><span class="p">.</span><span class="n">handleQuestionAnswered</span> <span class="p">=</span> <span class="o">::</span><span class="n">handleMatrixQuestionAnswered</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div></section><footer class="page__meta"></footer><section class="page__share"><h4 class="page__share-title">Share on</h4><a href="https://twitter.com/intent/tweet?text=https://c0rmac.github.io/portfolio/2-react-quiz-and-progress/" class="btn btn--twitter" title="Share on Twitter"><i class="fab fa-twitter" aria-hidden="true"></i><span> Twitter</span></a> <a href="https://www.facebook.com/sharer/sharer.php?u=https://c0rmac.github.io/portfolio/2-react-quiz-and-progress/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a> <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://c0rmac.github.io/portfolio/2-react-quiz-and-progress/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a></section><nav class="pagination"> <a href="https://c0rmac.github.io/portfolio/1-interlink-alg/" class="pagination--pager" title="InterlinkAlg ">Previous</a> <a href="https://c0rmac.github.io/portfolio/3-house-of-costs/" class="pagination--pager" title="House of Costs ">Next</a></nav></div></article></div><div class="page__footer"><footer> <!-- start custom footer snippets --> <a href="/sitemap/">Sitemap</a> <!-- end custom footer snippets --><div class="page__footer-follow"><ul class="social-icons"><li><strong>Follow:</strong></li><li><a href="http://github.com/c0rmac"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li><li><a href="https://c0rmac.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li></ul></div><div class="page__footer-copyright">&copy; 2025 Cormac Kinsella. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div></footer></div><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> <script src="https://c0rmac.github.io/assets/js/main.min.js"></script> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', '', 'auto'); ga('send', 'pageview'); </script></body></html>

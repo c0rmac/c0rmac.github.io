@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ga"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://c0rmac.github.io/ga/feed.xml" rel="self" type="application/atom+xml" /><link href="https://c0rmac.github.io/ga/" rel="alternate" type="text/html" hreflang="ga" /><updated>2025-09-26T11:23:41-07:00</updated><id>https://c0rmac.github.io/ga/feed.xml</id><title type="html">Cormac Kinsella</title><subtitle>Final year Mathematics BA Student and Software Engineer</subtitle><author><name>Cormac Kinsella</name></author><entry><title type="html">Cáipéisíocht Phoiblí ar BCMS Upload Services</title><link href="https://c0rmac.github.io/ga/posts/2023/1/bcms-upload-1/" rel="alternate" type="text/html" title="Cáipéisíocht Phoiblí ar BCMS Upload Services" /><published>2023-01-05T00:00:00-08:00</published><updated>2023-01-05T00:00:00-08:00</updated><id>https://c0rmac.github.io/ga/posts/2023/1/bcms-upload-1</id><content type="html" xml:base="https://c0rmac.github.io/ga/posts/2023/1/bcms-upload-1/"><![CDATA[<p>Cuirim ar fáil cáipéisíocht phoiblí ar mo chuid oibre i dtaobh <a href="/ga/portfolio/bcms-upload/">BCMS Upload Services</a> san alt seo ina bhfeictear cén struchtúr a chuir mé ar an bhfeidhmchlár agus cé na cinntí a thug orm na struchtúir úd a chur i bhfeidhm sa bhfeidhmchlár. Léirím mo mhodh féin ar a gcruthóinn feidhmchlár agus cuirim i bhfeidhm mo chuid prionsabal atá i léirithe i mo chuid oibre i <code class="language-plaintext highlighter-rouge">trin-app</code> agus <code class="language-plaintext highlighter-rouge">trin-react</code>.</p>
+
+<p>Tabhair faoi deara go bhfuil an t-alt seo dhá fhorbairt i gcónaí.</p>
+
+<p>Tá an feidhmchlár BCMS Upload Services bunaithe ar Kotlin Multiplatform le Modúl Coitianta, Modúl Freastálaí agus Modúl Feidhmchlár Idirlín. Cruthaíodh seachmhodúil <code class="language-plaintext highlighter-rouge">bcms-alt-service</code> freisin ina gcoinnítear loighic a idirghníomhann le suíomh oifigiúil BCMS. Tá seachfheidhmchlár Wordpress ann a leagans amach an príomhsuíomh.</p>
+
+<h2 id="an-modúl-coitianta">An Modúl Coitianta</h2>
+<p>Anseo a choinnítear samhail bhunúsach an fheidhmchláir. .i. tá an chuid is mó de bhunghnéithe an fheidhmchláir coinnithe sa modúl coitianta. Is féidir sonraí a thraschur go sábháilteach idir an feidhmchlár idirlín agus an freastálaí. Go hiondúil, cloíonn an modúl le treoirlíntí trin-app, iompórtálann sé <code class="language-plaintext highlighter-rouge">trin-app</code> mar sheachmhodúl agus is mar seo a leanas a leagtar amach cuid den mhodúl:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>commons
+|-----upload
+    |-----entity
+        |-----SubmissionStatus
+        |-----UploadStatus
+                |-----Standby : UploadStatus
+                |-----InternalUploading : UploadStatus
+                |-----PendingPayment : UploadStatus
+                |-----PendingBCMSUpload : UploadStatus
+                |-----BCMSUploading : UploadStatus
+                |-----Success : UploadStatus
+                |-----Error : UploadStatus
+    |-----exception
+        |-----UserNotInternallyFoundException
+        |-----BCMSException
+        |-----BCMSDeletionInProgressException : BCMSException
+        |-----BCMSUploadInProgressException : BCMSException
+        |-----BCMSBusyException : BCMSException
+        |-----PaymentCannotBeTakenException
+        |-----InsufficientFundsException
+        |-----BCMSSubmissionNotFoundException
+        |-----BCMSAuthNotFoundException
+        |-----UploadOrderRequestNotFoundException
+        |-----UploadOrdersNotFoundException
+    |-----port
+        |-----MyAppSuppDocUploadAPI
+        |-----SubmissionsUploadAPI
+        |-----MyAppStatDocUploadAPI
+        |-----MyNoticesSuppDocUploadAPI
+        |-----MyNoticesStatDocUploadAPI
+    |-----transport
+        |-----generic
+            |-----IUploadOrder
+            |-----UploadOrder : IUploadOrder
+            |-----UploadOrderRequest
+        |-----myappsuppdoc
+            |-----IUploadOrder
+            |-----UploadOrder : IUploadOrder
+            |-----UploadOrderRequest
+        |-----Submission
+        |-----MyApplicationsSubmission
+        |-----MyNoticesSubmission
+        |-----UploadOrderRequest
+        |-----UploadOrder
+
+</code></pre></div></div>
+
+<p>Tá sé tábhachtach go gcoinnítear an modúl seo chomh dlúth dingthe agus is féidir agus teastaíonn réasúnú cúramach le samhail ar bith a choinneáil ann. Sa gcrann comhaid thuas, tarrnaím bhur n-aird ar an bhfóphacáiste <code class="language-plaintext highlighter-rouge">upload</code> le sampla a thiubhairt ar mo réasúnú féin. Feictear <code class="language-plaintext highlighter-rouge">UploadStatus</code> agus <code class="language-plaintext highlighter-rouge">SubmissionStatus</code> in <em>entity</em>. Tá ciall agus réasún le hiad a choinneáil sa Modúl Coitianta ós go dtraschuirtear eolas faoi uaslódáil cáipéisí go minic sa bhfeidhmchlár agus teastaíonn samhail chaighdeánach ar fud an fheidhmchláir.</p>
+
+<p>Cé go gcaithfear a bheith cúramach faoin gcuid is mó dá gcoinnítear sa modúl seo, tá cupla riail lámha faoinar féidir a chur sa modúl de ghnáth. Féach <code class="language-plaintext highlighter-rouge">exception</code>. Is iomaí earráid a chaitear i bhfeidhmchlár idir ‘foirm nach bhfuil comhlíonta i gceart’ agus fadhb inmhéanach sa bhfeidhmchlár. Coinnítear roinnt mhaith de na hearráidí a d’fheicfeadh úsáideoir anseo. Is féidir earráid a chaitheamh ar thaobh an Mhodúil Freastálaí le fógra earráide a thiubhairt don úsáideoir. A bhuí le <code class="language-plaintext highlighter-rouge">RESTAPIManager</code> de chuid <code class="language-plaintext highlighter-rouge">trin-react</code>, ní gá le haon réamhshocrú sa bhfeidhmchlár idirlín le earráid <code class="language-plaintext highlighter-rouge">exception</code> a láimhseáil. Díontar tilleadh trácht ar na rialacha lámha i dtreoirlíntí <code class="language-plaintext highlighter-rouge">trin-app</code> agus is féidir tiocht ar tuilleadh eolais ar chúrsaí trin-app in alt a fhoilseofar go luath.</p>
+
+<h3 id="traschur-na-samhailtí">Traschur na Samhailtí</h3>
+<p>Úsáidtear <code class="language-plaintext highlighter-rouge">kotlinx.serialization</code> le haghaidh na samhailtí a srathú ar fud an fheidhmchláir. Coinníonn gach fóphacáiste <code class="language-plaintext highlighter-rouge">port</code> samhail d’orduithe a dhíontar idir an freastálaí agus an feidhmchlár idirlín. Tá sé de dhualgas ag an Modúl Feidhmchláir Idirlín agus ag an Modúl Freastálaí cén chaoi ar chóir na samhailtí a chur i bhfeidhm.</p>
+
+<h2 id="an-modúl-feidhmchláir-idirlín">An Modúl Feidhmchláir Idirlín</h2>
+<p>Anseo a choinnítear feidhmchlár ReactJS atá scríobtha i Kotlin-JS agus bunaithe ar an gcreat <code class="language-plaintext highlighter-rouge">trin-react</code>. Is feidhmchlár coimhéadáin simplí é seo agus tá a laghad leathanach ann; is iad sin:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/public/login - LogincVC
+/public/register - RegisterVC
+
+
+/consumer/dashboard - DashboardVC
+
+/consumer/myapplications - MyApplicationVC
+/consumer/services/myapplications/suppdoc/:pUUID - MyApplicationsSuppDocVC
+/consumer/services/myapplications/statdoc/:pUUID - MyApplicationsStatDocVC
+
+/consumer/mynotices - MyNoticesVC
+/consumer/services/mynotices/suppdoc/:pUUID - MyNoticesSuppDocVC
+/consumer/services/mynotices/statdoc/:pUUID - MyNoticesStatDocVC
+</code></pre></div></div>
+
+<h3 id="foirmeacha-iarratais">Foirmeacha Iarratais</h3>
+<p>Tugaim léargas dhaoibh ar na foirmeacha éagsúla atá ar fáil ar an suíomh oifigiúil BCMS: My Notices/Supporting Documents, My Notices/Statutory Documents, My Applications/Statutory Documents, My Applications/Supporting Documents agus feictear go bhfuil a macasamhail forbartha sa méid thuas. Tá na céad chuid de na foirmeacha an-chosúil le chéile agus spreagtar dhom aicme theibí a bhunú ar na trí leathanach úd. Tá an fhoirm dheireanach sách-éagsúil ó na trí cinn eile agus ní féidir é a bhunú go héasca ar an aicme theibí chéanna.</p>
+
+<p>Dá réir sin, bunaím na <em>VCs</em> (.i. <em>ViewControllers</em> i mBéarla) mar a fheictear sa léaráid thíos:</p>
+<div style="text-align: center; padding-bottom: 16px;">
+<img src="/images/portfolio/bcms-upload/client-app-upload-service-structure.gv.svg?raw=true" alt="Léaráid Aicmí de struchtúr na VCs." />
+</div>
+
+<p>Ag seo léargas cruinn de na gnéithe teibí a bhaineanns le <code class="language-plaintext highlighter-rouge">BaseUploadServiceVC</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Document Submission Logic
+abstract suspend fun uploadDocumentsLoadOnClickHandler()
+
+abstract fun addDocumentOnClickHandler(event: Event)
+
+abstract suspend fun getUploadRequests(): List&lt;T&gt;
+
+abstract suspend fun getSubmission(): Submission
+
+abstract suspend fun executeUploadRequest(uploadOrderRequest: T): T
+
+abstract suspend fun deleteAllUploads()
+
+abstract fun getSubmissionStatus(submission: Submission): SubmissionStatus
+
+abstract fun updateSubmissionStatus(submissionStatus: SubmissionStatus)
+
+// Render Logic
+abstract fun RBuilder.uploadOrdersRender()
+
+abstract fun RBuilder.uploadsRender()
+
+abstract fun RBuilder.addDocumentRender()
+</code></pre></div></div>
+
+<p>agus ag seo léargas de na gnéithe teibí a bhaineanns le <code class="language-plaintext highlighter-rouge">GenericUploadServiceVC</code> agus na feidhmeanna oidhreachta  a chuireanns sé i bhfeidhm ó <code class="language-plaintext highlighter-rouge">BaseUploadServiceVC</code>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>abstract val documentTypes: Array&lt;DocumentType.Generic&gt;
+
+// Implemented Functions from BaseUploadServiceVC
+override fun addDocumentOnClickHandler(event: Event)
+
+override fun RBuilder.uploadOrdersRender()
+
+override fun RBuilder.uploadsRender()
+
+override fun RBuilder.addDocumentRender()
+</code></pre></div></div>
+
+<p>Ní fhágann sé sin ar <code class="language-plaintext highlighter-rouge">MyNoticesSuppDocVC</code>, <code class="language-plaintext highlighter-rouge">MyNoticesStatDocVC</code> agus ar <code class="language-plaintext highlighter-rouge">MyNoticesStatDocVC</code> ach <code class="language-plaintext highlighter-rouge">uploadDocumentsLoadOnClickHandler</code>, <code class="language-plaintext highlighter-rouge">getUploadRequests</code>, <code class="language-plaintext highlighter-rouge">getSubmission</code>, <code class="language-plaintext highlighter-rouge">executeUploadRequest</code>, <code class="language-plaintext highlighter-rouge">deleteAllUploads</code>, <code class="language-plaintext highlighter-rouge">getSubmissionStatus</code>, <code class="language-plaintext highlighter-rouge">updateSubmissionStatus</code> le cur i bhfeidhm.</p>
+
+<h2 id="an-modúl-freastálaí">An Modúl Freastálaí</h2>
+<p>Roinntear an modúl freastálaí ina fhómhodúil bunaithe ar ailtireacht heicseagánach. Tá an clár http coinnithe i modúl <code class="language-plaintext highlighter-rouge">web-app</code> ar leith agus amuigh ón loighic ghnó. Coinnítear bunloighic an fheidhmchláir sa modúl <code class="language-plaintext highlighter-rouge">core</code> mar a mholanns treoirlínte ailtireacht heicseagánach ach is é an éagsúlacht go n-iompórtálann <code class="language-plaintext highlighter-rouge">core</code> an Modúl Coitianta mar aon leis an modúl <code class="language-plaintext highlighter-rouge">port</code>, modúl a rialanns na loighic sheachtracha (.i. loighic bhunachair sonraí, modúl <code class="language-plaintext highlighter-rouge">web-app</code> ⁊rl) agus a shocraíonns cén loighic ar gá le <code class="language-plaintext highlighter-rouge">core</code> idirghníonú léi. Mar thurgnamh, tugaim cead mo chinn an Modúl Coitianta a iompórtáíl i ngach aon mhodúl, fiú <code class="language-plaintext highlighter-rouge">core</code> nó go bhfuighfí amach cé mar a éireofas le struchtúr mar seo.</p>
+
+<p>Maidir le <code class="language-plaintext highlighter-rouge">web-app</code>, cuirtear i bhfeidhm na haicmí atá i <code class="language-plaintext highlighter-rouge">port</code> de chuid chuile fhóphacáiste i <code class="language-plaintext highlighter-rouge">common</code>. Úsáidtear Spring Boot le haghaidh cúrsaí http ar fad.</p>
+
+<p>Tá an feidhmchlár á óstáíl ag AWS - Amazon Web Services.</p>
+
+<p>Ní féidir mórán eile a thrácht ar an modúl seo ar mhaithe le slándáil an fheidhmchláir.</p>]]></content><author><name>Cormac Kinsella</name></author><category term="bcms upload" /><category term="technical details" /><summary type="html"><![CDATA[Cuirim ar fáil cáipéisíocht phoiblí ar mo chuid oibre i dtaobh BCMS Upload Services san alt seo ina bhfeictear cén struchtúr a chuir mé ar an bhfeidhmchlár agus cé na cinntí a thug orm na struchtúir úd a chur i bhfeidhm sa bhfeidhmchlár. Léirím mo mhodh féin ar a gcruthóinn feidhmchlár agus cuirim i bhfeidhm mo chuid prionsabal atá i léirithe i mo chuid oibre i trin-app agus trin-react.]]></summary></entry><entry><title type="html">Díorthaigh feidhm a ionsamhlaíonn bonn neamhchlaonta - Dúshlán Códaithe 1</title><link href="https://c0rmac.github.io/ga/posts/2022/12/coding-challenge-1/" rel="alternate" type="text/html" title="Díorthaigh feidhm a ionsamhlaíonn bonn neamhchlaonta - Dúshlán Códaithe 1" /><published>2022-12-18T00:00:00-08:00</published><updated>2022-12-18T00:00:00-08:00</updated><id>https://c0rmac.github.io/ga/posts/2022/12/coding-challenge-1</id><content type="html" xml:base="https://c0rmac.github.io/ga/posts/2022/12/coding-challenge-1/"><![CDATA[<blockquote>
+  <p>Bíodh <code class="language-plaintext highlighter-rouge">toss_biased</code> ina fheidhm a thuganns ceann (H) or cruit (T) le dóchúlacht $p$ agus $q$ faoi sheach, áit a bhfuil $p \neq q$, .i. tá an bonn claonta. <br /><br />
+Díorthaigh feidhm a ionsamhlaíonn bonn neamhchlaonta.</p>
+</blockquote>
+
+<p>Cuimhnigh ar dhá bhonn neamhspleácha</p>
+
+\[B^{(1)} \sim \text{ toss_biased() } \\
+B^{(2)} \sim \text{ toss_biased() }
+\notag\]
+
+<p>Ina theannta sin, cuimhnigh ar na péirí teagmhas a leanas</p>
+
+\[\begin{align}
+\{H^{(1)}H^{(2)}\}, \{T^{(1)}T^{(2)}\} \notag \\
+\{H^{(1)}T^{(2)}\}, \{T^{(1)}H^{(2)}\} \notag
+\end{align} \notag\]
+
+<p>áit arb iad $H^{(i)}, T^{(i)}$ na teagmhais a aschuireann bonn $B^{(i)}$ $H$ nó $T$.</p>
+
+<p>Mar gheall ar neamhspleáchas, is féidir an dóchúlacht a ríomh le riail an toraidh $P(B^{(1)}, B^{(2)})=P(B^{(1)})P(B^{(2)})$. Ag seo a gcomhdóchúlachtaí</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>$P$</th>
+      <th>$H^{(1)}$</th>
+      <th>$T^{(1)}$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$H^{(2)}$</td>
+      <td>$p^2$</td>
+      <td>$pq$</td>
+    </tr>
+    <tr>
+      <td>$T^{(2)}$</td>
+      <td>$pq$</td>
+      <td>$q^2$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Anois tabhair faoi deara go bhfuil $P(H^{(1)},T^{(2)})=P(T^{(1)},H^{(2)})$. Saothróidh muid an t-airí seo mar bhunús don réiteach ar an dúshlán seo. Bíodh</p>
+
+\[\bar{H}=\{H^{(1)}T^{(2)}\}\\
+\bar{T}=\{T^{(1)}H^{(2)}\}
+\notag\]
+
+<p>mar thorthaí féidearthacha an bhoinn nua $\bar{B}$. Is léir ón airí thuas go bhfuil</p>
+
+\[P(\bar{H}) = P(\bar{T}) \notag\]
+
+<p>agus is bonn neamhchlaonta é $\bar{B}$ dá réir. Mar aon leis, cuimhnigh ar na tacair a leanas</p>
+
+\[J=\{H^{(1)}T^{(2)},T^{(1)}H^{(2)}\}=\{\bar{H},\bar{T}\}\\
+K=\{H^{(1)}H^{(2)},T^{(1)}T^{(2)}\}
+\notag\]
+
+<p>Tabhair faoi deara go bhfuil $r:=P(J)=2pq$ agus $s:=P(K)=p^2+q^2$. Féadfaimis na teagmhais thuas a bhreacadh mar chrann thíos</p>
+<div style="text-align: center; padding-bottom: 16px;">
+<img src="/images/posts/coding-challenge-1/tree-graph.gv.svg?raw=true" alt="Léaráid Mharkov den phróiseas togartha" />
+</div>
+
+<p>Is é $J$ an t-aon teagmhas ina bhfáightear na teagmhais $\bar{H}$ nó $\bar{T}$ agus tá muid ag iarraidh go dtarlóidh teagmhas $J$ lena thoradh neamhchlaonta a fháil. Beidh orainn an próiseas a reáchtáil go hathchúrsach le go dtarlóidh $J$. Dá dhá bhrí sin, is dual dúinn cuimhniú ar an gcrann mar phróiseas Mharkov $X_n$</p>
+
+<div style="text-align: center; padding-bottom: 16px;">
+
+<img src="/images/posts/coding-challenge-1/markov-graph.gv.svg?raw=true" alt="Léaráid Mharkov den phróiseas togartha" />
+$
+P = \begin{bmatrix}
+    r &amp; s \\
+    0 &amp; 1
+\end{bmatrix}
+$
+</div>
+
+<p>Tabhair faoi deara go bhfuil $P(T_J = k) = s^{k-1}r$. Ríomhadh muid $T_J$ go dtí go mbeidh $X_n = K$ i gcás $n \geq 1$ eicínt. Is í an dóchúlacht go mbaintear $K$ amach agus $n$ ag teannadh $n \to \infty$, .i. go mbainfear $K$ amach thar éis céimeanna éigríche, ná:</p>
+
+\[\begin{align}
+P(T_J \geq 0) &amp;= \sum^{\infty}_{k=1} P(T_J = k)\notag \\
+&amp;= \sum^{\infty}_{k=1} s^{k-1}r \notag \\
+&amp;= \frac{r}{1-s} \notag \\
+&amp;= \frac{2pq}{1-p^2-q^2} \notag \\
+&amp;= 1 \notag 
+\end{align} \notag\]
+
+<p>Dhá bhrí sin, tarlaíonn teagmhas $J$ thar éis oiread céimeanna éigríche. Ós go dtarlaíonn teagmhas $J$ beagnach go cinnte, cuimhníodh muid ar an bhfeidhm a leanas</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unbiased_toss() {
+  b1 = toss_biased()
+  b2 = toss_biased()
+
+  if b1 == b2 {
+    # Teagmhas K
+    # Fós ag fanacht go dtarlóidh an teagmhas J a bhfuil toradh neamhchlaonta air. 
+    # Cuirfidh muid unbiased_toss i gcrích aríst.
+    return unbiased_toss()
+  } else {
+    # Teagmhas J
+    # Toradh neamhchlaonta a thabhairt.
+    if (b1 == H) {
+      return H_unbiased
+    } else {
+      return T_unbiased
+    }
+  }
+}
+</code></pre></div></div>]]></content><author><name>Cormac Kinsella</name></author><category term="coding challenge" /><category term="biased" /><category term="simulate" /><category term="coin" /><category term="unbiased" /><summary type="html"><![CDATA[Bíodh toss_biased ina fheidhm a thuganns ceann (H) or cruit (T) le dóchúlacht $p$ agus $q$ faoi sheach, áit a bhfuil $p \neq q$, .i. tá an bonn claonta. Díorthaigh feidhm a ionsamhlaíonn bonn neamhchlaonta.]]></summary></entry></feed>
