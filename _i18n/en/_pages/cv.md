@@ -14,12 +14,11 @@ Education
 
 Open‑Source Libraries
 ======
-### <a href='https://github.com/c0rmac/qtexture'>qtexture</a>
-High‑performance toolkit for computing quantum‑state texture measures and basis‑minimized resource monotones. Compact C/C++ core with Python bindings, designed for numerical stability and integration into researcher workflows.  
-- Basis‑dependent texture measures and basis‑minimized monotones for density matrices.  
-- Density‑matrix‑native optimizer ProgQAOA with adaptive heuristics (Adaptive Layering, Freeze‑then‑Refine).  
-- Optional GPU acceleration (Metal) and C/C++ kernels for hotspots.  
-- Lightweight interoperability utilities for Qiskit and QuTiP; minimal NumPy/SciPy dependency footprint.  
+### <a href='https://github.com/c0rmac/tessera'>Tessera</a>
+An **in-development**, quantum-inspired solver for **NP-hard** constrained portfolio optimization (MIQP). This research project explores a novel method to avoid the instability of traditional penalty functions by encoding financial constraints directly into the solver's core structure.
+- **Solves Complex MIQP:** Designed to handle binary asset selection ($z_i \in \{0, 1\}$) and complex non-linear constraints.
+- **Constraint-Intrinsic Solver:** Builds constraints (e.g., cardinality, sector limits) into its internal logic, guaranteeing all solutions are valid *by construction*.
+- **Stable & Efficient:** Uses a powerful iterative algorithm (DMRG) to find the optimal portfolio, eliminating the unstable hyperparameter tuning required by penalty functions.
 
 ### <a href='https://github.com/c0rmac/deep-quant'>DeepQuant</a>
 High-performance Python library for pricing American options, specializing in rough volatility markets using an adaptive deep learning framework. Provides tight, provable price bounds by dynamically selecting the optimal stochastic volatility model.
@@ -27,6 +26,13 @@ High-performance Python library for pricing American options, specializing in ro
 - **Attention-Enhanced Deep Solvers:** Replaces classical regression with deep **Residual Networks (ResNets)** enhanced with **Squeeze-and-Excitation (SE) attention blocks** for efficient feature learning. These networks use path signatures as inputs to approximate the continuation value (primal) and the martingale integrand (dual).
 - **Primal-Dual Framework:** Orchestrates modular solvers to compute a lower bound (primal price) and an upper bound (dual price), yielding a duality gap as a direct measure of pricing accuracy.
 - **High-Performance Numerics:** Features a fully vectorized PyTorch implementation for the dual solver with optimized full-batch and mini-batch training modes for efficiency.
+
+### <a href='https://github.com/c0rmac/qtexture'>qtexture</a>
+High‑performance toolkit for computing quantum‑state texture measures and basis‑minimized resource monotones. Compact C/C++ core with Python bindings, designed for numerical stability and integration into researcher workflows.  
+- Basis‑dependent texture measures and basis‑minimized monotones for density matrices.  
+- Density‑matrix‑native optimizer ProgQAOA with adaptive heuristics (Adaptive Layering, Freeze‑then‑Refine).  
+- Optional GPU acceleration (Metal) and C/C++ kernels for hotspots.  
+- Lightweight interoperability utilities for Qiskit and QuTiP; minimal NumPy/SciPy dependency footprint.  
 
 ### <a href='https://github.com/c0rmac/holographic-tensor-networks'>holographic‑tensor‑networks</a>
 Numerical laboratory for holographic tensor networks built on discrete hyperbolic geometry (hyperbolic buildings). Converts combinatorial geometric constructions into contractible tensor networks and provides flexible numerics for entanglement and holographic diagnostics.  
@@ -42,9 +48,7 @@ Algorithmic Contributions
 ### <a href='https://github.com/c0rmac/interlink-alg'>interlink‑alg</a>
 Streaming, memory‑efficient algorithm to extract equivalence classes of atomic symbols from a dictionary of sequences by grouping characters that co‑occur (directly or transitively) across words.  
 - Builds a character co‑occurrence graph then identifies connected components as identifier sets.  
-- Streaming and low‑latency variants for large corpora with implementations in C++, Python, and Rust.  
-- Complexity: O(M · L²) to build the co‑occurrence map (M = number of words, L = average word length) plus graph traversal costs dependent on alphabet size.  
-https://github.com/c0rmac/interlink-alg
+- Streaming and low‑latency variants for large corpora with implementations in C++, Python, and Rust.
 
 ### <a href='https://github.com/c0rmac/react-quiz-and-progress'>react‑quiz‑and‑progress</a>
 Algorithm for computing questionnaire completion progress in a way that reflects both independent and dependent questions, giving a more accurate and intuitive measure of progress in branching surveys.  
@@ -52,7 +56,6 @@ Algorithm for computing questionnaire completion progress in a way that reflects
 - Assigns weighted increments so that progress advances proportionally to the number of relevant questions, not the total possible questions.  
 - Handles branching logic seamlessly — progress changes only when a new path is unlocked, avoiding misleading percentage spikes or stalls.  
 - Designed for reusability in any survey or decision‑tree workflow, independent of presentation layer.  
-https://github.com/c0rmac/react-quiz-and-progress
 
 ---
 
