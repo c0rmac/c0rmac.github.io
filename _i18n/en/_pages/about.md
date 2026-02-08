@@ -2,6 +2,8 @@ I am Cormac Kinsella, a mathematician and software engineer completing my Master
 
 This transition allows me to bridge the gap between high-level abstraction and numerical stability. My industry experience, such as developing file submission pipelines at EasyBCMS or implementing core features at Reactoo, provided a solid foundation in software architecture and automated testing. Today, I utilize that background to ensure theoretical breakthroughs in manifold optimization and tensor algebra remain computationally feasible and robust.
 
+Feel free to reach out to me via email: <a href="mailto:cormac.c.00@gmail.com">cormac.c.00@gmail.com</a>
+
 ## 🌀 Geometry & Probability: The Foundation of Curved Optimization
 
 Navigating complex, curved environments requires optimization algorithms that are inherently aware of the "shape" of the data they process. By investigating the interaction between manifold theory and random processes, it is possible to design collective intelligence systems that do not rely on standard Euclidean techniques, which often falter in non-convex landscapes.
