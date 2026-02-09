@@ -12,7 +12,7 @@ Education
     * 567 Points (Top 3% in Ireland)
 
 Research Experience
-======
+---
 ### TU Munich - Thesis on Consensus Based Optimisation on Riemannian Manifolds (December 2025-Present)
 - Conensus Based Optimisation (CBO) is a gradient-free optimisation algorithm that finds a global optimum of a non-convex objective on a Euclidean (flat) space with mathematically guaranteed convergence.
 - I connect Riemannian manifold (curved space) theory with CBO for the first time.
