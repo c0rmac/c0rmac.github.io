@@ -8,9 +8,11 @@ Feel free to reach out to me via email: <a href="mailto:cormac.c.00@gmail.com">c
 
 Navigating complex, curved environments requires optimization algorithms that are inherently aware of the "shape" of the data they process. By investigating the interaction between manifold theory and random processes, it is possible to design collective intelligence systems that do not rely on standard Euclidean techniques, which often falter in non-convex landscapes.
 
-My central research involves Consensus-Based Optimization (CBO) on Riemannian Manifolds, where an ensemble of agents collaboratively identifies the global minimum of an energy functional on a curved surface. I move toward a Fixed Variance paradigm to understand the system as a stable statistical equilibrium shaped by the manifold's geometry rather than a collapsing point. To ensure numerical integrity, I developed a perturbative theory that keeps discrete update laws geometrically consistent with continuous dynamics. In simple terms, imagine a group of scouts looking for the lowest valley in a mountain range; my work provides the mathematical "map" that accounts for the earth's curvature so the group doesn't get lost because they assumed the terrain was flat.
+My central research involves Consensus-Based Optimization (CBO) on Riemannian Manifolds, where an ensemble of agents collaboratively identifies the global minimum of an energy functional on a curved surface. I move toward a Fixed Variance paradigm to understand the system as a stable statistical equilibrium shaped by the manifold's geometry rather than a collapsing point. To ensure numerical integrity, I developed a perturbative theory that keeps discrete update laws geometrically consistent with continuous dynamics. The theory also allows us to develop an algorithm that requires no discretisation. Methods using discretisation (in this case: the Euler-Maruyama Method) typically acculate error exponentially and are extremely sensitive to calibrate.
 
-*Note: I am unable to publish any of my research until around July 2026. If you would like to know more about what I am doing, please don't hesitate to contact me!*
+In simple terms, imagine a group of scouts looking for the lowest valley in a mountain range; my work provides the mathematical "map" that accounts for the earth's curvature so the group doesn't get lost because they assumed the terrain was flat. It also allows the group to teleport to the best solution instantaneously.
+
+*Note: I am unable to publish any of my research until around July 2026. If you would like to know more about what I am doing, contact me and I can explain in private!*
 
 ## 🕸️ Tensor Networks: Navigating the Curse of Dimensionality
 

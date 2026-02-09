@@ -3,7 +3,7 @@
 Education
 ======
 * Technical University of Munich 2023-2026
-  * Masters in Mathematics
+  * Masters in Mathematics (Grade 1.7)
 * Trinity College Dublin, 2019-2023
   * B.A in Mathematics and Statistics
 * Technical University Munich, 2021-2022
@@ -11,28 +11,60 @@ Education
 * Leaving Certificate in Grammar School Dundalk, 2017-2019
     * 567 Points (Top 3% in Ireland)
 
-
-Open‑Source Libraries
+Research Experience
 ======
-### <a href='https://github.com/c0rmac/tessera'>Tessera</a>
-An **in-development**, quantum-inspired solver for **NP-hard** constrained portfolio optimization (MIQP). This research project explores a novel method to avoid the instability of traditional penalty functions by encoding financial constraints directly into the solver's core structure.
-- **Solves Complex MIQP:** Designed to handle binary asset selection ($z_i \in \{0, 1\}$) and complex non-linear constraints.
-- **Constraint-Intrinsic Solver:** Builds constraints (e.g., cardinality, sector limits) into its internal logic, guaranteeing all solutions are valid *by construction*.
-- **Stable & Efficient:** Uses a powerful iterative algorithm (DMRG) to find the optimal portfolio, eliminating the unstable hyperparameter tuning required by penalty functions.
+### TU Munich - Thesis on Consensus Based Optimisation on Riemannian Manifolds (December 2025-Present)
+- Conensus Based Optimisation (CBO) is a gradient-free optimisation algorithm that finds a global optimum of a non-convex objective on a Euclidean (flat) space with mathematically guaranteed convergence.
+- I connect Riemannian manifold (curved space) theory with CBO for the first time.
+- I derive efficient algorithms, with proven convergence, that are independent of discretisation methods (Euler–Maruyama method etc).
+- Research focuses are on the Special Orthogonal Group and the Stiefel Manifold.
+- Future uses of my work include applications to Computer Vision (especially drones and robotics) and Quantum Tensor Network Methods.
+*Note: I am unable to publish any of my research until around July 2026. If you would like to know more about what I am doing, contact me and I can explain in private!*
+
+Engineering Experience
+======
+### BMW — Software Engineer (June 2023-Present)
+- Architected a software solution that centralized complex engineering and test data into a large and sophisticated interactive dashboard, enabling domain experts to explore and analyze datasets in real time.  
+- Designed and implemented internal numeric libraries to compute specialized quantities for battery testing, ensuring numerical stability and reproducibility.  
+- Developed advanced libraries and frameworks to simplify front‑end integration for colleagues, reducing implementation time for complex visual components.  
+- Created high‑performance visualization algorithms to render large volumes of intricate electrical engineering data in a form usable by engineers for diagnostics and decision‑making.  
+- Collaborated cross‑functionally with electrical engineers, data scientists, and front‑end developers to ensure seamless integration of computational back‑end and visualization layers.
+
+### BCMS Upload Services --- Mid-experienced Software Engineer (June 2020 - June 2023)
+  * Application that assists civil engineers with online government bureaucracy by automating the upload process of construction documents and thus reducing the time of submission from one hour to only a few minutes.
+  * Tasked with creating the user interface, back-end functionality and working with engineers to develop a finished product.
+  * Kotlin-ReactJS/Spring web application.
+  
+### Reactoo --- iOS Software Developer (June 2017 - August 2017)
+  * Reactoo is an emerging social media platform based on video streaming amongst multiple users.
+  * Hired as software analyst working with in a small software development team.
+  * Tasked with implementing core features such as video & face tracking filters, bug fixing and automating app tests.
+  * Obtained valuable teamwork experience with a team of highly experienced developers.
+  * Swift iOS Application using AWS APIs to interact with backend. Involved the use of video encoding APIs.  
+  * See [link](https://reactoo.com) for more.
+
+### Turner & Townsend --- Software Developer (March 2017 - April 2017)
+  * Turner & Townsend is a multinational professional service specializing in programme, project and cost management and
+consulting across the global property market and natural resources sectors.
+  * Tasked with developing an app to replace physical hand-out cards of health & safety tips used for promoting a safety conscious work environment. Both apps developed using native sdk.
+  * Implemented a data table on the company’s website as well as modifying their graphical API using Google Analytics.
+
+---
+
+Research Projects & Collabarations
+======
+### <a href='https://github.com/c0rmac/qtt-hank-solver'>QTT-HANK Solver</a>
+A **high-performance** macroeconomic solver designed to bypass the **"Curse of Dimensionality"** in heterogeneous agent models. This research utilizes tensor network compression to solve high-dimensional equations that would typically exceed the memory capacity of modern supercomputers.
+- **Logarithmic Complexity:** Reduces memory requirements from an exponential $O(N^d)$ to a manageable $O(d \cdot \log N \cdot r^2)$, enabling hyper-fine grid resolutions on standard consumer hardware.
+- **QTT-Driven Compression:** Employs Quantized Tensor Trains to reshape massive economic grids into virtual binary modes, allowing for the representation of complex state spaces in a highly compressed, low-rank format.
+- **Manifold-Constrained Optimization:** Navigates a Product Stiefel Manifold via Riemannian CBO to maintain structural integrity, ensuring all solutions satisfy market-clearing constraints *by construction*.
 
 ### <a href='https://github.com/c0rmac/deep-quant'>DeepQuant</a>
-High-performance Python library for pricing American options, specializing in rough volatility markets using an adaptive deep learning framework. Provides tight, provable price bounds by dynamically selecting the optimal stochastic volatility model.
+Python library for pricing American options, specializing in rough volatility markets using an adaptive deep learning framework. Provides tight, provable price bounds by dynamically selecting the optimal stochastic volatility model.
 - **Rough Volatility Modeling:** Leverages the two-factor rough **Bergomi model** to accurately capture market behavior when the Hurst parameter is less than 0.5. An adaptive engine automatically selects the appropriate SDE based on a forecasted Hurst parameter, ensuring model validity.
 - **Attention-Enhanced Deep Solvers:** Replaces classical regression with deep **Residual Networks (ResNets)** enhanced with **Squeeze-and-Excitation (SE) attention blocks** for efficient feature learning. These networks use path signatures as inputs to approximate the continuation value (primal) and the martingale integrand (dual).
 - **Primal-Dual Framework:** Orchestrates modular solvers to compute a lower bound (primal price) and an upper bound (dual price), yielding a duality gap as a direct measure of pricing accuracy.
 - **High-Performance Numerics:** Features a fully vectorized PyTorch implementation for the dual solver with optimized full-batch and mini-batch training modes for efficiency.
-
-### <a href='https://github.com/c0rmac/qtexture'>qtexture</a>
-High‑performance toolkit for computing quantum‑state texture measures and basis‑minimized resource monotones. Compact C/C++ core with Python bindings, designed for numerical stability and integration into researcher workflows.  
-- Basis‑dependent texture measures and basis‑minimized monotones for density matrices.  
-- Density‑matrix‑native optimizer ProgQAOA with adaptive heuristics (Adaptive Layering, Freeze‑then‑Refine).  
-- Optional GPU acceleration (Metal) and C/C++ kernels for hotspots.  
-- Lightweight interoperability utilities for Qiskit and QuTiP; minimal NumPy/SciPy dependency footprint.  
 
 ### <a href='https://github.com/c0rmac/holographic-tensor-networks'>holographic‑tensor‑networks</a>
 Numerical laboratory for holographic tensor networks built on discrete hyperbolic geometry (hyperbolic buildings). Converts combinatorial geometric constructions into contractible tensor networks and provides flexible numerics for entanglement and holographic diagnostics.  
@@ -41,9 +73,33 @@ Numerical laboratory for holographic tensor networks built on discrete hyperboli
 - Multiple contraction/entropy strategies: Kernel Polynomial Method (KPM) for memory‑efficient stochastic trace estimation, exact diagonalization for small systems, and Block Belief Propagation (BBP) as an approximate tree‑aware solver.  
 - CPU (NumPy/Quimb/Yastn) and optional GPU (PyTorch) backends; utilities for RT‑style diagnostics and minimal‑surface / cut‑length reporting.  
 
+### <a href='https://github.com/c0rmac/qtexture'>qtexture</a>
+High‑performance toolkit for computing quantum‑state texture measures and basis‑minimized resource monotones. Compact C/C++ core with Python bindings, designed for numerical stability and integration into researcher workflows.  
+- Basis‑dependent texture measures and basis‑minimized monotones for density matrices.  
+- Density‑matrix‑native optimizer ProgQAOA with adaptive heuristics (Adaptive Layering, Freeze‑then‑Refine).  
+- Optional GPU acceleration (Metal) and C/C++ kernels for hotspots.  
+- Lightweight interoperability utilities for Qiskit and QuTiP; minimal NumPy/SciPy dependency footprint.  
+
 ---
 
-Algorithmic Contributions
+Other Work Experience
+======
+### Hewitt College Cork --- Education Consultant (January 2021 - July 2021)
+  * In charge of designing the template for Physics revision videos in Irish for past Leaving Certificate papers.
+  * Lead a team of private tutors to produce and voice the videos.
+  * Created highly comprehensive solutions and explanations to past paper questions.
+
+### The Rob of the Green Podcast --- Software Developer & Online Business Consultant (April 2021 - August 2021)
+  * Podcast website for a team of award-winning life coaches.
+  * Tasked with completely redesigning the podcast website from scratch, implementing an efficient & long-lasting website
+backend and migrating old podcasts & blog posts from the old websites to the new one.
+  * Consulted end-user on website structuring and advertisement strategies.
+  * WordPress web application with use of bootstrap css.
+  * See [here](https://robofthegreen.ie) for more.
+
+---
+
+Algorithms
 ======
 ### <a href='https://github.com/c0rmac/interlink-alg'>interlink‑alg</a>
 Streaming, memory‑efficient algorithm to extract equivalence classes of atomic symbols from a dictionary of sequences by grouping characters that co‑occur (directly or transitively) across words.  
@@ -59,58 +115,9 @@ Algorithm for computing questionnaire completion progress in a way that reflects
 
 ---
 
-Professional Experience
-======
-### BMW — Software Engineer (June 2023-Present)
-
-- Architected a software solution that centralized complex engineering and test data into a large and sophisticated interactive dashboard, enabling domain experts to explore and analyze datasets in real time.  
-- Designed and implemented internal numeric libraries to compute specialized quantities for battery testing, ensuring numerical stability and reproducibility.  
-- Developed advanced libraries and frameworks to simplify front‑end integration for colleagues, reducing implementation time for complex visual components.  
-- Created high‑performance visualization algorithms to render large volumes of intricate electrical engineering data in a form usable by engineers for diagnostics and decision‑making.  
-- Collaborated cross‑functionally with electrical engineers, data scientists, and front‑end developers to ensure seamless integration of computational back‑end and visualization layers.
-
-### BCMS Upload Services --- Mid-experienced Software Engineer (June 2020 - June 2023)
-  * Application that assists civil engineers with online government bureaucracy by automating the upload process of construction documents and thus reducing the time of submission from one hour to only a few minutes.
-  * Tasked with creating the user interface, back-end functionality and working with engineers to develop a finished product.
-  * Kotlin-ReactJS/Spring web application.
-  * See [here](https://bcms-upload.ie "here") for more.
-
-### The Rob of the Green Podcast --- Software Developer & Online Business Consultant (April 2021 - August 2021)
-  * Podcast website for a team of award-winning life coaches.
-  * Tasked with completely redesigning the podcast website from scratch, implementing an efficient & long-lasting website
-backend and migrating old podcasts & blog posts from the old websites to the new one.
-  * Consulted end-user on website structuring and advertisement strategies.
-  * WordPress web application with use of bootstrap css.
-  * See [here](https://robofthegreen.ie) for more.
-
-### Reactoo --- iOS Software Analyst (June 2017 - August 2017)
-  * Reactoo is an emerging social media platform based on video streaming amongst multiple users.
-  * Hired as software analyst working with in a small software development team.
-  * Tasked with implementing core features such as video & face tracking filters, bug fixing and automating app tests.
-  * Obtained valuable teamwork experience with a team of highly experienced developers.
-  * Swift iOS Application using AWS APIs to interact with backend. Involved the use of video encoding APIs.  
-  * See [link](https://reactoo.com) for more.
-
-### Turner & Townsend --- Software Analyst (March 2017 - April 2017)
-  * Turner & Townsend is a multinational professional service specializing in programme, project and cost management and
-consulting across the global property market and natural resources sectors.
-  * Tasked with developing an app to replace physical hand-out cards of health & safety tips used for promoting a safety conscious work environment. Both apps developed using native sdk.
-  * Implemented a data table on the company’s website as well as modifying their graphical API using Google Analytics.
-
----
-
-Education Work Experience
-======
-### Hewitt College Cork --- Education Consultant (January 2021 - July 2021)
-  * In charge of designing the template for Physics revision videos in Irish for past Leaving Certificate papers.
-  * Lead a team of private tutors to produce and voice the videos.
-  * Created highly comprehensive solutions and explanations to past paper questions.
-
----
-
 Personal Projects
 ======
-### Law of Large Numbers & Data Mining applied to Crypto Alt‑coins
+### Data Mining applied to Crypto Alt‑coins
 End‑to‑end research program combining unsupervised regime discovery, stability‑focused model selection, and a deterministic live‑trading pipeline.  
 - Regime signal: K‑Means clustering on engineered features (candlesticks, volume, sentiment trajectories, rolling‑mode Fear & Greed trails) to produce pseudo‑stationary partitions for regime‑conditioned models.  
 - Selection heuristic: large‑scale "Grand Tournament" of shuffled training runs with stratified cross‑validation; champion models selected by minimum validation‑variance to prioritise stability over single‑run accuracy.  
