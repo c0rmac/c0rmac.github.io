@@ -34,8 +34,6 @@ I developed <a href="https://github.com/c0rmac/deep-quant">DeepQuant</a>, a Pyth
 
 Moving forward, I am focused on integrating my background in differential geometry into neural network and machine learning frameworks. I am particularly interested in applying geometric optimization to problems with poor convexity, where traditional gradient-based methods struggle. My goal is to work on projects involving robotics and computer vision, utilizing manifolds to improve the efficiency and stability of high-dimensional learning tasks.
 
-## 🇮🇪 Linguistics: Digital Preservation of Gaeilge
-
-The preservation of minority languages requires the same structural dedication and technical integration as any mathematical research. Bringing native languages into the digital spaces where modern technology and gaming intersect is essential for ensuring a culture remains relevant in the future.
+## 🇮🇪 Linguistics: Digital Preservation of An Ghaeilge
 
 As a native Irish (An Ghaeilge) speaker, I have been involved in Gaeilge Chun Cinn, an initiative dedicated to translating apps, websites, and games into Irish. Our team successfully launched the official Irish translation for the blockbuster game ***Among Us*** (see our from The Verge <a href="https://www.theverge.com/2021/7/16/22579968/among-us-official-irish-translation">here</a>), coordinating an international team of volunteers to bring Gaeilge into the global gaming spotlight.
