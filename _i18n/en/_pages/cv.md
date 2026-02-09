@@ -13,7 +13,9 @@ Education
 
 Research Experience
 ======
+
 ## TU Munich - Thesis on Consensus Based Optimisation on Riemannian Manifolds
+
 - Conensus Based Optimisation (CBO) is a gradient-free optimisation algorithm that finds a global optimum of a non-convex objective on a Euclidean (flat) space with <a href="https://arxiv.org/abs/2103.15130">mathematically guaranteed convergence</a>.
 - I connect Riemannian manifold (curved space) theory with CBO for the first time.
 - I derive efficient algorithms, with proven convergence, that are independent of discretisation methods (Euler–Maruyama method etc).
@@ -24,7 +26,9 @@ Research Experience
 
 Engineering Experience
 ======
+
 ## BMW — Software Engineer (June 2023-Present)
+
 - Architected a software solution that centralized complex engineering and test data into a large and sophisticated interactive dashboard, enabling domain experts to explore and analyze datasets in real time.  
 - Designed and implemented internal numeric libraries to compute specialized quantities for battery testing, ensuring numerical stability and reproducibility.  
 - Developed advanced libraries and frameworks to simplify front‑end integration for colleagues, reducing implementation time for complex visual components.  
@@ -32,11 +36,13 @@ Engineering Experience
 - Collaborated cross‑functionally with electrical engineers, data scientists, and front‑end developers to ensure seamless integration of computational back‑end and visualization layers.
 
 ## BCMS Upload Services --- Mid-experienced Software Engineer (June 2020 - June 2023)
+
   * Application that assists civil engineers with online government bureaucracy by automating the upload process of construction documents and thus reducing the time of submission from one hour to only a few minutes.
   * Tasked with creating the user interface, back-end functionality and working with engineers to develop a finished product.
   * Kotlin-ReactJS/Spring web application.
   
 ## Reactoo --- iOS Software Developer (June 2017 - August 2017)
+
   * Reactoo is an emerging social media platform based on video streaming amongst multiple users.
   * Hired as software analyst working with in a small software development team.
   * Tasked with implementing core features such as video & face tracking filters, bug fixing and automating app tests.
@@ -45,6 +51,7 @@ Engineering Experience
   * See [link](https://reactoo.com) for more.
 
 ## Turner & Townsend --- Software Developer (March 2017 - April 2017)
+
   * Turner & Townsend is a multinational professional service specializing in programme, project and cost management and
 consulting across the global property market and natural resources sectors.
   * Tasked with developing an app to replace physical hand-out cards of health & safety tips used for promoting a safety conscious work environment. Both apps developed using native sdk.
@@ -54,13 +61,16 @@ consulting across the global property market and natural resources sectors.
 
 Research Projects & Collabarations
 ======
+
 ## <a href='https://github.com/c0rmac/qtt-hank-solver'>QTT-HANK Solver</a>
+
 A **high-performance** macroeconomic solver designed to bypass the **"Curse of Dimensionality"** in heterogeneous agent models. This research utilizes tensor network compression to solve high-dimensional equations that would typically exceed the memory capacity of modern supercomputers.
 - **Logarithmic Complexity:** Reduces memory requirements from an exponential $O(N^d)$ to a manageable $O(d \cdot \log N \cdot r^2)$, enabling hyper-fine grid resolutions on standard consumer hardware.
 - **QTT-Driven Compression:** Employs Quantized Tensor Trains to reshape massive economic grids into virtual binary modes, allowing for the representation of complex state spaces in a highly compressed, low-rank format.
 - **Manifold-Constrained Optimization:** Navigates a Product Stiefel Manifold via Riemannian CBO to maintain structural integrity, ensuring all solutions satisfy market-clearing constraints *by construction*.
 
 ## <a href='https://github.com/c0rmac/deep-quant'>DeepQuant</a>
+
 Python library for pricing American options, specializing in rough volatility markets using an adaptive deep learning framework. Provides tight, provable price bounds by dynamically selecting the optimal stochastic volatility model.
 - **Rough Volatility Modeling:** Leverages the two-factor rough **Bergomi model** to accurately capture market behavior when the Hurst parameter is less than 0.5. An adaptive engine automatically selects the appropriate SDE based on a forecasted Hurst parameter, ensuring model validity.
 - **Attention-Enhanced Deep Solvers:** Replaces classical regression with deep **Residual Networks (ResNets)** enhanced with **Squeeze-and-Excitation (SE) attention blocks** for efficient feature learning. These networks use path signatures as inputs to approximate the continuation value (primal) and the martingale integrand (dual).
@@ -68,6 +78,7 @@ Python library for pricing American options, specializing in rough volatility ma
 - **High-Performance Numerics:** Features a fully vectorized PyTorch implementation for the dual solver with optimized full-batch and mini-batch training modes for efficiency.
 
 ## <a href='https://github.com/c0rmac/holographic-tensor-networks'>holographic‑tensor‑networks</a>
+
 Numerical laboratory for holographic tensor networks built on discrete hyperbolic geometry (hyperbolic buildings). Converts combinatorial geometric constructions into contractible tensor networks and provides flexible numerics for entanglement and holographic diagnostics.  
 - Programmatic geometric kernel (HyperbolicBuilding) to generate `{p,q}` tilings, construct buildings from side‑pairings, enumerate faces and dual graphs, and locate discrete geodesics.  
 - Automated tensor‑network builder that places tensors on faces and assembles contractions from the building’s topology to produce boundary states.  
@@ -75,6 +86,7 @@ Numerical laboratory for holographic tensor networks built on discrete hyperboli
 - CPU (NumPy/Quimb/Yastn) and optional GPU (PyTorch) backends; utilities for RT‑style diagnostics and minimal‑surface / cut‑length reporting.  
 
 ## <a href='https://github.com/c0rmac/qtexture'>qtexture</a>
+
 Toolkit for computing quantum‑state texture measures and basis‑minimized resource monotones. Compact C/C++ core with Python bindings, designed for numerical stability and integration into researcher workflows.  
 - Basis‑dependent texture measures and basis‑minimized monotones for density matrices.  
 - Density‑matrix‑native optimizer ProgQAOA with adaptive heuristics (Adaptive Layering, Freeze‑then‑Refine).  
@@ -85,12 +97,15 @@ Toolkit for computing quantum‑state texture measures and basis‑minimized res
 
 Other Work Experience
 ======
+
 ## Hewitt College Cork --- Education Consultant (January 2021 - July 2021)
+
   * In charge of designing the template for Physics revision videos in Irish for past Leaving Certificate papers.
   * Lead a team of private tutors to produce and voice the videos.
   * Created highly comprehensive solutions and explanations to past paper questions.
 
 ## The Rob of the Green Podcast --- Software Developer & Online Business Consultant (April 2021 - August 2021)
+
   * Podcast website for a team of award-winning life coaches.
   * Tasked with completely redesigning the podcast website from scratch, implementing an efficient & long-lasting website
 backend and migrating old podcasts & blog posts from the old websites to the new one.
@@ -102,6 +117,7 @@ backend and migrating old podcasts & blog posts from the old websites to the new
 
 Algorithms
 ======
+
 ## <a href='https://github.com/c0rmac/interlink-alg'>interlink‑alg</a>
 Streaming, memory‑efficient algorithm to extract equivalence classes of atomic symbols from a dictionary of sequences by grouping characters that co‑occur (directly or transitively) across words.  
 - Builds a character co‑occurrence graph then identifies connected components as identifier sets.  
@@ -118,8 +134,9 @@ Algorithm for computing questionnaire completion progress in a way that reflects
 
 Personal Projects
 ======
+
 ## Data Mining applied to Crypto Alt‑coins
-End‑to‑end research program combining unsupervised regime discovery, stability‑focused model selection, and a deterministic live‑trading pipeline.  
+Combining unsupervised regime discovery, stability‑focused model selection, and a deterministic live‑trading pipeline.  
 - Regime signal: K‑Means clustering on engineered features (candlesticks, volume, sentiment trajectories, rolling‑mode Fear & Greed trails) to produce pseudo‑stationary partitions for regime‑conditioned models.  
 - Selection heuristic: large‑scale "Grand Tournament" of shuffled training runs with stratified cross‑validation; champion models selected by minimum validation‑variance to prioritise stability over single‑run accuracy.  
 - Execution: deterministic two‑phase trade lifecycle — pre‑trade momentum confirmation followed by active trade management with dynamic trailing stops, profit targets, divestment pools and reinvestment rules.  
@@ -162,6 +179,7 @@ models developed with my B.A. training.
 
 Skills, Activities & Interests
 ======
+
 * Very strong Kotlin, Java, Swift, SQL background – Spring Boot, ReactJS for Kotlin.
 * Strong C++, Rust.
 * Applied Statistics, Data Analytics & Machine Learning qualifications.
