@@ -13,7 +13,10 @@ Education
 
 Research Experience
 ======
-## TU Munich - Thesis on Consensus Based Optimisation on Riemannian Manifolds (December 2025-Present)
+
+---
+
+## TU Munich - Thesis on Consensus Based Optimisation on Riemannian Manifolds
 - Conensus Based Optimisation (CBO) is a gradient-free optimisation algorithm that finds a global optimum of a non-convex objective on a Euclidean (flat) space with <a href="https://arxiv.org/abs/2103.15130">mathematically guaranteed convergence</a>.
 - I connect Riemannian manifold (curved space) theory with CBO for the first time.
 - I derive efficient algorithms, with proven convergence, that are independent of discretisation methods (Euler–Maruyama method etc).
@@ -25,6 +28,9 @@ Research Experience
 Engineering Experience
 ======
 ## BMW — Software Engineer (June 2023-Present)
+
+---
+
 - Architected a software solution that centralized complex engineering and test data into a large and sophisticated interactive dashboard, enabling domain experts to explore and analyze datasets in real time.  
 - Designed and implemented internal numeric libraries to compute specialized quantities for battery testing, ensuring numerical stability and reproducibility.  
 - Developed advanced libraries and frameworks to simplify front‑end integration for colleagues, reducing implementation time for complex visual components.  
@@ -54,6 +60,9 @@ consulting across the global property market and natural resources sectors.
 
 Research Projects & Collabarations
 ======
+
+---
+
 ## <a href='https://github.com/c0rmac/qtt-hank-solver'>QTT-HANK Solver</a>
 A **high-performance** macroeconomic solver designed to bypass the **"Curse of Dimensionality"** in heterogeneous agent models. This research utilizes tensor network compression to solve high-dimensional equations that would typically exceed the memory capacity of modern supercomputers.
 - **Logarithmic Complexity:** Reduces memory requirements from an exponential $O(N^d)$ to a manageable $O(d \cdot \log N \cdot r^2)$, enabling hyper-fine grid resolutions on standard consumer hardware.
@@ -85,6 +94,9 @@ Toolkit for computing quantum‑state texture measures and basis‑minimized res
 
 Other Work Experience
 ======
+
+---
+
 ## Hewitt College Cork --- Education Consultant (January 2021 - July 2021)
   * In charge of designing the template for Physics revision videos in Irish for past Leaving Certificate papers.
   * Lead a team of private tutors to produce and voice the videos.
@@ -102,6 +114,9 @@ backend and migrating old podcasts & blog posts from the old websites to the new
 
 Algorithms
 ======
+
+---
+
 ## <a href='https://github.com/c0rmac/interlink-alg'>interlink‑alg</a>
 Streaming, memory‑efficient algorithm to extract equivalence classes of atomic symbols from a dictionary of sequences by grouping characters that co‑occur (directly or transitively) across words.  
 - Builds a character co‑occurrence graph then identifies connected components as identifier sets.  
@@ -118,6 +133,9 @@ Algorithm for computing questionnaire completion progress in a way that reflects
 
 Personal Projects
 ======
+
+---
+
 ## Data Mining applied to Crypto Alt‑coins
 End‑to‑end research program combining unsupervised regime discovery, stability‑focused model selection, and a deterministic live‑trading pipeline.  
 - Regime signal: K‑Means clustering on engineered features (candlesticks, volume, sentiment trajectories, rolling‑mode Fear & Greed trails) to produce pseudo‑stationary partitions for regime‑conditioned models.  
@@ -162,6 +180,9 @@ models developed with my B.A. training.
 
 Skills, Activities & Interests
 ======
+
+---
+
 * Very strong Kotlin, Java, Swift, SQL background – Spring Boot, ReactJS for Kotlin.
 * Strong C++, Rust.
 * Applied Statistics, Data Analytics & Machine Learning qualifications.
