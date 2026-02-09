@@ -74,7 +74,7 @@ Numerical laboratory for holographic tensor networks built on discrete hyperboli
 - CPU (NumPy/Quimb/Yastn) and optional GPU (PyTorch) backends; utilities for RT‑style diagnostics and minimal‑surface / cut‑length reporting.  
 
 ### <a href='https://github.com/c0rmac/qtexture'>qtexture</a>
-High‑performance toolkit for computing quantum‑state texture measures and basis‑minimized resource monotones. Compact C/C++ core with Python bindings, designed for numerical stability and integration into researcher workflows.  
+Toolkit for computing quantum‑state texture measures and basis‑minimized resource monotones. Compact C/C++ core with Python bindings, designed for numerical stability and integration into researcher workflows.  
 - Basis‑dependent texture measures and basis‑minimized monotones for density matrices.  
 - Density‑matrix‑native optimizer ProgQAOA with adaptive heuristics (Adaptive Layering, Freeze‑then‑Refine).  
 - Optional GPU acceleration (Metal) and C/C++ kernels for hotspots.  
