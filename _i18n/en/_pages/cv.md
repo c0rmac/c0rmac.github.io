@@ -19,6 +19,7 @@ Research Experience
 - I derive efficient algorithms, with proven convergence, that are independent of discretisation methods (Euler–Maruyama method etc).
 - Research focuses are on the Special Orthogonal Group and the Stiefel Manifold.
 - Future uses of my work include applications to Computer Vision (especially drones and robotics) and Quantum Tensor Network Methods.
+
 *Note: I am unable to publish any of my research until around July 2026. If you would like to know more about what I am doing, contact me and I can explain in private!*
 
 Engineering Experience
