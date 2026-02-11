@@ -22,7 +22,7 @@ tags:
 
 > **Abstract:** Hyperbolic geometry is a fascinating and non-intuitive type of non-Euclidean geometry. While Euclidean geometry describes flat surfaces like a sheet of paper, hyperbolic geometry describes surfaces with constant negative curvature, like the surface of a saddle or a Pringles chip. This negative curvature leads to a space that expands exponentially, having "more room" than flat space.
 >
-> This property makes it a natural mathematical language for describing concepts in the AdS/CFT correspondence, where a vast amount of information on a boundary is encoded within a higher-dimensional bulk.
+> This property makes it a natural mathematical language for describing concepts in the AdS/CFT correspondence (which I will introduce at the end of the article), where a vast amount of information on a boundary of a set is encoded within a higher-dimensional "bulk" universe.
 
 ## The Parallel Postulate: A Fundamental Break {#parallel-postulate}
 
@@ -186,7 +186,7 @@ What makes this boundary so well-behaved is a property called **Gromov hyperboli
     </p>
 </div>
 
-## The AdS/CFT Correspondence: The Physical Context {#ads-cft}
+### The AdS/CFT Correspondence: The Physical Context {#ads-cft}
 
 To understand why physicists care about hyperbolic geometry, we must look at the **AdS/CFT correspondence**. Proposed by Juan Maldacena in 1997, this conjecture provides the physical motivation for studying the relationship between a bulk space and its boundary.
 
