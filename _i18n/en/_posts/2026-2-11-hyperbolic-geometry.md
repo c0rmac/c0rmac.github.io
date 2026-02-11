@@ -113,7 +113,7 @@ Using complex numbers where $z = x + iy$, the general form of an isometry is:
 
 $$f(z) = e^{i\phi} \frac{z - z_0}{1 - \bar{z_0}z}$$
 
-* **Hyperbolic Translation ($z_0$)**: The parameter $z_0$ (a complex number with $|z_0| < 1$) defines a translation that moves the point $z_0$ to the origin. Unlike a Euclidean shift, this is a non-linear transformation that warps the space accordingly.
+* **Hyperbolic Translation ($z_0$)**: The parameter $z_0$ (a complex number with $\text{Norm}(z_0) < 1$) defines a translation that moves the point $z_0$ to the origin. Unlike a Euclidean shift, this is a non-linear transformation that warps the space accordingly.
 * **Rotation ($\phi$)**: The parameter $e^{i\phi}$ represents a standard Euclidean rotation by an angle $\phi$ about the origin.
 
 What if we want to apply this in a practical situation in order to develop a model? My library <a href='https://github.com/c0rmac/holographic-tensor-networks'>holographic-tensor-networks</a> encapsulates this mathematical object as a `PoincareIsometry` class. Its real power comes from its use in constructing complex manifolds. Instead of tiling a simple plane, we can define a **fundamental domain** (a single polygon) and a set of isometries that act as "gluing instructions" for its sides. By identifying pairs of sides via these isometries, we can "stitch" the space together to create surfaces with non-trivial topologies, like a two-holed torus. The `construct_building` method uses this approach to generate a much richer class of geometries than simple tilings.
