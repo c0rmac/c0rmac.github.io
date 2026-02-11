@@ -78,13 +78,13 @@ A "straight line" (a **geodesic**) in this model is the shortest path between tw
 
 ### Tessellations as Geodesic Polygons {#tessellations}
 
-The connection to our library is that a hyperbolic tessellation is built from regular polygons whose sides are **geodesic arcs**. A tessellation is specified by the **Schläfli symbol** $\{p, q\}$, meaning it is a tiling by regular *p*-gons, with *q* of them meeting at each vertex.
+A hyperbolic tessellation is built from regular polygons whose sides are **geodesic arcs**. A tessellation is specified by the **Schläfli symbol** $\{p, q\}$, meaning it is a tiling by regular *p*-gons, with *q* of them meeting at each vertex.
 
 Because the space is curved, the angles of these polygons are different from their Euclidean counterparts. The interior angle $\alpha$ of a regular hyperbolic *p*-gon in a $\{p, q\}$ tiling is fixed by the requirement that *q* of them must fit perfectly around a vertex:
 $$\alpha = \frac{2\pi}{q}$$
 For this to form a valid *p*-gon, the sum of its interior angles, $p \times \alpha$, must satisfy the **Gauss-Bonnet theorem**, which relates the area of a polygon to its angles.
 
-Let's consider the `{5, 4}` tiling used in our library:
+Let's consider the `{5, 4}` tiling:
 * We tile the space with pentagons (*p*=5).
 * Four pentagons meet at each vertex (*q*=4).
 * The interior angle of each pentagon must therefore be $\alpha = 2\pi / 4 = \pi/2$ (90°).
@@ -116,7 +116,7 @@ $$f(z) = e^{i\phi} \frac{z - z_0}{1 - \bar{z_0}z}$$
 * **Hyperbolic Translation ($z_0$)**: The parameter $z_0$ (a complex number with $|z_0| < 1$) defines a translation that moves the point $z_0$ to the origin. Unlike a Euclidean shift, this is a non-linear transformation that warps the space accordingly.
 * **Rotation ($\phi$)**: The parameter $e^{i\phi}$ represents a standard Euclidean rotation by an angle $\phi$ about the origin.
 
-The `PoincareIsometry` class in our library encapsulates this mathematical object. Its real power comes from its use in constructing complex manifolds. Instead of tiling a simple plane, we can define a **fundamental domain** (a single polygon) and a set of isometries that act as "gluing instructions" for its sides. By identifying pairs of sides via these isometries, we can "stitch" the space together to create surfaces with non-trivial topologies, like a two-holed torus. The `construct_building` method uses this approach to generate a much richer class of geometries than simple tilings.
+What if we want to apply this in a practical situation in order to develop a model? My library <a href='https://github.com/c0rmac/holographic-tensor-networks'>holographic-tensor-networks</a> encapsulates this mathematical object as a `PoincareIsometry` class. Its real power comes from its use in constructing complex manifolds. Instead of tiling a simple plane, we can define a **fundamental domain** (a single polygon) and a set of isometries that act as "gluing instructions" for its sides. By identifying pairs of sides via these isometries, we can "stitch" the space together to create surfaces with non-trivial topologies, like a two-holed torus. The `construct_building` method uses this approach to generate a much richer class of geometries than simple tilings.
 
 <div style="text-align:center;">
     <img src="/images/posts/hyperbolic-geometry/fundamental_domain_labels.png" alt="Fundamental domain with isometry labels" width="500">
