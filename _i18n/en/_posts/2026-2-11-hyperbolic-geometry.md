@@ -110,7 +110,9 @@ In Euclidean geometry, a regular pentagon has 108° angles, so this would be imp
 An **isometry** is a transformation that preserves distances, and thus the entire structure of the geometry. In the Poincaré disk, the orientation-preserving isometries are a class of functions known as **Möbius transformations**. Any such transformation can be represented as a composition of a hyperbolic translation and a rotation.
 
 Using complex numbers where $z = x + iy$, the general form of an isometry is:
+
 $$f(z) = e^{i\phi} \frac{z - z_0}{1 - \bar{z_0}z}$$
+
 * **Hyperbolic Translation ($z_0$)**: The parameter $z_0$ (a complex number with $|z_0| < 1$) defines a translation that moves the point $z_0$ to the origin. Unlike a Euclidean shift, this is a non-linear transformation that warps the space accordingly.
 * **Rotation ($\phi$)**: The parameter $e^{i\phi}$ represents a standard Euclidean rotation by an angle $\phi$ about the origin.
 
