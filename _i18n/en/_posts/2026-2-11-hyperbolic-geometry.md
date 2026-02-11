@@ -52,7 +52,7 @@ From a formal perspective, a geometry is a logical system built upon foundationa
 This demonstrates that the distinction is not merely descriptive but is a fundamental choice at the deepest logical level. By choosing a different axiom, an entire, self-consistent universe of geometric theorems emerges.
 
 <div style="text-align:center;">
-    <img src="2026-1-11-hyperbolic-geometry/parallel_postulates_with_detail.png" alt="Comparison of parallel postulates" width="700">
+    <img src="/images/posts/hyperbolic-geometry/parallel_postulates_with_detail.png" alt="Comparison of parallel postulates" width="700">
     <p style="font-style: italic; font-size: 0.9em;">
         <b>Figure 1:</b> A comparison of the parallel postulate. The detailed Poincaré disk projection on the right shows how multiple distinct "straight lines" (geodesics) can pass through Point P without ever intersecting Line L. The orange dotted lines are the two "limiting parallels" that meet L only at infinity.
     </p>
@@ -92,14 +92,14 @@ Let's consider the `{5, 4}` tiling used in our library:
 In Euclidean geometry, a regular pentagon has 108° angles, so this would be impossible. In hyperbolic geometry, the negative curvature allows the pentagon's sides to curve inwards, reducing the angles to 90° and allowing four of them to fit perfectly. The `HyperbolicBuilding` class algorithmically constructs this tiling by repeatedly gluing these geodesic pentagons together according to the $\{5, 4\}$ rule.
 
 <div style="text-align:center;">
-    <img src="2026-1-11-hyperbolic-geometry/poincare_pentagon_detail.png" alt="Detail of a hyperbolic pentagon" width="500">
+    <img src="/images/posts/hyperbolic-geometry/poincare_pentagon_detail.png" alt="Detail of a hyperbolic pentagon" width="500">
     <p style="font-style: italic; font-size: 0.9em;">
         <b>Figure 2:</b> A view of a single {5, 4} pentagon. The red sides are geodesic arcs, and the negative curvature of the space allows their interior angles to be exactly 90°.
     </p>
 </div>
 
 <div style="text-align:center;">
-    <img src="2026-1-11-hyperbolic-geometry/poincare_tessellation_neighborhood.png" alt="A hyperbolic tessellation neighborhood" width="500">
+    <img src="/images/posts/hyperbolic-geometry/poincare_tessellation_neighborhood.png" alt="A hyperbolic tessellation neighborhood" width="500">
     <p style="font-style: italic; font-size: 0.9em;">
         <b>Figure 3:</b> The regular tessellation of the squares (4, 4), pentagons (5, 4), hexagons (6, 4), and '15-gons' (15, 4). The three hyperbolic lattices with p ≥ 5 are displayed in the Poincaré disk. <a href="https://www.researchgate.net/figure/The-regular-tessellation-of-the-squares-4-4-pentagons-5-4-hexagons-6-4-and_fig1_381190053">Source</a>
     </p>
@@ -117,14 +117,14 @@ $$f(z) = e^{i\phi} \frac{z - z_0}{1 - \bar{z_0}z}$$
 The `PoincareIsometry` class in our library encapsulates this mathematical object. Its real power comes from its use in constructing complex manifolds. Instead of tiling a simple plane, we can define a **fundamental domain** (a single polygon) and a set of isometries that act as "gluing instructions" for its sides. By identifying pairs of sides via these isometries, we can "stitch" the space together to create surfaces with non-trivial topologies, like a two-holed torus. The `construct_building` method uses this approach to generate a much richer class of geometries than simple tilings.
 
 <div style="text-align:center;">
-    <img src="2026-1-11-hyperbolic-geometry/fundamental_domain_labels.png" alt="Fundamental domain with isometry labels" width="500">
+    <img src="/images/posts/hyperbolic-geometry/fundamental_domain_labels.png" alt="Fundamental domain with isometry labels" width="500">
     <p style="font-style: italic; font-size: 0.9em;">
         <b>Figure 4:</b> The "blueprint" for a complex surface. This solid octagon is the fundamental domain, and the labels show the side-pairing rules. For example, the isometry 'a' glues the top-left side to its inverse 'a⁻¹' on the bottom-right.
     </p>
 </div>
 
 <div style="text-align:center;">
-    <img src="2026-1-11-hyperbolic-geometry/fundamental_domain_isometry_action.png" alt="Action of an isometry on a fundamental domain" width="500">
+    <img src="/images/posts/hyperbolic-geometry/fundamental_domain_isometry_action.png" alt="Action of an isometry on a fundamental domain" width="500">
     <p style="font-style: italic; font-size: 0.9em;">
         <b>Figure 5:</b> Applying the isometry 'a' maps the solid red fundamental domain to the dashed gray neighboring copy, meeting along the paired side and illustrating how repeated side-pairings tile the space.
     </p>
@@ -155,14 +155,14 @@ Imagine standing at a point and shining a laser beam. This beam travels along a 
 $$\sup_{t \ge 0} d(\gamma_1(t), \gamma_2(t)) < \infty$$
 
 <div style="text-align:center;">
-    <img src="2026-1-11-hyperbolic-geometry/geodesic_rays_simple_divergence.png" alt="Divergence of geodesic rays" width="500">
+    <img src="/images/posts/hyperbolic-geometry/geodesic_rays_simple_divergence.png" alt="Divergence of geodesic rays" width="500">
     <p style="font-style: italic; font-size: 0.9em;">
         <b>Figure 7:</b> Geodesic rays originating from a single point (red dot) inside the disk. Due to the negative curvature of the space, these rays diverge from each other exponentially fast.
     </p>
 </div>
 
 <div style="text-align:center;">
-    <img src="2026-1-11-hyperbolic-geometry/geodesic_rays_complex_convergence.png" alt="Convergence of geodesic rays" width="500">
+    <img src="/images/posts/hyperbolic-geometry/geodesic_rays_complex_convergence.png" alt="Convergence of geodesic rays" width="500">
     <p style="font-style: italic; font-size: 0.9em;">
         <b>Figure 8:</b> While rays from a single point diverge, rays from two different points (red and blue dots) can be aimed to converge on the exact same point at infinity (highlighted in green).
     </p>
@@ -174,7 +174,7 @@ What makes this boundary so well-behaved is a property called **Gromov hyperboli
 * **Thin Triangles**: A geodesic triangle is $\delta$-thin if any point on one side is within a distance $\delta$ of the union of the other two sides. This property prevents the formation of large, grid-like structures and forces the space to have a **tree-like** nature at large scales.
 
 <div style="text-align:center;">
-    <img src="2026-1-11-hyperbolic-geometry/thin_triangle.png" alt="Thin triangles" width="800">
+    <img src="/images/posts/hyperbolic-geometry/thin_triangle.png" alt="Thin triangles" width="800">
     <p style="font-style: italic; font-size: 0.9em;">
         <b>Figure 9:</b> Left: a geodesic triangle in the Poincaré disk; points on each side that lie within hyperbolic distance δ of the union of the other two sides are shaded, illustrating the δ‑thin triangle property. 
     </p>
