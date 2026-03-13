@@ -1,5 +1,3 @@
-# Involute
-
 **Involute** is a state-of-the-art, hardware-accelerated Consensus-Based Optimization (CBO) library designed to find the global minimum of non-convex objective functions constrained to locally symmetric manifolds, **such as $SO(d)$, Stiefel, Grassmannian, and other manifolds**.
 
 Currently optimized exclusively for **macOS Apple Silicon (M-series)** via the Apple MLX backend, Involute allows you to solve complex manifold-constrained problems without being an expert in particle swarm optimization.

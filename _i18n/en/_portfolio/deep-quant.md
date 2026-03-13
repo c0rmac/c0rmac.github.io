@@ -1,5 +1,3 @@
-# DeepQuant: An Adaptive Deep Learning Library for Quantitative Finance ⚖️
-
 [![PyPI version](https://badge.fury.io/py/deep-quant-lib.svg)](https://badge.fury.io/py/deep-quant-lib)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/example/deep-quant)

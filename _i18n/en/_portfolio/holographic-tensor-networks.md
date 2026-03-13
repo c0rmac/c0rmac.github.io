@@ -1,5 +1,3 @@
-# Holographic Tensor Networks (`holographic_tn`)
-
 [![PyPI version](https://badge.fury.io/py/holographic-tn.svg)](https://badge.fury.io/py/holographic-tn)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/example/holographic_tn)

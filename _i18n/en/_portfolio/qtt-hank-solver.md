@@ -1,5 +1,3 @@
-# qtt-hank-solver: A Quantized Tensor Train Framework for High-Dimensional Macroeconomic Equilibrium
-
 > **Project Status: Conceptual Proposal** > This repository outlines a technical framework for solving high-dimensional Heterogeneous Agent New Keynesian (HANK) models using Quantized Tensor Trains (QTT).
 
 ---

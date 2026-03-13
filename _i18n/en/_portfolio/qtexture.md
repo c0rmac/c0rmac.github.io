@@ -1,5 +1,3 @@
-# qtexture: A Quantum State Texture Library 🔬
-
 [![PyPI version](https://img.shields.io/pypi/v/qtexture.svg)](https://pypi.org/project/qtexture/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Version](https://img.shields.io/pypi/pyversions/qtexture.svg)](https://pypi.org/project/qtexture)
