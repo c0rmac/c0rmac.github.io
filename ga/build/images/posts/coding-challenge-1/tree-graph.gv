@@ -1,0 +1,16 @@
+digraph "tree-graph" {
+	node [shape=circle]
+	start [shape=point style=invis]
+	J1 [label=J]
+	K1 [label=K]
+	J2 [label=J]
+	K2 [label=K]
+	J3 [label=J]
+	"Kn-1" [label=K style=invis]
+	start -> K1 [label="  r"]
+	start -> J1 [label=" s"]
+	K1 -> K2 [label="  r"]
+	K1 -> J2 [label=" s"]
+	K2 -> "Kn-1" [label="  forever" style=dotted]
+	K2 -> J3 [label=" s"]
+}
