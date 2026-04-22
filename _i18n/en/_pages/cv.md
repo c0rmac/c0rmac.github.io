@@ -24,38 +24,16 @@ Research Experience
 
 *Note: I am unable to publish any of my research until around July 2026. If you would like to know more about what I am doing, contact me and I can explain in private!*
 
-Engineering Experience
+Professional Experience
 ======
 
 ## BMW — Software Engineer (June 2023-Present)
 
-- Architected a software solution that centralized complex engineering and test data into a large and sophisticated interactive dashboard, enabling domain experts to explore and analyze datasets in real time.  
-- Designed and implemented internal numeric libraries to compute specialized quantities for battery testing, ensuring numerical stability and reproducibility.  
-- Developed advanced libraries and frameworks to simplify front‑end integration for colleagues, reducing implementation time for complex visual components.  
-- Created high‑performance visualization algorithms to render large volumes of intricate electrical engineering data in a form usable by engineers for diagnostics and decision‑making.  
-- Collaborated cross‑functionally with electrical engineers, data scientists, and front‑end developers to ensure seamless integration of computational back‑end and visualization layers.
-
-## BCMS Upload Services --- Mid-experienced Software Engineer (June 2020 - June 2023)
-
-  * Application that assists civil engineers with online government bureaucracy by automating the upload process of construction documents and thus reducing the time of submission from one hour to only a few minutes.
-  * Tasked with creating the user interface, back-end functionality and working with engineers to develop a finished product.
-  * Kotlin-ReactJS/Spring web application.
+## BCMS Upload Services --- Software Engineer (June 2020 - June 2023)
   
-## Reactoo --- iOS Software Developer (June 2017 - August 2017)
+## Reactoo --- Software Dev Intern (June 2017 - August 2017)
 
-  * Reactoo is an emerging social media platform based on video streaming amongst multiple users.
-  * Hired as software analyst working with in a small software development team.
-  * Tasked with implementing core features such as video & face tracking filters, bug fixing and automating app tests.
-  * Obtained valuable teamwork experience with a team of highly experienced developers.
-  * Swift iOS Application using AWS APIs to interact with backend. Involved the use of video encoding APIs.  
-  * See [link](https://reactoo.com) for more.
-
-## Turner & Townsend --- Software Developer (March 2017 - April 2017)
-
-  * Turner & Townsend is a multinational professional service specializing in programme, project and cost management and
-consulting across the global property market and natural resources sectors.
-  * Tasked with developing an app to replace physical hand-out cards of health & safety tips used for promoting a safety conscious work environment. Both apps developed using native sdk.
-  * Implemented a data table on the company’s website as well as modifying their graphical API using Google Analytics.
+## Turner & Townsend --- Software Dev Intern (March 2017 - April 2017)
 
 ---
 
