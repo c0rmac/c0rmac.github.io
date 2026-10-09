@@ -2,7 +2,7 @@ Is iarrthóir PhD sa mhatamaitic mé ag Ollscoil Teicniúil München, faoi stiú
 
 Baineann mo chuid taighde le *Consensus-Based Optimisation (CBO)* ar mhanifhillteacha: oibríonn scaoth cáithníní idirghníomhacha le chéile chun *íosmhéid domhanda (global minimum)* feidhme neamhchonveacsaí a aimsiú ar spás cuar. Sa róbataic, cuirim na modhanna seo i bhfeidhm ar fhadhbanna ardtoiseacha, go háirithe *diverse scene generation*. Nuair a thugtar radharc, is é an aidhm sampla amháin a aimsiú de gach bealach ar leith inar féidir lena chuid réad teacht chun suaimhnis.
 
-Sular thosaigh mé ar mo PhD, d’oibrigh mé mar innealtóir bogearraí, ag an BMW Group le déanaí, áit ar fhorbair mé *numerical libraries* agus *datahubs*. Is cainteoir dúchais Gaeilge mé freisin, agus chabhraigh mé le haipeanna agus cluichí a aistriú go Gaeilge, an t-aistriúchán oifigiúil Gaeilge ar ***Among Us*** ina measc ([alt in The Verge](https://web.archive.org/web/20210718192147/https://www.theverge.com/2021/7/16/22579968/among-us-official-irish-translation)).
+Sular thosaigh mé ar mo PhD, d’oibrigh mé mar innealtóir bogearraí, ag an BMW Group le déanaí, áit ar fhorbair mé *numerical libraries* agus *datahubs*. Is cainteoir Gaeilge mé freisin, le canúint Chois Fharraige i gConamara, agus chabhraigh mé le haipeanna agus cluichí a aistriú go Gaeilge, an t-aistriúchán oifigiúil Gaeilge ar ***Among Us*** ina measc ([alt in The Verge](https://web.archive.org/web/20210718192147/https://www.theverge.com/2021/7/16/22579968/among-us-official-irish-translation)).
 
 ## 🚀 Tionscadail roghnaithe
 
