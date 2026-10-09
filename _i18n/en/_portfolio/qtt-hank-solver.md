@@ -10,18 +10,18 @@ Modern macroeconomics is moving away from representative-agent models toward **H
 A global macroeconomic equilibrium requires finding a stationary value function $V(\mathbf{x})$ and a probability distribution $g(\mathbf{x})$ that satisfy two coupled Partial Differential Equations (PDEs):
 
 1. **Hamilton-Jacobi-Bellman (HJB) Equation**:
-Determines optimal household utility and savings policy:
-    
-$$\rho V(\mathbf{x}) = \max_{c} \{u(c) + \mathcal{L}V(\mathbf{x})\}$$
-    
-where $\mathcal{L}$ is the infinitesimal generator of the state vector $\mathbf{x}$.
+   Determines optimal household utility and savings policy:
+
+   <div>$$\rho V(\mathbf{x}) = \max_{c} \{u(c) + \mathcal{L}V(\mathbf{x})\}$$</div>
+
+   where $\mathcal{L}$ is the infinitesimal generator of the state vector $\mathbf{x}$.
 
 2.  **Kolmogorov Forward Equation (KFE)**:
-Describes the evolution of the household distribution $g(\mathbf{x})$ under the optimal policy:
-    
-$$\frac{\partial g}{\partial t} = \mathcal{L}^* g$$
-    
-where $\mathcal{L}^*$ is the adjoint operator.
+    Describes the evolution of the household distribution $g(\mathbf{x})$ under the optimal policy:
+
+    <div>$$\frac{\partial g}{\partial t} = \mathcal{L}^* g$$</div>
+
+    where $\mathcal{L}^*$ is the adjoint operator.
 
 ### 1.2 The "Curse of Dimensionality"
 In a 10-dimensional problem with a standard grid of $N=100$ points per dimension, the state space explodes to $N^d = 10^{20}$ points. Storing this would require **~400 exabytes** of memory, rendering traditional finite difference schemes and standard Monte Carlo simulations computationally impossible.
@@ -42,7 +42,8 @@ The differential operator $\mathcal{L}$ (incorporating drift and diffusion) will
 ### 2.3 Compressed Nonlinearity (Zip-Up Algorithm)
 To solve the $\max$ operator in the HJB equation without decompressing the tensors, we propose using the **Zip-Up Algorithm**. By utilizing a smooth Boltzmann-style approximation:
 
-$$\max(A, B) \approx \frac{Ae^{kA} + Be^{kB}}{e^{kA} + e^{kB}}$$
+
+<div>$$\max(A, B) \approx \frac{Ae^{kA} + Be^{kB}}{e^{kA} + e^{kB}}$$</div>
 
 we can perform element-wise maximization with $O(N \cdot r^3)$ scaling, preserving the efficiency of the compressed format.
 
@@ -89,7 +90,8 @@ The development of the QTT-HANK solver addresses seven core bottlenecks where hi
 
 **The Solution**: **Analytic Smoothing (Softplus)**. We replace sharp constraints (like ReLU) with a smooth approximation: 
 
-$$f_\mu(x) = \mu \ln (1 + \exp (x/\mu))$$
+
+<div>$$f_\mu(x) = \mu \ln (1 + \exp (x/\mu))$$</div>
 
 This restores exponential singular value decay and keeps the bond dimension $r$ stable.
 
@@ -102,7 +104,8 @@ We collapse the nested hierarchy into a single global energy minimization task. 
 **The Energy Function**:
 We define the "Economic Energy" $\mathcal{J}(\mathcal{X})$ as a weighted sum of residuals that the CBO swarm aims to minimize:
 
-$$\mathcal{J}(\mathcal{X}) = \underbrace{\|\mathbf{L}_p \mathbf{V} - \mathbf{u}_p\|^2}_{\text{HJB Residual}} + \underbrace{\|\mathbf{L}_p^* \mathbf{g}\|^2}_{\text{KFE Residual}} + \lambda \underbrace{\|\int a g(a,z) da - K(p)\|^2}_{\text{Market Clearing Error}}$$
+
+<div>$$\mathcal{J}(\mathcal{X}) = \underbrace{\|\mathbf{L}_p \mathbf{V} - \mathbf{u}_p\|^2}_{\text{HJB Residual}} + \underbrace{\|\mathbf{L}_p^* \mathbf{g}\|^2}_{\text{KFE Residual}} + \lambda \underbrace{\|\int a g(a,z) da - K(p)\|^2}_{\text{Market Clearing Error}}$$</div>
   
 Where $\mathbf{L}_p$ is the infinitesimal generator, $\mathbf{u}_p$ is the utility/return vector, and $\lambda$ acts as the global clearing penalty.
 
@@ -123,11 +126,13 @@ Standard Tensor Train solvers do not preserve these invariants automatically. SV
 
 **We abandon the direct simulation of the density $g$.** Instead, we introduce a latent amplitude tensor $\Psi$ and represent the distribution as
 
-$$g(\mathbf{x},t) = \Psi(\mathbf{x},t)^2$$
+
+<div>$$g(\mathbf{x},t) = \Psi(\mathbf{x},t)^2$$</div>
 
 This guarantees positivity by construction. Mass conservation becomes a unit-norm constraint:
 
-$$\int g(\mathbf{x},t)\, d\mathbf{x} = \|\Psi\|_2^2 = 1$$
+
+<div>$$\int g(\mathbf{x},t)\, d\mathbf{x} = \|\Psi\|_2^2 = 1$$</div>
 
 Rather than evolving a nonlinear PDE for $\Psi$, we use a **projected operator-splitting scheme** that is well-defined in function space and compatible with TT/QTT rounding.
 
@@ -136,22 +141,26 @@ Rather than evolving a nonlinear PDE for $\Psi$, we use a **projected operator-s
 1. **Linear KFE Step (MPO Apply)**  
 Apply the discretized adjoint generator as an MPO to the density tensor:
 
-$$g^{*} = \mathrm{TT\text{-}round} \left((I + \Delta t\,\mathbf{L}^{\*})\, g^n\right)$$
+
+<div>$$g^{*} = \mathrm{TT\text{-}round} \left((I + \Delta t\,\mathbf{L}^{*})\, g^n\right)$$</div>
 
 2. **Positivity Projection**  
 Enforce non-negativity with a smooth elementwise projection (Softplus) in TT/QTT form:
 
-$$g^{**}(\mathbf{x}) = \mu \log\!\big(1 + \exp(g^{*}(\mathbf{x})/\mu)\big)$$
+
+<div>$$g^{**}(\mathbf{x}) = \mu \log\!\big(1 + \exp(g^{*}(\mathbf{x})/\mu)\big)$$</div>
 
 3. **Mass Renormalization**  
 Compute the integral by TT contraction and renormalize:
 
-$$g^{n+1} = \frac{g^{**}}{\int g^{**}(\mathbf{x})\, d\mathbf{x}}$$
+
+<div>$$g^{n+1} = \frac{g^{**}}{\int g^{**}(\mathbf{x})\, d\mathbf{x}}$$</div>
 
 5. **Amplitude Update (Optional Manifold Form)**  
 Set
 
-$$\Psi^{n+1} = \sqrt{g^{n+1}}$$
+
+<div>$$\Psi^{n+1} = \sqrt{g^{n+1}}$$</div>
 
 and compress in TT format with fixed rank. This places $\Psi$ on the **unit-sphere TT manifold**, enabling optional Riemannian optimization steps with an explicit normalization constraint.
 

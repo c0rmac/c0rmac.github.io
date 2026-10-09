@@ -60,7 +60,8 @@ Note: Whenever any files in ``qtexture/kernels`` are modified, you must recompil
 Here's how to calculate a simple, basis-dependent monotone for a GHZ state. The source paper establishes a direct link between texture and state purity, defining a monotone as "the difference between the maximum and minimum real parts of the density matrix elements".
 
 The formula is given as:
-$$M_P(\rho) = \max_{i,j}(\text{Re}(\rho_{ij})) - \min_{i,j}(\text{Re}(\rho_{ij}))$$
+
+<div>$$M_P(\rho) = \max_{i,j}(\text{Re}(\rho_{ij})) - \min_{i,j}(\text{Re}(\rho_{ij}))$$</div>
 
 ```python
 import qtexture as qt
