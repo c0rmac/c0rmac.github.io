@@ -11,7 +11,7 @@ locale                   : "en-US"
 title                    : "Cormac Kinsella"
 title_separator          : "-"
 name                     : &name "Cormac Kinsella"
-description              : &description "Final year Mathematics BA Student and Software Engineer"
+description              : &description "Mathematics PhD candidate at TUM working on consensus-based optimisation on manifolds, robotics and open-source scientific software."
 url                      : https://c0rmac.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "c0rmac/c0rmac.github.io"
@@ -71,6 +71,8 @@ social:
   type                   : # Person or Organization (defaults to Person)
   name                   : # If the user or organization name differs from the site's name
   links: # An array of links to social media profiles
+    - "https://github.com/c0rmac"
+    - "https://www.ce.cit.tum.de/en/aipd/members/cormac-kinsella/"
 
 
 # Analytics
