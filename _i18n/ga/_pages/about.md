@@ -4,7 +4,7 @@ Baineann mo chuid taighde le *Consensus-Based Optimisation (CBO)* ar mhanifhillt
 
 Sular thosaigh mé ar mo PhD, d’oibrigh mé mar innealtóir bogearraí, ag an BMW Group le déanaí, áit ar fhorbair mé *numerical libraries* agus *datahubs*. Is cainteoir Gaeilge mé freisin, le canúint Chois Fharraige i gConamara, agus chabhraigh mé le haipeanna agus cluichí a aistriú go Gaeilge, an t-aistriúchán oifigiúil Gaeilge ar ***Among Us*** ina measc ([alt in The Verge](https://web.archive.org/web/20210718192147/https://www.theverge.com/2021/7/16/22579968/among-us-official-irish-translation)).
 
-## 🚀 Tionscadail roghnaithe
+## 🚀 Tionscadail tofa
 
 - [**metal-linalg**](https://github.com/c0rmac/metal-linalg): QR, *eigendecomposition* agus SVD do bhaisceanna maitrísí, *GPU-accelerated* ar Apple Silicon, do MLX agus PyTorch ([tuilleadh eolais](/ga/portfolio/metal-linalg/))
 - [**holographic-tensor-networks**](https://github.com/c0rmac/holographic-tensor-networks): leabharlann Python do *líonraí teannasacha (tensor networks)* holagrafacha ar fhoirgnimh hipearbóileacha ([tuilleadh eolais](/ga/portfolio/4-holographic-tensor-networks/))
