@@ -1,0 +1,16 @@
+digraph "client-app-upload-service-structure" {
+	node [shape=rectangle]
+	start [shape=point style=invis]
+	1 [label=BaseUploadServiceVC]
+	2 [label=GenericUploadServiceVC]
+	1.1 [label=MyApplicationsSuppDocVC]
+	2.1 [label=MyApplicationsStatDocVC]
+	2.2 [label=MyNoticesStatDocVC]
+	2.3 [label=MyNoticesSuppDocVC]
+	start -> 1 [label=""]
+	1 -> 2 [label=""]
+	1 -> 1.1 [label=""]
+	2 -> 2.1 [label=""]
+	2 -> 2.2 [label=""]
+	2 -> 2.3 [label=""]
+}
